@@ -8,6 +8,21 @@ export { default as DocAside } from "./components/DocAside.astro";
 export { bindCopyButtons, copyText } from "./components/CopyButton";
 
 export {
+  DEFAULT_LOCALE,
+  catalogs,
+  locales,
+  getLocale,
+  getMessages,
+  htmlLang,
+  htmlLangAttr,
+  t,
+  mainNavItems,
+  mobileExtraNavItems,
+  siteNavItems,
+} from "./i18n";
+export type { Locale, MessageKey, Messages, SiteNavId } from "./i18n";
+
+export {
   repoRoot,
   readJson,
   tryReadJson,

@@ -1,20 +1,29 @@
 ---
 import { SITE } from '../seo';
+import { getLocale, t } from '@core/i18n';
+import type { Locale } from '@core/i18n';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = getLocale() } = Astro.props;
+const taglineLines = t('chrome.footerTagline', undefined, locale).split('\n');
 ---
 <footer class="site-footer">
   <div class="footer-top">
     <a class="brand" href="/">visualspec.</a>
-    <p>An open visual intermediate representation for visual intent.<br/>Across tools. Across platforms. Across media.</p>
+    <p>{taglineLines[0]}<br/>{taglineLines[1]}</p>
     <div class="footer-links">
-      <a href="/specification/1.0/">Specification</a>
-      <a href="/schemas/">Schemas</a>
-      <a href="/use-cases/">Use cases</a>
-      <a href={SITE.github} rel="me noopener noreferrer">GitHub</a>
-      <a href="/learn/contributing/">Contributing</a>
+      <a href="/specification/1.0/">{t('nav.specification', undefined, locale)}</a>
+      <a href="/schemas/">{t('nav.schemas', undefined, locale)}</a>
+      <a href="/use-cases/">{t('nav.useCases', undefined, locale)}</a>
+      <a href={SITE.github} rel="me noopener noreferrer">{t('common.github', undefined, locale)}</a>
+      <a href="/learn/contributing/">{t('nav.contributing', undefined, locale)}</a>
     </div>
   </div>
   <div class="footer-bottom">
-    <span>Created and maintained by <a href={SITE.authorUrl} rel="me noopener noreferrer">Gustavo Franco ↗</a></span>
-    <span class="mono"><a href={SITE.license}>Apache 2.0</a> · VISUAL INTENT, EXPLICITLY DEFINED.</span>
+    <span>{t('chrome.footerMaintained', undefined, locale)} <a href={SITE.authorUrl} rel="me noopener noreferrer">Gustavo Franco ↗</a></span>
+    <span class="mono"><a href={SITE.license}>{t('chrome.footerLicense', undefined, locale)}</a> · {t('chrome.footerMotto', undefined, locale)}</span>
   </div>
 </footer>

@@ -1,4 +1,6 @@
 ---
+import { t } from '@core/i18n';
+
 interface Child {
   name: string;
   kind: string;
@@ -41,7 +43,7 @@ function parts(sentence: string) {
   {title && (
     <header class="schema-node-head">
       <code>{title}</code>
-      {required && <span class="schema-flag">required</span>}
+      {required && <span class="schema-flag">{t('pages.schemaNode.required')}</span>}
       {node.href ? (
         <a class="schema-type" href={node.href}>{node.summary}</a>
       ) : (
@@ -63,7 +65,7 @@ function parts(sentence: string) {
       )}
       {(node.facts.length > 0 || node.enumValues.length > 0) && (
         <details class="schema-exact">
-          <summary>Exact constraints</summary>
+          <summary>{t('pages.schemaNode.exactConstraints')}</summary>
           {node.facts.length > 0 && (
             <dl class="schema-facts">
               {node.facts.map(([label, value]) => (
@@ -76,7 +78,7 @@ function parts(sentence: string) {
           )}
           {node.enumValues.length > 0 && (
             <div class="schema-enum">
-              <span>Allowed values</span>
+              <span>{t('pages.schemaNode.allowedValues')}</span>
               <ul>
                 {node.enumValues.map((value) => <li><code>{value}</code></li>)}
               </ul>

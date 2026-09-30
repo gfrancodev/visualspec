@@ -1,37 +1,35 @@
 ---
 import Logo from './Logo.astro';
+import LanguageSwitch from './LanguageSwitch.astro';
 import ThemeSwitch from './ThemeSwitch.astro';
+import { mainNavItems, mobileExtraNavItems, t } from '@core/i18n';
+import type { Locale } from '@core/i18n';
 
 interface Props {
   path: string;
+  locale: Locale;
 }
-const { path } = Astro.props;
-const nav = [
-  ['Learn', '/learn/'],
-  ['Specification', '/specification/1.0/'],
-  ['Reference', '/reference/'],
-  ['Use Cases', '/use-cases/']
-];
+const { path, locale } = Astro.props;
+const nav = mainNavItems(locale);
+const mobileExtra = mobileExtraNavItems(locale);
 ---
 <header class="site-header">
   <div class="nav-wrap">
     <Logo />
-    <span class="version-tag">1.0 RC</span>
-    <nav class="desktop-nav" aria-label="Main navigation">
-      {nav.map(([label, href]) => (
+    <span class="version-tag">{t('chrome.versionTag', undefined, locale)}</span>
+    <nav class="desktop-nav" aria-label={t('aria.mainNav', undefined, locale)}>
+      {nav.map(({ label, href }) => (
         <a href={href} aria-current={path.startsWith(href) ? 'page' : undefined}>{label}</a>
       ))}
     </nav>
-    <ThemeSwitch />
-    <a class="github-link" href="https://github.com/gfrancodev/visualspec" target="_blank" rel="me noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+    <LanguageSwitch locale={locale} />
+    <ThemeSwitch locale={locale} />
+    <a class="github-link" href="https://github.com/gfrancodev/visualspec" target="_blank" rel="me noopener noreferrer">{t('common.github', undefined, locale)} <span aria-hidden="true">↗</span></a>
     <details class="mobile-nav">
-      <summary aria-label="Open navigation"><span></span><span></span></summary>
-      <nav aria-label="Mobile navigation">
-        {nav.map(([label, href]) => <a href={href}>{label}</a>)}
-        <a href="/schemas/">Schemas</a>
-        <a href="/reference-explorer/">Reference explorer</a>
-        <a href="/ecosystem/">Ecosystem</a>
-        <a href="/rfcs/">RFCs</a>
+      <summary aria-label={t('aria.openNav', undefined, locale)}><span></span><span></span></summary>
+      <nav aria-label={t('aria.mobileNav', undefined, locale)}>
+        {nav.map(({ label, href }) => <a href={href}>{label}</a>)}
+        {mobileExtra.map(({ label, href }) => <a href={href}>{label}</a>)}
       </nav>
     </details>
   </div>

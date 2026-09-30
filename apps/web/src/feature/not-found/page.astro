@@ -1,5 +1,6 @@
 ---
 import Base from '@app/layouts/Base.astro';
+import { t } from '@core/i18n';
 
 interface Props {
   path?: string;
@@ -11,9 +12,9 @@ Astro.response.status = 404;
 Astro.response.headers.set('X-Robots-Tag', 'noindex, follow');
 
 const suggestions = [
-  { href: '/use-cases/', label: 'Use Cases' },
-  { href: '/specification/1.0/', label: 'Specification' },
-  { href: '/learn/quick-start/', label: 'Quick start' }
+  { href: '/use-cases/', label: t('notFound.suggestions.useCases') },
+  { href: '/specification/1.0/', label: t('notFound.suggestions.specification') },
+  { href: '/learn/quick-start/', label: t('notFound.suggestions.quickStart') }
 ];
 
 const typoHints = [];
@@ -21,15 +22,16 @@ if (
   (/example/i.test(path) || /generated/i.test(path)) &&
   !path.startsWith('/use-cases/')
 ) {
-  typoHints.push({ href: '/use-cases/', text: 'Browse use cases' });
+  typoHints.push({ href: '/use-cases/', text: t('notFound.browseUseCases') });
 }
+const browseUseCasesLabel = t('notFound.browseUseCases');
 ---
-<Base title="Page not found" description="The page you requested is not part of Visual Spec." noindex={true}>
-  <section class="not-found container">
-    <div class="eyebrow">Outside the specification</div>
+<Base title={t('notFound.title')} description={t('notFound.description')} noindex={true}>
+  <section class="not-found container" data-browse-use-cases={browseUseCasesLabel}>
+    <div class="eyebrow">{t('notFound.eyebrow')}</div>
     <h1>404<span class="serif">.</span></h1>
-    <p class="not-found-lead">This URL is not in the site map. The path below was not found.</p>
-    <p class="not-found-path mono" aria-label="Requested path" data-path={path}>{path}</p>
+    <p class="not-found-lead">{t('notFound.lead')}</p>
+    <p class="not-found-path mono" aria-label={t('aria.requestedPath')} data-path={path}>{path}</p>
     {typoHints.length > 0 && (
       <ul class="not-found-hints">
         {typoHints.map((hint) => (
@@ -43,7 +45,7 @@ if (
       ))}
     </div>
     <p class="not-found-foot">
-      <a class="button" href="/">Back to home <span aria-hidden="true">→</span></a>
+      <a class="button" href="/">{t('notFound.backHome')} <span aria-hidden="true">→</span></a>
     </p>
   </section>
   <script is:inline>
@@ -54,9 +56,12 @@ if (
       var shown = fromQuery || (location.pathname !== '/404/' ? location.pathname : el.getAttribute('data-path'));
       if (shown) el.textContent = shown;
       var hints = document.querySelector('.not-found-hints');
+      var section = document.querySelector('.not-found');
+      var browseLabel = section ? section.getAttribute('data-browse-use-cases') : '';
       if (
         !hints &&
         shown &&
+        browseLabel &&
         (/example/i.test(shown) || /generated/i.test(shown)) &&
         shown.indexOf('/use-cases/') !== 0
       ) {
@@ -66,7 +71,7 @@ if (
         var a = document.createElement('a');
         a.className = 'text-link';
         a.href = '/use-cases/';
-        a.innerHTML = 'Browse use cases <span aria-hidden="true">↗</span>';
+        a.innerHTML = browseLabel + ' <span aria-hidden="true">↗</span>';
         li.appendChild(a);
         wrap.appendChild(li);
         el.parentNode.insertBefore(wrap, el.nextSibling);

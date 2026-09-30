@@ -1,31 +1,24 @@
 ---
 import Base from '@app/layouts/Base.astro';
+import { t } from '@core/i18n';
 import { listUseCases } from './catalog';
 
 const useCases = listUseCases();
+const p = (key: Parameters<typeof t>[0], params?: Parameters<typeof t>[1]) => t(key, params);
 ---
-<Base title="Use Cases" description="Worked Visual Spec documents and generated artifacts for every profile: UI, image, illustration, document, presentation, video, 3D, and games.">
+<Base title={p('pages.useCases.title')} description={p('pages.useCases.description')}>
   <div class="container">
     <header class="page-head">
-      <div class="eyebrow">Specification-driven generation</div>
-      <h1>Use Cases</h1>
-      <p>
-        These examples show how Visual Spec acts as the contract for visual intent: a validated document
-        describes what should exist, and a large language model reads that specification to produce the
-        finished artifact-UI, illustration, document, motion, 3D, or interactive output. Each card
-        pairs the source JSON with the generated result so you can inspect input and output side by side.
-      </p>
+      <div class="eyebrow">{p('pages.useCases.eyebrow')}</div>
+      <h1>{p('pages.useCases.heading')}</h1>
+      <p>{p('pages.useCases.lead')}</p>
     </header>
     <div class="preview-grid">
       {useCases.map((item) => (
         <article class="preview-card">
-          <a class="preview-shot" href={`/use-cases/${item.slug}/`} aria-label={`Open ${item.title}`}>
+          <a class="preview-shot" href={`/use-cases/${item.slug}/`} aria-label={p('aria.openUseCase', { title: item.title })}>
             {!item.ready ? (
-              <span class="preview-empty">Not written yet</span>
-            ) : item.artifactKind === 'pdf' ? (
-              <div class="preview-embed preview-embed--pdf" aria-hidden="true">
-                <embed src={`${item.download}#toolbar=0&navpanes=0`} type="application/pdf" title="" />
-              </div>
+              <span class="preview-empty">{p('pages.useCases.notWritten')}</span>
             ) : item.artifactKind === 'pptx' ? (
               <div class="preview-file preview-file--deck" aria-hidden="true">
                 <span class="preview-file-badge">PPTX</span>
@@ -45,11 +38,11 @@ const useCases = listUseCases();
                 href={`/examples/${item.file}`}
                 download={item.file}
               >
-                spec ↓
+                {p('common.specDownload')}
               </a>
               {item.ready && (
                 <a class="mono" href={item.download} target="_blank" rel="noreferrer">
-                  artifact ↗
+                  {p('common.artifactOpen')}
                 </a>
               )}
             </div>

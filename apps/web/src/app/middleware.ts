@@ -1,22 +1,50 @@
+import { hasFileExtension, isInternalPath } from "@astrojs/internal-helpers/path";
 import { defineMiddleware } from "astro:middleware";
+import { resetRequestLocale, setRequestLocale } from "@core/i18n/requestLocale";
+import { isLocale, LOCALE_COOKIE, resolveLocale } from "@core/i18n/resolve";
 
 export const onRequest = defineMiddleware(async (context, next) => {
-  const { pathname } = context.url;
+  const cookieValue = context.cookies.get(LOCALE_COOKIE)?.value;
+  const locale =
+    cookieValue && isLocale(cookieValue)
+      ? cookieValue
+      : resolveLocale(
+          context.request.headers.get("cookie"),
+          context.request.headers.get("accept-language"),
+        );
+  context.locals.locale = locale;
+  setRequestLocale(locale);
 
-  if (pathname !== "/" && !pathname.endsWith("/") && !pathname.includes(".")) {
-    return context.redirect(`${pathname}/`, 308);
+  try {
+    const pathname = decodeURI(context.url.pathname);
+
+    if (pathname.length > 1 && pathname.endsWith("/") && isInternalPath(pathname)) {
+      const target = pathname.replace(/\/+$/, "") || "/";
+      return context.redirect(`${target}${context.url.search}`, 308);
+    }
+
+    if (
+      pathname !== "/" &&
+      !pathname.endsWith("/") &&
+      !isInternalPath(pathname) &&
+      !hasFileExtension(pathname)
+    ) {
+      return context.redirect(`${pathname}/`, 308);
+    }
+
+    if (pathname === "/404/" || pathname === "/404") {
+      return next();
+    }
+
+    const response = await next();
+    if (response.status === 404) {
+      const url = new URL("/404/", context.url);
+      url.searchParams.set("path", pathname);
+      return context.rewrite(`${url.pathname}${url.search}`);
+    }
+
+    return response;
+  } finally {
+    resetRequestLocale();
   }
-
-  if (pathname === "/404/" || pathname === "/404") {
-    return next();
-  }
-
-  const response = await next();
-  if (response.status === 404) {
-    const url = new URL("/404/", context.url);
-    url.searchParams.set("path", pathname);
-    return context.rewrite(`${url.pathname}${url.search}`);
-  }
-
-  return response;
 });

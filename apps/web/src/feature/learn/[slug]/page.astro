@@ -1,6 +1,7 @@
 ---
 import Base from '@app/layouts/Base.astro';
 import { renderMarkdown } from '@core';
+import { siteNavItems, t } from '@core/i18n';
 import { hrefFor, loadDocs } from '../lib/docs';
 
 interface Props {
@@ -17,24 +18,22 @@ if (!doc) {
 const html = renderMarkdown(doc.body);
 const prev = index > 0 ? docs[index - 1] : null;
 const next = index < docs.length - 1 ? docs[index + 1] : null;
+const site = siteNavItems();
 ---
 <Base title={doc.title} description={doc.description} pageType="article">
   <div class="container doc-layout">
-    <aside class="sidebar" aria-label="Learn navigation">
+    <aside class="sidebar" aria-label={t('aria.learnNav')}>
       <div class="sidebar-group">
-        <h3>Learn</h3>
+        <h3>{t('nav.learn')}</h3>
         {docs.map((item) => (
           <a href={hrefFor(item.slug)} class:list={[{ active: item.slug === slug }]}>{item.title}</a>
         ))}
       </div>
       <div class="sidebar-group">
-        <h3>Site</h3>
-        <a href="/reference/">Reference</a>
-        <a href="/schemas/">Schemas</a>
-        <a href="/components/">Components</a>
-        <a href="/ecosystem/">Ecosystem</a>
-        <a href="/rfcs/">RFCs</a>
-        <a href="/learn/contributing/" class:list={[{ active: slug === 'contributing' }]}>Contributing</a>
+        <h3>{t('nav.site')}</h3>
+        {site.map(({ href, label, id }) => (
+          <a href={href} class:list={[{ active: id === 'contributing' && slug === 'contributing' }]}>{label}</a>
+        ))}
       </div>
     </aside>
     <div>
@@ -44,7 +43,7 @@ const next = index < docs.length - 1 ? docs[index + 1] : null;
         <p>{doc.description}</p>
       </header>
       <article class="prose" set:html={html}></article>
-      <nav class="doc-footer-nav" aria-label="Previous and next">
+      <nav class="doc-footer-nav" aria-label={t('aria.prevNext')}>
         {prev ? <a href={hrefFor(prev.slug)}>← {prev.title}</a> : <span></span>}
         {next ? <a href={hrefFor(next.slug)}>{next.title} →</a> : <span></span>}
       </nav>

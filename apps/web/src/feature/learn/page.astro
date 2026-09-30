@@ -1,16 +1,18 @@
 ---
 import Base from '@app/layouts/Base.astro';
+import { t } from '@core/i18n';
 import { hrefFor, loadDocs } from './lib/docs';
 
 const docs = loadDocs();
 const categories = [...new Set(docs.map((d) => d.category))];
+const p = (key: Parameters<typeof t>[0]) => t(key);
 ---
-<Base title="Learn" description="Guides for understanding and applying Visual Spec, the open visual intermediate representation (Visual IR) and JSON Schema for visual intent.">
+<Base title={p('pages.learn.title')} description={p('pages.learn.description')}>
   <div class="container">
     <header class="page-head">
-      <div class="eyebrow">Documentation</div>
-      <h1>Learn Visual Spec</h1>
-      <p>Start with the motivation, then move through concepts, profiles, validation and adapter guidance.</p>
+      <div class="eyebrow">{p('pages.learn.eyebrow')}</div>
+      <h1>{p('pages.learn.heading')}</h1>
+      <p>{p('pages.learn.lead')}</p>
     </header>
     {categories.map((category) => (
       <section class="index-list" aria-labelledby={`cat-${category}`}>

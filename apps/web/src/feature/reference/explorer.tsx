@@ -1,5 +1,6 @@
 import { useId, useMemo, useState } from "react";
 import { copyText } from "@core/components/CopyButton";
+import { getMessages, t } from "@core/i18n";
 
 const KINDS = [
   "website",
@@ -14,35 +15,39 @@ const KINDS = [
 
 const ROLES = ["source-of-truth", "preferred", "supporting", "inspiration", "avoid"] as const;
 
-const LOCATOR_FIELDS: Record<string, Array<{ key: string; label: string; type: string }>> = {
-  website: [
-    { key: "cssSelector", label: "CSS selector", type: "text" },
-    { key: "viewportWidth", label: "Viewport width", type: "number" },
-    { key: "viewportHeight", label: "Viewport height", type: "number" },
-  ],
-  image: [
-    { key: "x", label: "Region x", type: "number" },
-    { key: "y", label: "Region y", type: "number" },
-    { key: "width", label: "Region width", type: "number" },
-    { key: "height", label: "Region height", type: "number" },
-  ],
-  video: [
-    { key: "start", label: "Start (seconds)", type: "number" },
-    { key: "end", label: "End (seconds)", type: "number" },
-  ],
-  figma: [
-    { key: "fileKey", label: "File key", type: "text" },
-    { key: "nodeId", label: "Node id", type: "text" },
-  ],
-  pdf: [{ key: "page", label: "Page", type: "number" }],
-  presentation: [{ key: "slide", label: "Slide", type: "number" }],
-  document: [{ key: "section", label: "Section", type: "text" }],
-  "3d": [
-    { key: "scene", label: "Scene", type: "text" },
-    { key: "node", label: "Node", type: "text" },
-    { key: "camera", label: "Camera", type: "text" },
-  ],
-};
+function locatorFieldsForKind(kind: string) {
+  const labels = getMessages().pages.explorer.locatorFields;
+  const map: Record<string, Array<{ key: string; label: string; type: string }>> = {
+    website: [
+      { key: "cssSelector", label: labels.cssSelector, type: "text" },
+      { key: "viewportWidth", label: labels.viewportWidth, type: "number" },
+      { key: "viewportHeight", label: labels.viewportHeight, type: "number" },
+    ],
+    image: [
+      { key: "x", label: labels.regionX, type: "number" },
+      { key: "y", label: labels.regionY, type: "number" },
+      { key: "width", label: labels.regionWidth, type: "number" },
+      { key: "height", label: labels.regionHeight, type: "number" },
+    ],
+    video: [
+      { key: "start", label: labels.startSeconds, type: "number" },
+      { key: "end", label: labels.endSeconds, type: "number" },
+    ],
+    figma: [
+      { key: "fileKey", label: labels.fileKey, type: "text" },
+      { key: "nodeId", label: labels.nodeId, type: "text" },
+    ],
+    pdf: [{ key: "page", label: labels.page, type: "number" }],
+    presentation: [{ key: "slide", label: labels.slide, type: "number" }],
+    document: [{ key: "section", label: labels.section, type: "text" }],
+    "3d": [
+      { key: "scene", label: labels.scene, type: "text" },
+      { key: "node", label: labels.node, type: "text" },
+      { key: "camera", label: labels.camera, type: "text" },
+    ],
+  };
+  return map[kind] || [];
+}
 
 function numberOrNothing(value: string | undefined) {
   if (value === "" || value == null) return undefined;
@@ -144,7 +149,9 @@ export default function ReferenceExplorer() {
   }, [kind, role, aspects, uri, fields]);
 
   const pretty = JSON.stringify(output, null, 2);
-  const locatorFields = LOCATOR_FIELDS[kind] || [];
+  const locatorFields = locatorFieldsForKind(kind);
+  const copyLabel = t("common.copy");
+  const explorer = getMessages().pages.explorer;
 
   function updateField(key: string, value: string) {
     setFields((prev) => ({ ...prev, [key]: value }));
@@ -153,14 +160,14 @@ export default function ReferenceExplorer() {
   return (
     <div className="explorer">
       <div className="callout" role="note">
-        This builder constructs a descriptor. It does not fetch or verify the resource.
+        {explorer.builderNote}
       </div>
 
       <div className="explorer-grid">
         <div>
           <div className="field">
             <label className="field-label" htmlFor={kindId}>
-              Kind
+              {explorer.kind}
             </label>
             <select
               id={kindId}
@@ -180,7 +187,7 @@ export default function ReferenceExplorer() {
           </div>
           <div className="field">
             <label className="field-label" htmlFor={roleId}>
-              Role
+              {explorer.role}
             </label>
             <select
               id={roleId}
@@ -197,7 +204,7 @@ export default function ReferenceExplorer() {
           </div>
           <div className="field">
             <label className="field-label" htmlFor={aspectsId}>
-              Aspects (comma-separated)
+              {explorer.aspects}
             </label>
             <input
               id={aspectsId}
@@ -208,18 +215,18 @@ export default function ReferenceExplorer() {
           </div>
           <div className="field">
             <label className="field-label" htmlFor={uriId}>
-              URI (optional)
+              {explorer.uriOptional}
             </label>
             <input
               id={uriId}
               className="input"
               value={uri}
               onChange={(e) => setUri(e.target.value)}
-              placeholder="https://…"
+              placeholder={explorer.uriPlaceholder}
             />
           </div>
 
-          <h3 style={{ fontSize: 18, marginTop: 10 }}>Locator</h3>
+          <h3 style={{ fontSize: 18, marginTop: 10 }}>{explorer.locator}</h3>
           {locatorFields.map((field) => {
             const id = `${kindId}-${field.key}`;
             return (
@@ -240,16 +247,16 @@ export default function ReferenceExplorer() {
         </div>
 
         <div>
-          <div className="field-label">Descriptor JSON</div>
+          <div className="field-label">{explorer.descriptorJson}</div>
           <div className="code-block">
             <button
               className="copy-button"
               type="button"
               onClick={(event) => {
-                void copyText(event.currentTarget, pretty);
+                void copyText(event.currentTarget, pretty, copyLabel);
               }}
             >
-              Copy
+              {copyLabel}
             </button>
             <pre>
               <code>{pretty}</code>

@@ -1,24 +1,26 @@
 ---
 import Base from '@app/layouts/Base.astro';
+import { t } from '@core/i18n';
 import { loadProfiles } from './catalog';
 
 const profiles = loadProfiles();
+const p = (key: Parameters<typeof t>[0]) => t(key);
 ---
-<Base title="Profiles" description="Nine combinable Visual Spec profiles: UI, image, illustration, document, presentation, video, motion graphics, 3D, and games.">
+<Base title={p('pages.profiles.title')} description={p('pages.profiles.description')}>
   <div class="container">
     <header class="page-head">
-      <div class="eyebrow">Specializations</div>
-      <h1>Profiles</h1>
-      <p>Select a profile by the kind of visual artifact you describe. Combine profiles when an experience crosses media.</p>
+      <div class="eyebrow">{p('pages.profiles.eyebrow')}</div>
+      <h1>{p('pages.profiles.heading')}</h1>
+      <p>{p('pages.profiles.lead')}</p>
     </header>
     <div class="index-list">
-      {profiles.map((p) => (
-        <a class="index-row" href={`/profiles/${p.id}/`}>
+      {profiles.map((profile) => (
+        <a class="index-row" href={`/profiles/${profile.id}/`}>
           <div>
-            <div class="row-title">{p.title}</div>
-            <p>{p.description}</p>
+            <div class="row-title">{profile.title}</div>
+            <p>{profile.description}</p>
           </div>
-          <span class="mono">{p.id}</span>
+          <span class="mono">{profile.id}</span>
         </a>
       ))}
     </div>

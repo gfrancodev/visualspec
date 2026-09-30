@@ -2,6 +2,7 @@
 import { join } from 'node:path';
 import Base from '@app/layouts/Base.astro';
 import { DocAside, catalogPath, jsonToSpecCodeHtml, modulesDir, readJson, SpecWindow } from '@core';
+import { t } from '@core/i18n';
 import SchemaNode from '../SchemaNode.astro';
 import { MODULE_GUIDES } from '../guides';
 import { describeNode, minimalExample } from '../schema';
@@ -30,35 +31,36 @@ const defEntries = (Object.entries(defs) as [string, any][]).map(([name, def]) =
   };
 });
 const guide = MODULE_GUIDES[moduleName] || null;
+const p = (key: Parameters<typeof t>[0]) => t(key);
 ---
-<Base title={`${meta.title} - Reference`} description={meta.description}>
+<Base title={t('pages.reference.detailTitleSuffix', { title: meta.title })} description={meta.description}>
   <div class="container doc-layout">
     <DocAside current={moduleName} modules={modules} />
     <div>
       <header class="page-head" style="padding-top:0">
-        <div class="eyebrow">Module</div>
+        <div class="eyebrow">{p('pages.reference.moduleEyebrow')}</div>
         <h1>{meta.title}</h1>
         {guide ? (
           <div class="module-guide">
             <p class="module-role">{guide.role}</p>
             <p>{guide.intro}</p>
-            <p><strong>Use this module when</strong> {guide.useWhen}</p>
-            <p><strong>Keep in mind.</strong> {guide.caution}</p>
+            <p><strong>{p('pages.reference.useWhen')}</strong> {guide.useWhen}</p>
+            <p><strong>{p('pages.reference.keepInMind')}</strong> {guide.caution}</p>
           </div>
         ) : (
           <p>{schema.description || meta.description}</p>
         )}
         <p class="schema-path">
-          Raw schema:
+          {p('pages.reference.rawSchema')}
           <a href={`/schema/1.0/modules/${moduleName}.schema.json`}>/schema/1.0/modules/{moduleName}.schema.json</a>
           {schema.$id && <> · <span class="mono">{schema.$id}</span></>}
         </p>
         <div class="callout">
-          <strong>How to read a definition.</strong>
-          The paragraphs say what to write and why. “Exact constraints” opens the schema keywords (type, pattern, bounds) for people checking a validator. A sample at the bottom of each definition is the smallest JSON that shows the required shape. Values such as <code>$ref</code> inside a sample point at another definition. They are not fields you copy into a document.
+          <strong>{p('pages.reference.readDefinitionTitle')}</strong>
+          {p('pages.reference.readDefinitionBody')}
         </div>
         {defEntries.length > 0 && (
-          <nav class="def-jump" aria-label="Definitions on this page">
+          <nav class="def-jump" aria-label={t('aria.definitionsOnPage')}>
             {defEntries.map((entry) => <a href={`#${entry.name}`}>{entry.name}</a>)}
           </nav>
         )}
@@ -70,8 +72,8 @@ const guide = MODULE_GUIDES[moduleName] || null;
           <SchemaNode node={entry.node} />
           {entry.exampleHtml && (
             <div class="schema-example">
-              <h3>Smallest example</h3>
-              <p>Required fields only, with placeholder values. Replace them with the real intent.</p>
+              <h3>{p('pages.reference.smallestExample')}</h3>
+              <p>{p('pages.reference.smallestExampleLead')}</p>
               <SpecWindow caption={entry.name} badge="JSON" variant="doc">
                 <pre class="spec-code" set:html={entry.exampleHtml}></pre>
               </SpecWindow>

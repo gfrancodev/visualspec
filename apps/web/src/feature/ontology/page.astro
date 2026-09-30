@@ -1,22 +1,24 @@
 ---
 import Base from '@app/layouts/Base.astro';
 import { DocAside } from '@core';
+import { t } from '@core/i18n';
 import { loadComponents } from './catalog';
 
 const components = loadComponents();
+const p = (key: Parameters<typeof t>[0]) => t(key);
 ---
-<Base title="Components" description="Semantic component ontology for Visual Spec: reusable interface meaning independent of UI framework.">
+<Base title={p('pages.components.title')} description={p('pages.components.description')}>
   <div class="container doc-layout">
     <DocAside current="components" />
     <div>
     <header class="page-head">
-      <div class="eyebrow">Ontology</div>
-      <h1>Components</h1>
-      <p>Reusable interface patterns defined by meaning and behavior-not by a framework component library.</p>
+      <div class="eyebrow">{p('pages.components.eyebrow')}</div>
+      <h1>{p('pages.components.heading')}</h1>
+      <p>{p('pages.components.lead')}</p>
     </header>
     {components.length === 0 ? (
       <div class="callout">
-        <strong>Registry pending.</strong> The component catalog at <code>content/components.json</code> is not available in this build yet.
+        <strong>{p('pages.components.registryPending')}</strong> {p('pages.components.registryPendingBody')}
       </div>
     ) : (
       <div class="index-list">

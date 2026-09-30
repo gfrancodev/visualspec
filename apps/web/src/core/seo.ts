@@ -1,8 +1,11 @@
+import { getMessages } from "./i18n";
+
+const meta = getMessages().meta;
+
 export const SITE = {
   origin: "https://visualspec.dev",
-  name: "Visual Spec",
-  description:
-    "Visual Spec is an open visual intermediate representation (Visual IR): a JSON Schema contract for visual intent across UI, images, illustration, documents, presentations, video, motion graphics, 3D, and games.",
+  name: meta.siteName,
+  description: meta.siteDescription,
   schemaId: "https://visualspec.dev/schema/1.0/schema.json",
   github: "https://github.com/gfrancodev/visualspec",
   license: "https://www.apache.org/licenses/LICENSE-2.0",
@@ -10,7 +13,7 @@ export const SITE = {
   authorUrl: "https://github.com/gfrancodev",
   locale: "en_US",
   ogImage: "https://visualspec.dev/og.png",
-  ogImageAlt: "Visual Spec: open visual intermediate representation for visual intent",
+  ogImageAlt: meta.ogImageAlt,
   version: "1.0.0-rc.1",
   format: "visualSpec 1.0",
 } as const;
@@ -27,11 +30,11 @@ export function canonicalUrl(pathname: string): string {
 }
 
 export function documentTitle(title: string): string {
-  if (title === SITE.name) {
-    return "Visual Spec | Open visual intermediate representation (Visual IR)";
+  if (title === SITE.name || title === "Visual Spec") {
+    return meta.defaultDocumentTitle;
   }
   if (title.includes(SITE.name)) return title;
-  return `${title} | Visual Spec`;
+  return meta.documentTitleSuffix.replace("{title}", title);
 }
 
 export function siteJsonLd(options: {

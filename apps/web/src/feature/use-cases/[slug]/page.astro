@@ -1,6 +1,7 @@
 ---
 import Base from '@app/layouts/Base.astro';
 import { SpecWindow, jsonToSpecCodeHtml } from '@core';
+import { t } from '@core/i18n';
 import { getUseCase, readUseCaseDocument } from '../catalog';
 
 interface Props {
@@ -17,33 +18,34 @@ const pretty = JSON.stringify(doc, null, 2);
 const specCodeHtml = jsonToSpecCodeHtml(pretty);
 const openLabel =
   item.artifact?.kind === 'pptx'
-    ? 'Download deck'
+    ? t('pages.useCases.openDeck')
     : item.artifact?.kind === 'pdf'
-      ? 'Open PDF'
+      ? t('pages.useCases.openPdf')
       : item.artifact?.kind === 'video'
-        ? 'Open video'
-        : 'Open artifact';
+        ? t('pages.useCases.openVideo')
+        : t('pages.useCases.openArtifact');
+const p = (key: Parameters<typeof t>[0], params?: Parameters<typeof t>[1]) => t(key, params);
 ---
 <Base
-  title={`${item.title} | Use case`}
-  description={`Visual Spec use case (${item.profiles.join(', ')}): ${item.title}.`}
+  title={p('pages.useCases.detailTitleSuffix', { title: item.title })}
+  description={p('pages.useCases.detailDescription', { profiles: item.profiles.join(', '), title: item.title })}
   pageType="article"
 >
   <div class="container">
     <header class="page-head">
-      <div class="eyebrow">Use case</div>
+      <div class="eyebrow">{p('pages.useCases.eyebrowDetail')}</div>
       <h1>{item.title}</h1>
       <p>
-        Profiles: {item.profiles.join(', ')}
+        {p('pages.useCases.profilesLabel')} {item.profiles.join(', ')}
         {item.modelLabel && (
           <>
             {' '}
-            · Generated with <span class="mono">{item.modelLabel}</span>
+            · {p('pages.useCases.generatedWith')} <span class="mono">{item.modelLabel}</span>
           </>
         )}
       </p>
       <div class="hero-actions" style="margin-top:18px">
-        <a class="button secondary small" href={`/examples/${item.file}`}>Download JSON <span>↓</span></a>
+        <a class="button secondary small" href={`/examples/${item.file}`}>{p('pages.useCases.downloadJson')} <span>↓</span></a>
         {item.ready && (
           <a class="button secondary small" href={item.download} download={item.artifact?.kind === 'pptx' ? '' : undefined}>
             {openLabel} <span>↗</span>
@@ -53,23 +55,31 @@ const openLabel =
     </header>
     {item.ready ? (
       <div class="target-stage-shell">
-        <iframe
-          class="target-stage"
-          title={`${item.title} artifact preview`}
-          src={item.preview}
-          sandbox="allow-scripts allow-same-origin"
-        ></iframe>
+        {item.artifact?.kind === 'pdf' ? (
+          <iframe
+            class="target-stage"
+            title={p('pages.useCases.artifactPreview', { title: item.title })}
+            src={item.preview}
+          ></iframe>
+        ) : (
+          <iframe
+            class="target-stage"
+            title={p('pages.useCases.artifactPreview', { title: item.title })}
+            src={item.preview}
+            sandbox="allow-scripts allow-same-origin"
+          ></iframe>
+        )}
       </div>
     ) : (
-      <p class="callout">The artifact for this document has not been published yet.</p>
+      <p class="callout">{p('pages.useCases.artifactPending')}</p>
     )}
     <header class="page-head" style="margin-top:48px">
-      <div class="eyebrow">Input</div>
-      <h2>Visual Spec document</h2>
+      <div class="eyebrow">{p('pages.useCases.inputEyebrow')}</div>
+      <h2>{p('pages.useCases.inputHeading')}</h2>
       <p class="mono">{item.file}</p>
     </header>
     <div class="code-block">
-      <button class="copy-button" type="button" data-copy-text={pretty}>Copy</button>
+      <button class="copy-button" type="button" data-copy-text={pretty}>{t('common.copy')}</button>
       <SpecWindow caption={item.file} badge="JSON" variant="doc">
         <pre class="spec-code" set:html={specCodeHtml}></pre>
       </SpecWindow>

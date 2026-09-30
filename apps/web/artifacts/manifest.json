@@ -8,9 +8,9 @@
     "source": "visualspec-ui.html"
   },
   "image": {
-    "kind": "model",
-    "source": "visualspec-cup-study.glb",
-    "asset": "cup-study.glb",
+    "kind": "image",
+    "source": "visualspec-cup-still.jpg",
+    "asset": "cup-still.jpg",
     "title": "Ceramic cup still"
   },
   "illustration": {
@@ -62,7 +62,7 @@
   },
   "presentation-video": {
     "kind": "video",
-    "source": "visualspec-video.mp4",
+    "source": "visualspec-presentation-video.mp4",
     "asset": "narrated-deck.mp4",
     "title": "Narrated deck",
     "loop": false,

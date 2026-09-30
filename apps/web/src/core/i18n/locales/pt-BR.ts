@@ -1,0 +1,464 @@
+export const ptBR = {
+  "common": {
+    "copy": "Copiar",
+    "copied": "Copiado",
+    "github": "GitHub",
+    "overview": "Visão geral",
+    "yes": "sim",
+    "no": "não",
+    "defs": "defs",
+    "specDownload": "spec ↓",
+    "artifactOpen": "artefato ↗"
+  },
+  "aria": {
+    "mainNav": "Navegação principal",
+    "mobileNav": "Navegação móvel",
+    "openNav": "Abrir navegação",
+    "learnNav": "Navegação Aprenda",
+    "specNav": "Navegação da especificação",
+    "docAside": "Documentação",
+    "prevNext": "Anterior e próximo",
+    "continueLearning": "Continuar aprendendo",
+    "definitionsOnPage": "Definições nesta página",
+    "requestedPath": "Caminho solicitado",
+    "skipToContent": "Ir para o conteúdo",
+    "colorTheme": "Tema de cor",
+    "themeLight": "Tema claro",
+    "themeDark": "Tema escuro",
+    "themeSystem": "Tema do sistema",
+    "language": "Idioma",
+    "openUseCase": "Abrir {title}"
+  },
+  "nav": {
+    "learn": "Aprenda",
+    "specification": "Especificação",
+    "reference": "Referência",
+    "useCases": "Casos de uso",
+    "schemas": "Schemas",
+    "components": "Componentes",
+    "ecosystem": "Ecossistema",
+    "rfcs": "RFCs",
+    "contributing": "Contribuir",
+    "referenceExplorer": "Explorador de referências",
+    "site": "Site"
+  },
+  "chrome": {
+    "versionTag": "1.0 RC",
+    "footerTagline": "Uma representação visual intermediária aberta para intenção visual.\nEntre ferramentas. Entre plataformas. Entre mídias.",
+    "footerMaintained": "Criado e mantido por",
+    "footerLicense": "Apache 2.0",
+    "footerMotto": "INTENÇÃO VISUAL, DEFINIDA EXPLICITAMENTE.",
+    "specWindowDefaultCaption": "Documento Visual Spec",
+    "specWindowBadgeJson": "JSON",
+    "langEn": "English",
+    "langPtBr": "Português (Brasil)",
+    "langEs": "Español"
+  },
+  "meta": {
+    "siteName": "Visual Spec",
+    "siteDescription": "Visual Spec é uma representação visual intermediária aberta (Visual IR): um contrato JSON Schema para intenção visual em UI, imagens, ilustração, documentos, apresentações, vídeo, motion graphics, 3D e jogos.",
+    "defaultDocumentTitle": "Visual Spec | Representação visual intermediária aberta (Visual IR)",
+    "documentTitleSuffix": "{title} | Visual Spec",
+    "ogImageAlt": "Visual Spec: representação visual intermediária aberta para intenção visual",
+    "llmIndexTitle": "Índice para LLM"
+  },
+  "notFound": {
+    "title": "Página não encontrada",
+    "description": "A página solicitada não faz parte do Visual Spec.",
+    "eyebrow": "Fora da especificação",
+    "lead": "Esta URL não está no mapa do site. O caminho abaixo não foi encontrado.",
+    "browseUseCases": "Ver casos de uso",
+    "backHome": "Voltar ao início",
+    "suggestions": {
+      "useCases": "Casos de uso",
+      "specification": "Especificação",
+      "quickStart": "Início rápido"
+    }
+  },
+  "home": {
+    "heroEyebrow": "A representação visual intermediária aberta",
+    "heroTitle": "Visual Spec.",
+    "heroTitleAccent": "Todo visual.",
+    "heroCopy": "Um contrato JSON Schema para intenção visual: como as coisas parecem, se movem, se comportam e são renderizadas. Independente de ferramentas, plataformas e frameworks.",
+    "getStarted": "Começar",
+    "readSpecification": "Ler a especificação",
+    "heroNote": "FORMATO ABERTO · JSON SCHEMA · VERSÃO 1.0 RC",
+    "artifactIntent": "INTENÇÃO → REPRESENTAÇÃO",
+    "artifactFile": "visual-spec.json",
+    "specCaption": "Uma definição. Muitas possibilidades.",
+    "previewTitle": "Intenção, explícita.",
+    "previewCopy": "Um contrato compartilhado entre design e código.",
+    "previewBadge": "VISUAL IR",
+    "sourceStrip": "Das ferramentas que você já usa",
+    "sourceTools": [
+      "Figma",
+      "Capturas de tela",
+      "Sites",
+      "Vídeo",
+      "Cenas 3D",
+      "Design systems"
+    ],
+    "section1Eyebrow": "01 / Terreno comum",
+    "section1Title": "Preserve a intenção.",
+    "section1TitleLine2": "Mude a mídia.",
+    "section1Copy": "Capture o que importa uma vez. Dê a cada implementação as mesmas referências, regras visuais e critérios de sucesso.",
+    "flowSources": "01 - FONTES",
+    "flowTargets": "02 - DESTINOS POSSÍVEIS",
+    "flowCoreLabel": "REPRESENTAÇÃO VISUAL INTERMEDIÁRIA",
+    "flowCoreTagline": "Estrutura · Semântica · Comportamento",
+    "flowValidation": "REFERENCIAR → ESPECIFICAR → IMPLEMENTAR → RENDERIZAR → VALIDAR ↺",
+    "sources": [
+      [
+        "◈",
+        "Arquivos de design"
+      ],
+      [
+        "▧",
+        "Imagens"
+      ],
+      [
+        "⌘",
+        "Sites"
+      ],
+      [
+        "▷",
+        "Vídeo"
+      ],
+      [
+        "▱",
+        "Documentos"
+      ],
+      [
+        "◇",
+        "Cenas 3D"
+      ]
+    ],
+    "targets": [
+      [
+        "⌘",
+        "Web"
+      ],
+      [
+        "▯",
+        "Mobile"
+      ],
+      [
+        "▧",
+        "Imagens"
+      ],
+      [
+        "▷",
+        "Vídeo"
+      ],
+      [
+        "▱",
+        "Slides e PDFs"
+      ],
+      [
+        "◇",
+        "3D e jogos"
+      ]
+    ],
+    "section2Eyebrow": "02 / Feito para ser entendido",
+    "section2Title": "Mais que pixels.",
+    "section2TitleAccent": "Significado incluído.",
+    "whyLink": "Por que Visual Spec",
+    "principles": [
+      {
+        "number": "[ 01 ]",
+        "title": "Referências são de primeira classe.",
+        "body": "Uma região de imagem. Um instante em vídeo. Um nó do Figma. Aponte a evidência exata por trás de uma decisão visual e preserve a origem."
+      },
+      {
+        "number": "[ 02 ]",
+        "title": "Descreva o quê, não o como.",
+        "body": "Um diálogo é mais que um retângulo. Capture anatomia, estados e comportamento acessível. Deixe cada plataforma escolher a implementação certa."
+      },
+      {
+        "number": "[ 03 ]",
+        "title": "Torne a correção explícita.",
+        "body": "Reúna estrutura, semântica, acessibilidade, motion e fidelidade visual em um contrato de validação. Troque “quase lá” por critérios acordados."
+      }
+    ],
+    "section3Eyebrow": "03 / Um núcleo. Nove perfis.",
+    "section3Title": "Feito para um mundo visual.",
+    "section3Copy": "Comece pelo perfil que precisa. Combine perfis quando a experiência cruza mídias.",
+    "profiles": [
+      {
+        "id": "ui",
+        "title": "Interfaces",
+        "description": "Componentes, layouts, estados e interações acessíveis."
+      },
+      {
+        "id": "image",
+        "title": "Imagens",
+        "description": "Composição, assuntos, iluminação e linguagem visual."
+      },
+      {
+        "id": "illustration",
+        "title": "Ilustração",
+        "description": "Primitivas vetoriais, formas, paths e sistemas gráficos."
+      },
+      {
+        "id": "document",
+        "title": "Documentos",
+        "description": "Páginas, ordem de leitura, impressão e conteúdo fluído."
+      },
+      {
+        "id": "presentation",
+        "title": "Apresentações",
+        "description": "Slides, masters, transições e contexto do apresentador."
+      },
+      {
+        "id": "video",
+        "title": "Vídeo",
+        "description": "Tomadas, sequências, câmeras e mídia sincronizada."
+      },
+      {
+        "id": "motion-graphics",
+        "title": "Motion graphics",
+        "description": "Trilhas de propriedades, keyframes e motion coreografado."
+      },
+      {
+        "id": "3d",
+        "title": "Cenas 3D",
+        "description": "Entidades espaciais, materiais, câmeras e iluminação."
+      },
+      {
+        "id": "game",
+        "title": "Jogos",
+        "description": "Mundos, personagens, HUDs e mapeamentos de estado visual."
+      }
+    ],
+    "ctaEyebrow": "Faça seu primeiro contrato visual",
+    "ctaTitle": "Da ideia ao",
+    "ctaTitleAccent": "explícito.",
+    "ctaCopy": "Explore um documento real. Altere. Valide.",
+    "browseUseCases": "Ver casos de uso",
+    "getSchemas": "Obter os schemas"
+  },
+  "docAside": {
+    "modules": "Módulos",
+    "site": "Site"
+  },
+  "pages": {
+    "learn": {
+      "title": "Aprenda",
+      "description": "Guias para entender e aplicar Visual Spec, a representação visual intermediária aberta (Visual IR) e JSON Schema para intenção visual.",
+      "eyebrow": "Documentação",
+      "heading": "Aprenda Visual Spec",
+      "lead": "Comece pela motivação, depois percorra conceitos, perfis, validação e orientação de adaptadores.",
+      "whyNext": "Próximo: Início rápido →"
+    },
+    "useCases": {
+      "title": "Casos de uso",
+      "description": "Documentos Visual Spec trabalhados e artefatos gerados para cada perfil: UI, imagem, ilustração, documento, apresentação, vídeo, 3D e jogos.",
+      "eyebrow": "Geração guiada pela especificação",
+      "heading": "Casos de uso",
+      "lead": "Estes exemplos mostram o Visual Spec como contrato de intenção visual: um documento validado descreve o que deve existir, e um modelo de linguagem lê essa especificação para produzir o artefato final (UI, ilustração, documento, motion, 3D ou saída interativa). Cada cartão junta o JSON de entrada com o resultado gerado para inspecionar lado a lado.",
+      "notWritten": "Ainda não publicado",
+      "detailTitleSuffix": "{title} | Caso de uso",
+      "detailDescription": "Caso de uso Visual Spec ({profiles}): {title}.",
+      "eyebrowDetail": "Caso de uso",
+      "profilesLabel": "Perfis:",
+      "generatedWith": "Gerado com",
+      "downloadJson": "Baixar JSON",
+      "openDeck": "Baixar deck",
+      "openPdf": "Abrir PDF",
+      "openVideo": "Abrir vídeo",
+      "openArtifact": "Abrir artefato",
+      "artifactPreview": "Prévia do artefato {title}",
+      "artifactPending": "O artefato deste documento ainda não foi publicado.",
+      "inputEyebrow": "Entrada",
+      "inputHeading": "Documento Visual Spec"
+    },
+    "profiles": {
+      "title": "Perfis",
+      "description": "Nove perfis Visual Spec combináveis: UI, imagem, ilustração, documento, apresentação, vídeo, motion graphics, 3D e jogos.",
+      "eyebrow": "Especializações",
+      "heading": "Perfis",
+      "lead": "Escolha um perfil pelo tipo de artefato visual que descreve. Combine perfis quando a experiência cruza mídias.",
+      "detailTitleSuffix": "{title} | Perfil",
+      "detailDescription": "{description} Perfil Visual Spec para a representação visual intermediária aberta.",
+      "eyebrowDetail": "Perfil · {id}",
+      "typicalUses": "Usos típicos",
+      "relatedModules": "Módulos relacionados",
+      "artifacts": "Artefatos",
+      "viewUseCase": "Ver caso de uso",
+      "profileSchema": "Schema do perfil"
+    },
+    "components": {
+      "title": "Componentes",
+      "description": "Ontologia semântica de componentes para Visual Spec: significado reutilizável de interface independente de framework de UI.",
+      "eyebrow": "Ontologia",
+      "heading": "Componentes",
+      "lead": "Padrões de interface reutilizáveis definidos por significado e comportamento, não por biblioteca de componentes de um framework.",
+      "registryPending": "Registro pendente.",
+      "registryPendingBody": "O catálogo de componentes em content/components.json ainda não está disponível neste build.",
+      "detailTitleSuffix": "{title} - Componente",
+      "eyebrowDetail": "Componente · {kind}",
+      "mappingsCallout": "Mapeamentos apenas informativos.",
+      "mappingsCalloutBody": "Os exemplos de plataforma abaixo descrevem primitivas de destino possíveis. Esta release não inclui adaptadores para React, Swift, Android ou qualquer outra plataforma.",
+      "anatomy": "Anatomia",
+      "part": "Parte",
+      "required": "Obrigatório",
+      "descriptionCol": "Descrição",
+      "states": "Estados",
+      "keyboard": "Teclado",
+      "accessibility": "Acessibilidade",
+      "motion": "Motion",
+      "platformMappings": "Mapeamentos de plataforma",
+      "noMapping": "Nenhum mapeamento registrado."
+    },
+    "ecosystem": {
+      "title": "Ecossistema",
+      "description": "O que o Visual Spec entrega hoje: JSON Schema, especificação, validador e casos de uso. Adaptadores não são declarados nesta release.",
+      "eyebrow": "Status",
+      "heading": "Ecossistema",
+      "lead": "O que este repositório entrega hoje e o que permanece como ideia de interoperabilidade, não como promessa de produto.",
+      "shipped": "ENTREGUE",
+      "specTitle": "Especificação e JSON Schema",
+      "specBody": "Texto normativo, schemas modulares Draft 2020-12, restrições de perfil, exemplos e checksums vivem neste repositório e são publicados em /schema/1.0/.",
+      "readSpec": "Ler a especificação",
+      "validatorTitle": "CLI do validador",
+      "validatorBody": "Checagens estruturais e semânticas implementadas rodam localmente com npm run validate -- <file>. Schemas resolvem a partir dos arquivos empacotados, sem buscar conteúdo de referência.",
+      "conformanceLink": "Modelo de conformidade",
+      "pagesTitle": "Páginas geradas",
+      "pagesBody": "Targets HTML construídos por agentes a partir dos documentos de exemplo. Ilustram consumo do Visual Spec, não conformidade em runtime nem um renderizador completo.",
+      "explorerTitle": "Explorador de referências",
+      "explorerBody": "Construa descritores e localizadores de referência visual para sites, imagens, vídeo, Figma, PDFs e mais. Não busca nem verifica fontes externas.",
+      "openExplorer": "Abrir explorador",
+      "adaptersHeading": "Adaptadores",
+      "adaptersCallout": "Nenhum entregue nesta release.",
+      "adaptersCalloutBody": "Mapeamentos de plataforma no catálogo de componentes são orientação de design informativa. Visual Spec não declara adaptadores React, Swift, Unity ou Android implementados.",
+      "adaptersP1": "Um adaptador deve começar com uma declaração de capacidades: versões do formato, perfis, tipos de componente, modos de layout, recursos de motion e contratos de acessibilidade que suporta. Capacidades obrigatórias não suportadas devem ser reportadas, não omitidas em silêncio. Aproximações precisam de registro inspecionável do que mudou.",
+      "adaptersP2Prefix": "Leia o",
+      "adapterGuide": "guia de adaptadores",
+      "adaptersP2Mid": "e proponha mudanças normativas de interoperabilidade pelo",
+      "rfcProcess": "processo de RFC",
+      "adaptersP2Suffix": "."
+    },
+    "rfcs": {
+      "title": "RFCs",
+      "description": "Processo Request for Comments para evoluir o Visual Spec, a representação visual intermediária aberta.",
+      "eyebrow": "Processo",
+      "heading": "RFCs",
+      "lead": "Mudanças normativas, novos perfis e compromissos de compatibilidade passam por RFC. Correções editoriais de documentação podem usar pull request normal.",
+      "emptyTitle": "Nenhuma RFC publicada ainda.",
+      "emptyBody": "Proponha mudanças conforme CONTRIBUTING e GOVERNANCE do repositório. RFCs aceitas aparecerão aqui com id, título e status.",
+      "statusLabel": "Status:",
+      "detailEyebrow": "RFC",
+      "statusMeta": "status:",
+      "allRfcs": "← Todas as RFCs"
+    },
+    "reference": {
+      "title": "Referência de schema",
+      "description": "Referência de módulos JSON Schema 1.0 para Visual Spec, a representação visual intermediária aberta para intenção visual.",
+      "eyebrow": "JSON Schema 1.0",
+      "heading": "Referência",
+      "lead": "Comece pelo módulo que corresponde à sua pergunta, não por uma palavra-chave do JSON Schema. Cada página de módulo explica para que servem as definições, o que escrever e um exemplo mínimo. Abra “Restrições exatas” só quando precisar da visão do validador: tipos, padrões e limites numéricos. Requisitos normativos continuam na especificação.",
+      "specificationLink": "especificação",
+      "rootHeading": "Documento raiz",
+      "rawSchema": "Schema bruto:",
+      "moduleEyebrow": "Módulo",
+      "useWhen": "Use este módulo quando",
+      "keepInMind": "Tenha em mente.",
+      "readDefinitionTitle": "Como ler uma definição.",
+      "readDefinitionBody": "Os parágrafos dizem o que escrever e por quê. “Restrições exatas” abre as palavras-chave do schema (tipo, padrão, limites) para quem confere um validador. Uma amostra no fim de cada definição é o JSON mínimo que mostra a forma exigida. Valores como $ref dentro de uma amostra apontam para outra definição. Não são campos para copiar no documento.",
+      "smallestExample": "Menor exemplo",
+      "smallestExampleLead": "Somente campos obrigatórios, com valores placeholder. Substitua pela intenção real.",
+      "detailTitleSuffix": "{title} - Referência"
+    },
+    "schemaNode": {
+      "required": "obrigatório",
+      "exactConstraints": "Restrições exatas",
+      "allowedValues": "Valores permitidos"
+    },
+    "schemas": {
+      "title": "Schemas",
+      "description": "Baixe artefatos JSON Schema Visual Spec 1.0, regras semânticas e schemas de perfil. Id canônico: https://visualspec.dev/schema/1.0/schema.json",
+      "eyebrow": "Downloads",
+      "heading": "Schemas",
+      "lead": "Identificadores canônicos de schema ficam em https://visualspec.dev/schema/1.0/. Fixe URLs versionadas 1.0 nos builds. /schema/latest/ é cópia de descoberta de 1.0 e pode mudar.",
+      "validateCallout": "Valide localmente.",
+      "validateCalloutBody": "Após clonar o repositório: npm run validate -- <file>. Schemas resolvem dos arquivos empacotados; validadores não devem buscar referências em runtime.",
+      "coreArtifacts": "Artefatos principais",
+      "profileArtifacts": "Schemas de perfil",
+      "profileConstraints": "Restrições de perfil para {id}.",
+      "artifacts": [
+        [
+          "Schema raiz",
+          "/schema/1.0/schema.json",
+          "Schema de entrada para documentos"
+        ],
+        [
+          "Bundle autônomo",
+          "/schema/1.0/schema.bundle.json",
+          "Schema autocontido para validação offline"
+        ],
+        [
+          "Manifesto",
+          "/schema/1.0/manifest.json",
+          "Versão, módulos, perfis e códigos de regras semânticas"
+        ],
+        [
+          "Regras semânticas",
+          "/schema/1.0/semantic-rules.json",
+          "Regras além do JSON Schema"
+        ],
+        [
+          "Checksums",
+          "/schema/1.0/SHA256SUMS",
+          "Somas SHA-256 dos artefatos publicados"
+        ]
+      ]
+    },
+    "explorer": {
+      "title": "Explorador de referências",
+      "description": "Construa descritores de referência visual Visual Spec para sites, imagens, vídeo, Figma, PDFs e outras fontes de evidência.",
+      "eyebrow": "Localizadores",
+      "heading": "Explorador de referências",
+      "lead": "Monte um descritor de referência visual com kind, role, aspects e um localizador específico do kind. Nenhuma chamada de rede é feita.",
+      "builderNote": "Este construtor monta um descritor. Não busca nem verifica o recurso.",
+      "kind": "Kind",
+      "role": "Role",
+      "aspects": "Aspects (separados por vírgula)",
+      "uriOptional": "URI (opcional)",
+      "uriPlaceholder": "https://…",
+      "locator": "Localizador",
+      "descriptorJson": "JSON do descritor",
+      "locatorFields": {
+        "cssSelector": "Seletor CSS",
+        "viewportWidth": "Largura do viewport",
+        "viewportHeight": "Altura do viewport",
+        "regionX": "Região x",
+        "regionY": "Região y",
+        "regionWidth": "Largura da região",
+        "regionHeight": "Altura da região",
+        "startSeconds": "Início (segundos)",
+        "endSeconds": "Fim (segundos)",
+        "fileKey": "Chave do arquivo",
+        "nodeId": "Id do nó",
+        "page": "Página",
+        "slide": "Slide",
+        "section": "Seção",
+        "scene": "Cena",
+        "node": "Nó",
+        "camera": "Câmera"
+      }
+    },
+    "specification": {
+      "title": "Especificação 1.0",
+      "description": "Especificação normativa Visual Spec 1.0: a representação visual intermediária aberta (Visual IR) e contrato JSON Schema para intenção visual.",
+      "sidebarTitle": "Especificação 1.0",
+      "eyebrow": "Texto normativo",
+      "eyebrowChapter": "Especificação 1.0",
+      "unavailableTitle": "Especificação indisponível.",
+      "unavailableBody": "As fontes markdown em specification/1.0/ ainda não estão presentes neste build. Quando publicadas, esta página renderizará a visão geral.",
+      "pageUnavailableTitle": "Página indisponível.",
+      "pageUnavailableBody": "Fonte esperada em specification/1.0/{slug}.md.",
+      "chapterTitleSuffix": "{title} | Especificação 1.0",
+      "chapterDescription": "Capítulo {title} Visual Spec 1.0: regras normativas para a representação visual intermediária aberta (Visual IR)."
+    }
+  }
+} as const;

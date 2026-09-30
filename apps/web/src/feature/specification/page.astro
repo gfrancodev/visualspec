@@ -1,28 +1,30 @@
 ---
 import Base from '@app/layouts/Base.astro';
+import { t } from '@core/i18n';
 import { renderSpecFile, sidebarPages } from './lib/spec';
 
 const html = renderSpecFile('index.md');
 const pages = sidebarPages();
+const p = (key: Parameters<typeof t>[0]) => t(key);
 ---
-<Base title="Specification 1.0" description="Normative Visual Spec 1.0 specification: the open visual intermediate representation (Visual IR) and JSON Schema contract for visual intent." pageType="article">
+<Base title={p('pages.specification.title')} description={p('pages.specification.description')} pageType="article">
   <div class="container doc-layout">
-    <aside class="sidebar" aria-label="Specification navigation">
+    <aside class="sidebar" aria-label={t('aria.specNav')}>
       <div class="sidebar-group">
-        <h3>Specification 1.0</h3>
-        <a href="/specification/1.0/" class="active">Overview</a>
-        {pages.map((p) => <a href={p.href}>{p.label}</a>)}
+        <h3>{p('pages.specification.sidebarTitle')}</h3>
+        <a href="/specification/1.0/" class="active">{t('common.overview')}</a>
+        {pages.map((page) => <a href={page.href}>{page.label}</a>)}
       </div>
     </aside>
     <div>
       <header class="page-head" style="padding-top:0">
-        <div class="eyebrow">Normative text</div>
+        <div class="eyebrow">{p('pages.specification.eyebrow')}</div>
       </header>
       {html ? (
         <article class="prose" set:html={html}></article>
       ) : (
         <div class="callout">
-          <strong>Specification unavailable.</strong> The markdown sources under <code>specification/1.0/</code> are not present in this build yet. Once published, this page will render the overview.
+          <strong>{p('pages.specification.unavailableTitle')}</strong> {p('pages.specification.unavailableBody')}
         </div>
       )}
     </div>

@@ -6,14 +6,14 @@
   "type": "module",
   "packageManager": "pnpm@10.26.1",
   "scripts": {
-    "dev": "node scripts/build-schema.mjs && node scripts/sync-public.mjs && node scripts/sync-use-case-artifacts.mjs && node scripts/build-llm-index.mjs && pnpm --filter @visualspec/web dev -- --host 0.0.0.0",
+    "dev": "node scripts/build-schema.mjs && node scripts/sync-public.mjs && node scripts/sync-use-case-artifacts.mjs && node scripts/build-llm-index.mjs && pnpm --filter @visualspec/web dev",
     "build": "node scripts/build-schema.mjs && node scripts/sync-public.mjs && node scripts/sync-use-case-artifacts.mjs && node scripts/build-llm-index.mjs && pnpm --filter @visualspec/web build",
     "check": "pnpm --filter @visualspec/web check",
     "fmt": "pnpm --filter @visualspec/web fmt",
     "fmt:check": "pnpm --filter @visualspec/web fmt:check",
     "test": "node --experimental-strip-types --import ./tests/register-web-ts.mjs --test tests/*.test.mjs",
     "validate": "node packages/validator/cli.mjs",
-    "preview": "pnpm --filter @visualspec/web preview -- --host 0.0.0.0"
+    "preview": "pnpm --filter @visualspec/web preview"
   },
   "devDependencies": {
     "ajv": "8.20.0",

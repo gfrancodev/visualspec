@@ -52,7 +52,7 @@ function writeIndex(slug, entry) {
   if (kind === 'pdf') {
     writeFileSync(
       join(targetsRoot, slug, 'index.html'),
-      injectTransparentScrollbars(`<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>${title}</title><style>html,body{margin:0;height:100%;background:#eef1e8}iframe{display:block;width:100%;height:100%;min-height:100vh;border:0;background:#eef1e8}</style></head><body><iframe src="${asset}#toolbar=1" title="${title}"></iframe></body></html>\n`)
+      injectTransparentScrollbars(`<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>${title}</title><style>html,body{margin:0;height:100%;background:#eef1e8}embed{display:block;width:100%;height:100%;min-height:100vh;border:0;background:#eef1e8}</style></head><body><embed src="${asset}#toolbar=1&navpanes=0" type="application/pdf" title="${title}"/></body></html>\n`)
     );
     return;
   }
@@ -61,6 +61,14 @@ function writeIndex(slug, entry) {
     writeFileSync(
       join(targetsRoot, slug, 'index.html'),
       `<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>${title}</title><style>html,body{margin:0;min-height:100%;display:grid;place-items:center;background:#f7f8f3}img{width:min(100%,420px);height:auto}</style></head><body><img src="${asset}" alt="${title}"/></body></html>\n`
+    );
+    return;
+  }
+
+  if (kind === 'image') {
+    writeFileSync(
+      join(targetsRoot, slug, 'index.html'),
+      injectTransparentScrollbars(`<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>${title}</title><style>html,body{margin:0;height:100%;background:#111}img{width:100%;height:100%;object-fit:contain;display:block;background:#111}</style></head><body><img src="${asset}" alt="${title}"/></body></html>\n`)
     );
     return;
   }

@@ -1,6 +1,7 @@
 ---
 import Base from '@app/layouts/Base.astro';
 import { DocAside } from '@core';
+import { t } from '@core/i18n';
 import { loadComponents } from '../catalog';
 
 interface Props {
@@ -13,32 +14,33 @@ if (!component) {
   return Astro.redirect(`/404/?path=${encodeURIComponent(Astro.url.pathname)}`);
 }
 const mappings = component.mappings || {};
+const p = (key: Parameters<typeof t>[0], params?: Parameters<typeof t>[1]) => t(key, params);
 ---
-<Base title={`${component.title} - Component`} description={component.summary}>
+<Base title={p('pages.components.detailTitleSuffix', { title: component.title })} description={component.summary}>
   <div class="container doc-layout">
     <DocAside current="components" />
     <div>
     <header class="page-head">
-      <div class="eyebrow">Component · {component.kind}</div>
+      <div class="eyebrow">{p('pages.components.eyebrowDetail', { kind: component.kind })}</div>
       <h1>{component.title}</h1>
       <p>{component.summary}</p>
     </header>
 
     <div class="callout">
-      <strong>Informative mappings only.</strong> Platform examples below describe possible target primitives. This release does not ship adapters for React, Swift, Android or any other platform.
+      <strong>{p('pages.components.mappingsCallout')}</strong> {p('pages.components.mappingsCalloutBody')}
     </div>
 
     {component.anatomy && component.anatomy.length > 0 && (
       <section class="schema-section">
-        <h2>Anatomy</h2>
+        <h2>{p('pages.components.anatomy')}</h2>
         <div class="table-wrap">
           <table class="property-table">
-            <thead><tr><th>Part</th><th>Required</th><th>Description</th></tr></thead>
+            <thead><tr><th>{p('pages.components.part')}</th><th>{p('pages.components.required')}</th><th>{p('pages.components.descriptionCol')}</th></tr></thead>
             <tbody>
               {component.anatomy.map((part) => (
                 <tr>
                   <td><code>{part.name}</code></td>
-                  <td>{part.required ? 'yes' : 'no'}</td>
+                  <td>{part.required ? p('common.yes') : p('common.no')}</td>
                   <td>{part.description}</td>
                 </tr>
               ))}
@@ -50,40 +52,40 @@ const mappings = component.mappings || {};
 
     {component.states && component.states.length > 0 && (
       <section class="schema-section">
-        <h2>States</h2>
+        <h2>{p('pages.components.states')}</h2>
         <ul>{component.states.map((s) => <li>{typeof s === 'string' ? s : ((s as { name?: string }).name || JSON.stringify(s))}</li>)}</ul>
       </section>
     )}
 
     {component.keyboard && component.keyboard.length > 0 && (
       <section class="schema-section">
-        <h2>Keyboard</h2>
+        <h2>{p('pages.components.keyboard')}</h2>
         <ul>{component.keyboard.map((k) => <li>{typeof k === 'string' ? k : ((k as { keys?: string; description?: string }).keys ? `${(k as { keys?: string }).keys}: ${(k as { description?: string }).description || ''}` : JSON.stringify(k))}</li>)}</ul>
       </section>
     )}
 
     {component.accessibility && (
       <section class="schema-section">
-        <h2>Accessibility</h2>
+        <h2>{p('pages.components.accessibility')}</h2>
         <div class="prose"><p>{typeof component.accessibility === 'string' ? component.accessibility : JSON.stringify(component.accessibility, null, 2)}</p></div>
       </section>
     )}
 
     {component.motion && (
       <section class="schema-section">
-        <h2>Motion</h2>
+        <h2>{p('pages.components.motion')}</h2>
         <div class="prose"><p>{typeof component.motion === 'string' ? component.motion : JSON.stringify(component.motion, null, 2)}</p></div>
       </section>
     )}
 
     <section class="schema-section">
-      <h2>Platform mappings</h2>
+      <h2>{p('pages.components.platformMappings')}</h2>
       <div class="grid-2">
         {['web', 'apple', 'android'].map((key) => (
           <div class="resource-card">
             <div class="mono">{key}</div>
             <h3 style="font-size:18px;margin-top:10px">{key}</h3>
-            <p>{mappings[key] || 'No mapping recorded.'}</p>
+            <p>{mappings[key] || p('pages.components.noMapping')}</p>
           </div>
         ))}
       </div>

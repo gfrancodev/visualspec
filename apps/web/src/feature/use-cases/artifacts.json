@@ -13,9 +13,9 @@
   },
   {
     "slug": "image",
-    "kind": "model",
+    "kind": "image",
     "preview": "/targets/image/index.html",
-    "download": "/targets/image/cup-study.glb"
+    "download": "/targets/image/cup-still.jpg"
   },
   {
     "slug": "illustration",

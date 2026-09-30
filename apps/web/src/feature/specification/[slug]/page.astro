@@ -1,5 +1,6 @@
 ---
 import Base from '@app/layouts/Base.astro';
+import { t } from '@core/i18n';
 import { renderSpecFile, sidebarPages } from '../lib/spec';
 
 interface Props {
@@ -10,27 +11,32 @@ const { slug } = Astro.props;
 const html = renderSpecFile(`${slug}.md`);
 const title = slug.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
 const pages = sidebarPages();
+const p = (key: Parameters<typeof t>[0], params?: Parameters<typeof t>[1]) => t(key, params);
 ---
-<Base title={`${title} | Specification 1.0`} description={`Visual Spec 1.0 ${title.toLowerCase()} chapter: normative rules for the open visual intermediate representation (Visual IR).`} pageType="article">
+<Base
+  title={p('pages.specification.chapterTitleSuffix', { title })}
+  description={p('pages.specification.chapterDescription', { title: title.toLowerCase() })}
+  pageType="article"
+>
   <div class="container doc-layout">
-    <aside class="sidebar" aria-label="Specification navigation">
+    <aside class="sidebar" aria-label={t('aria.specNav')}>
       <div class="sidebar-group">
-        <h3>Specification 1.0</h3>
-        <a href="/specification/1.0/">Overview</a>
-        {pages.map((p) => (
-          <a href={p.href} class:list={[{ active: p.name === slug }]}>{p.label}</a>
+        <h3>{p('pages.specification.sidebarTitle')}</h3>
+        <a href="/specification/1.0/">{t('common.overview')}</a>
+        {pages.map((page) => (
+          <a href={page.href} class:list={[{ active: page.name === slug }]}>{page.label}</a>
         ))}
       </div>
     </aside>
     <div>
       <header class="page-head" style="padding-top:0">
-        <div class="eyebrow">Specification 1.0</div>
+        <div class="eyebrow">{p('pages.specification.eyebrowChapter')}</div>
       </header>
       {html ? (
         <article class="prose" set:html={html}></article>
       ) : (
         <div class="callout">
-          <strong>Page unavailable.</strong> Expected source at <code>specification/1.0/{slug}.md</code>.
+          <strong>{p('pages.specification.pageUnavailableTitle')}</strong> {p('pages.specification.pageUnavailableBody', { slug })}
         </div>
       )}
     </div>

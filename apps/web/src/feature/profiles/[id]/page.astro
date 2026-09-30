@@ -1,5 +1,6 @@
 ---
 import Base from '@app/layouts/Base.astro';
+import { t } from '@core/i18n';
 import { loadProfiles } from '../catalog';
 
 interface Props {
@@ -12,24 +13,29 @@ if (!profile) {
   return Astro.redirect(`/404/?path=${encodeURIComponent(Astro.url.pathname)}`);
 }
 const exampleName = profile.example.replace(/\.json$/, '');
+const p = (key: Parameters<typeof t>[0], params?: Parameters<typeof t>[1]) => t(key, params);
 ---
-<Base title={`${profile.title} | Profile`} description={`${profile.description} Visual Spec profile for the open visual intermediate representation.`} pageType="article">
+<Base
+  title={p('pages.profiles.detailTitleSuffix', { title: profile.title })}
+  description={p('pages.profiles.detailDescription', { description: profile.description })}
+  pageType="article"
+>
   <div class="container">
     <header class="page-head">
-      <div class="eyebrow">Profile · {profile.id}</div>
+      <div class="eyebrow">{p('pages.profiles.eyebrowDetail', { id: profile.id })}</div>
       <h1>{profile.title}</h1>
       <p>{profile.description}</p>
     </header>
 
     <section class="schema-section">
-      <h2>Typical uses</h2>
+      <h2>{p('pages.profiles.typicalUses')}</h2>
       <ul>
         {profile.uses.map((use) => <li>{use}</li>)}
       </ul>
     </section>
 
     <section class="schema-section">
-      <h2>Related modules</h2>
+      <h2>{p('pages.profiles.relatedModules')}</h2>
       <div class="filter-bar">
         {profile.modules.map((m) => (
           <a class="chip" href={`/reference/${m}/`}>{m}</a>
@@ -38,10 +44,10 @@ const exampleName = profile.example.replace(/\.json$/, '');
     </section>
 
     <section class="schema-section">
-      <h2>Artifacts</h2>
+      <h2>{p('pages.profiles.artifacts')}</h2>
       <div class="hero-actions">
-        <a class="button small" href={`/use-cases/${exampleName}/`}>View use case</a>
-        <a class="button secondary small" href={`/schema/1.0/profiles/${profile.id}.schema.json`}>Profile schema</a>
+        <a class="button small" href={`/use-cases/${exampleName}/`}>{p('pages.profiles.viewUseCase')}</a>
+        <a class="button secondary small" href={`/schema/1.0/profiles/${profile.id}.schema.json`}>{p('pages.profiles.profileSchema')}</a>
       </div>
     </section>
   </div>

@@ -1,10 +1,14 @@
 ---
 import { Header, Footer } from '@core';
+import { DEFAULT_LOCALE, htmlLangAttr, t } from '@core/i18n';
+import type { Locale } from '@core/i18n';
 import { SITE, canonicalUrl, documentTitle, siteJsonLd } from '@core/seo';
 import '@core/styles/global.css';
 import '@fontsource-variable/manrope';
 import '@fontsource-variable/newsreader';
 import '@fontsource/ibm-plex-mono/400.css';
+import Analytics from '@vercel/analytics/astro';
+import SpeedInsights from '@vercel/speed-insights/astro';
 
 interface Props {
   title: string;
@@ -21,6 +25,8 @@ const {
   pageType = 'website'
 } = Astro.props;
 const path = Astro.url.pathname;
+const locale: Locale = Astro.locals.locale ?? DEFAULT_LOCALE;
+const htmlLang = htmlLangAttr(locale);
 const canonical = canonicalUrl(path);
 const fullTitle = documentTitle(title);
 const jsonLd = siteJsonLd({
@@ -31,7 +37,7 @@ const jsonLd = siteJsonLd({
 });
 ---
 <!doctype html>
-<html lang="en">
+<html lang={htmlLang}>
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -48,7 +54,7 @@ const jsonLd = siteJsonLd({
   <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
   <link rel="manifest" href="/site.webmanifest"/>
   <link rel="sitemap" type="application/xml" href="/sitemap.xml"/>
-  <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM index"/>
+  <link rel="alternate" type="text/plain" href="/llms.txt" title={t('meta.llmIndexTitle', undefined, locale)}/>
   <link rel="license" href={SITE.license}/>
   <meta name="theme-color" content="#f7f8f3" media="(prefers-color-scheme: light)"/>
   <meta name="theme-color" content="#20231e" media="(prefers-color-scheme: dark)"/>
@@ -86,9 +92,11 @@ const jsonLd = siteJsonLd({
   </script>
 </head>
 <body class:list={[{ wide }]}>
-  <a class="skip-link" href="#main">Skip to content</a>
-  <Header path={path} />
+  <a class="skip-link" href="#main">{t('aria.skipToContent', undefined, locale)}</a>
+  <Header path={path} locale={locale} />
   <main id="main"><slot/></main>
-  <Footer />
+  <Footer locale={locale} />
+  <Analytics />
+  <SpeedInsights />
 </body>
 </html>

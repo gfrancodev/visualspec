@@ -1,6 +1,7 @@
 ---
 import Base from '@app/layouts/Base.astro';
 import { renderMarkdown } from '@core';
+import { t } from '@core/i18n';
 import { loadDocs } from './lib/docs';
 
 const docs = loadDocs();
@@ -11,13 +12,13 @@ const html = renderMarkdown(doc.body);
 <Base title={doc.title} description={doc.description} pageType="article">
   <div class="container">
     <header class="page-head">
-      <div class="eyebrow">Learn</div>
+      <div class="eyebrow">{t('nav.learn')}</div>
       <h1>{doc.title}</h1>
       <p>{doc.description}</p>
     </header>
     <article class="prose" set:html={html}></article>
-    <nav class="doc-footer-nav doc-footer-nav--end" aria-label="Continue learning">
-      <a href="/learn/quick-start/">Next: Quick start →</a>
+    <nav class="doc-footer-nav doc-footer-nav--end" aria-label={t('aria.continueLearning')}>
+      <a href="/learn/quick-start/">{t('pages.learn.whyNext')}</a>
     </nav>
   </div>
 </Base>

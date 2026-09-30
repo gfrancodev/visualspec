@@ -1,13 +1,16 @@
 ---
 import Base from '@app/layouts/Base.astro';
+import { t } from '@core/i18n';
 import ReferenceExplorer from './explorer';
+
+const p = (key: Parameters<typeof t>[0]) => t(key);
 ---
-<Base title="Reference explorer" description="Build Visual Spec visual-reference descriptors for websites, images, video, Figma, PDFs, and other evidence sources.">
+<Base title={p('pages.explorer.title')} description={p('pages.explorer.description')}>
   <div class="container">
     <header class="page-head">
-      <div class="eyebrow">Locators</div>
-      <h1>Reference explorer</h1>
-      <p>Construct a visual-reference descriptor with kind, role, aspects and a kind-specific locator. No network calls are made.</p>
+      <div class="eyebrow">{p('pages.explorer.eyebrow')}</div>
+      <h1>{p('pages.explorer.heading')}</h1>
+      <p>{p('pages.explorer.lead')}</p>
     </header>
     <ReferenceExplorer client:load />
   </div>

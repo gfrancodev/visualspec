@@ -277,7 +277,7 @@
   position: relative;
   max-width: 100%;
 }
-.code-block pre {
+.code-block pre:not(.spec-code) {
   font: 11px/1.9 var(--mono);
   padding: 25px;
   background: var(--code);
@@ -580,29 +580,37 @@
 .property-table code {
   white-space: normal;
 }
-.prose .spec-window--doc {
+.prose .spec-window--doc,
+.code-block .spec-window--doc {
   margin: 28px 0 32px;
   max-width: 100%;
   background: #fff;
   color: var(--ink);
 }
-.prose .spec-window--doc .window-bar {
+.prose .spec-window--doc .window-bar,
+.code-block .spec-window--doc .window-bar {
   background: #fbfcf8;
   color: var(--muted);
 }
-.prose .spec-window--doc .spec-code {
+.prose .spec-window--doc .spec-code,
+.code-block .spec-window--doc .spec-code {
   background: #fff;
   color: #6f756b;
   border-radius: 0;
   line-height: 2;
 }
-.prose .spec-window--doc .spec-code .key {
+.prose .spec-window--doc .spec-code .key,
+.code-block .spec-window--doc .spec-code .key {
   color: #242c20;
 }
-.prose .spec-window--doc .spec-code .value {
+.prose .spec-window--doc .spec-code .value,
+.code-block .spec-window--doc .spec-code .value {
   color: var(--accent-dark);
 }
 .code-block .spec-window {
+  margin: 0;
+}
+.code-block .spec-window--doc {
   margin: 0;
 }
 .code-block .copy-button {

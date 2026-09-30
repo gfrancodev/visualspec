@@ -1,23 +1,25 @@
 ---
 import Base from '@app/layouts/Base.astro';
 import { DocAside } from '@core';
+import { t } from '@core/i18n';
 import { loadRfcs } from './catalog';
 
 const rfcs = loadRfcs();
+const p = (key: Parameters<typeof t>[0]) => t(key);
 ---
-<Base title="RFCs" description="Request for Comments process for evolving Visual Spec, the open visual intermediate representation.">
+<Base title={p('pages.rfcs.title')} description={p('pages.rfcs.description')}>
   <div class="container doc-layout">
     <DocAside current="rfcs" />
     <div>
     <header class="page-head">
-      <div class="eyebrow">Process</div>
-      <h1>RFCs</h1>
-      <p>Normative changes, new profiles and compatibility commitments go through an RFC. Editorial documentation fixes can use a normal pull request.</p>
+      <div class="eyebrow">{p('pages.rfcs.eyebrow')}</div>
+      <h1>{p('pages.rfcs.heading')}</h1>
+      <p>{p('pages.rfcs.lead')}</p>
     </header>
 
     {rfcs.length === 0 ? (
       <div class="callout">
-        <strong>No RFCs published yet.</strong> Propose changes against the repository’s CONTRIBUTING and GOVERNANCE documents. Accepted RFCs will appear here with an id, title and status.
+        <strong>{p('pages.rfcs.emptyTitle')}</strong> {p('pages.rfcs.emptyBody')}
       </div>
     ) : (
       <div class="index-list">
@@ -25,7 +27,7 @@ const rfcs = loadRfcs();
           <a class="index-row" href={`/rfcs/${rfc.slug}/`}>
             <div>
               <div class="row-title">{rfc.title}</div>
-              <p>Status: {rfc.status}</p>
+              <p>{p('pages.rfcs.statusLabel')} {rfc.status}</p>
             </div>
             <span class="mono">{rfc.id}</span>
           </a>
