@@ -21,12 +21,12 @@ jobs:
 
   deploy:
     needs: verify
-    if: ${{ secrets.VERCEL_TOKEN != '' }}
     runs-on: ubuntu-latest
     env:
       VERCEL_ORG_ID: team_XxTuz5WdrNWDsF7r4asFdVTb
       VERCEL_PROJECT_ID: prj_7hc0nVwlm8buhMC88BVRgt7ejWPh
       VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ENV: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'production' || 'preview' }}
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -36,9 +36,14 @@ jobs:
           cache: pnpm
       - run: pnpm add --global vercel
       - name: Pull Vercel project
-        run: vercel pull --yes --environment=${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'production' || 'preview' }} --token="$VERCEL_TOKEN"
+        run: vercel pull --yes --environment="$VERCEL_ENV" --token="$VERCEL_TOKEN"
       - name: Build
-        run: vercel build ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && '--prod' || '' }} --token="$VERCEL_TOKEN"
+        run: |
+          if [ "$VERCEL_ENV" = production ]; then
+            vercel build --prod --token="$VERCEL_TOKEN"
+          else
+            vercel build --token="$VERCEL_TOKEN"
+          fi
       - name: Deploy preview
         if: github.event_name == 'pull_request'
         run: vercel deploy --prebuilt --token="$VERCEL_TOKEN"
