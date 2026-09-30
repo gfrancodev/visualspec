@@ -7,7 +7,7 @@ const profileFiles = existsSync(profilesSchemaDir)
   ? readdirSync(profilesSchemaDir).filter((n) => n.endsWith('.schema.json')).sort()
   : [];
 ---
-<Base title="Schemas" description="Download Visual Spec 1.0 JSON Schema artifacts.">
+<Base title="Schemas" description="Download Visual Spec 1.0 JSON Schema artifacts, semantic rules, and profile schemas. Canonical id: https://visualspec.dev/schema/1.0/schema.json">
   <div class="container doc-layout">
     <DocAside current="schemas" />
     <div>

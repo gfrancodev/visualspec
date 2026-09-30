@@ -40,6 +40,18 @@ describe('core/markdown', () => {
   });
 });
 
+describe('seo', () => {
+  it('normalizes canonical paths', async () => {
+    const { canonicalPath, documentTitle, SITE } = await import('../apps/web/src/core/seo.ts');
+    assert.equal(canonicalPath('/learn'), '/learn/');
+    assert.equal(canonicalPath('/learn/'), '/learn/');
+    assert.equal(canonicalPath('/'), '/');
+    assert.equal(canonicalPath('/schema/1.0/schema.json'), '/schema/1.0/schema.json');
+    assert.match(documentTitle(SITE.name), /Visual IR/);
+    assert.equal(documentTitle('Learn'), 'Learn | Visual Spec');
+  });
+});
+
 describe('feature/use-cases catalog', () => {
   it('loads a single catalog of examples, artifacts and targets', () => {
     const useCases = listUseCases();

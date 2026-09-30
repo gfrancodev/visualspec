@@ -14,6 +14,45 @@
     { "source": "/generated", "destination": "/use-cases/", "permanent": true },
     { "source": "/generated/", "destination": "/use-cases/", "permanent": true },
     { "source": "/generated/:slug", "destination": "/use-cases/:slug/", "permanent": true },
-    { "source": "/generated/:slug/", "destination": "/use-cases/:slug/", "permanent": true }
+    { "source": "/generated/:slug/", "destination": "/use-cases/:slug/", "permanent": true },
+    { "source": "/.well-known/llms.txt", "destination": "/llms.txt", "permanent": false },
+    { "source": "/.well-known/llms-full.txt", "destination": "/llms-full.txt", "permanent": false }
+  ],
+  "headers": [
+    {
+      "source": "/schema/:path*",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Cache-Control", "value": "public, max-age=3600" }
+      ]
+    },
+    {
+      "source": "/examples/:path*",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "*" }
+      ]
+    },
+    {
+      "source": "/llms.txt",
+      "headers": [
+        { "key": "Content-Type", "value": "text/plain; charset=utf-8" },
+        { "key": "Access-Control-Allow-Origin", "value": "*" }
+      ]
+    },
+    {
+      "source": "/llms-full.txt",
+      "headers": [
+        { "key": "Content-Type", "value": "text/plain; charset=utf-8" },
+        { "key": "Access-Control-Allow-Origin", "value": "*" }
+      ]
+    },
+    {
+      "source": "/ai.txt",
+      "headers": [
+        { "key": "Content-Type", "value": "text/plain; charset=utf-8" },
+        { "key": "Access-Control-Allow-Origin", "value": "*" }
+      ]
+    }
   ]
 }

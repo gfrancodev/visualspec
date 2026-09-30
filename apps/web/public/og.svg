@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Visual Spec</title>
+  <desc id="desc">Open visual intermediate representation for visual intent</desc>
+  <rect width="1200" height="630" fill="#20231e"/>
+  <rect x="72" y="72" width="96" height="96" rx="22" fill="#161a14"/>
+  <g transform="translate(84 84)" fill="none" stroke="#d9ed94" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+    <path d="m14 19 18 29 18-29M14 19h36M22 19l10 16 10-16"/>
+  </g>
+  <text x="72" y="280" fill="#f3f6ee" font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="88" font-weight="600" letter-spacing="-2">visualspec<tspan fill="#d9ed94">.</tspan></text>
+  <text x="72" y="360" fill="#d9ed94" font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="34" font-weight="500">Open visual intermediate representation</text>
+  <text x="72" y="410" fill="#c5cbb8" font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="28">A JSON Schema contract for visual intent</text>
+  <text x="72" y="548" fill="#8b927f" font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="22" letter-spacing="2">VISUALSPEC.DEV</text>
+</svg>

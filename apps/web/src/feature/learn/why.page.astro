@@ -8,7 +8,7 @@ const doc = docs.find((d) => d.slug === 'why');
 if (!doc) throw new Error('docs.json is missing the why entry');
 const html = renderMarkdown(doc.body);
 ---
-<Base title={doc.title} description={doc.description}>
+<Base title={doc.title} description={doc.description} pageType="article">
   <div class="container">
     <header class="page-head">
       <div class="eyebrow">Learn</div>

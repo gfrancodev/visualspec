@@ -1,0 +1,5 @@
+# Visual Spec
+# https://visualspec.dev/llms.txt
+
+User-Agent: *
+Allow: /

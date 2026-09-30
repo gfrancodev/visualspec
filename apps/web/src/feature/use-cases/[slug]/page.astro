@@ -25,8 +25,9 @@ const openLabel =
         : 'Open artifact';
 ---
 <Base
-  title={`${item.title} - Use Case`}
-  description={`Visual Spec document and agent implementation: ${item.title}.`}
+  title={`${item.title} | Use case`}
+  description={`Visual Spec use case (${item.profiles.join(', ')}): ${item.title}.`}
+  pageType="article"
 >
   <div class="container">
     <header class="page-head">

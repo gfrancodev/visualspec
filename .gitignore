@@ -11,5 +11,7 @@ apps/web/public/schema/
 apps/web/public/examples/
 apps/web/public/registries/
 apps/web/public/specification/
+apps/web/public/llms.txt
+apps/web/public/llms-full.txt
 
 .vercel

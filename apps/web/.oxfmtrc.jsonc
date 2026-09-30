@@ -10,6 +10,8 @@
     "public/registries/**",
     "public/specification/**",
     "public/targets/**",
+    "public/llms.txt",
+    "public/llms-full.txt",
     "artifacts/**",
     "**/*.astro",
   ],

@@ -1,5 +1,6 @@
 ---
 import { Header, Footer } from '@core';
+import { SITE, canonicalUrl, documentTitle, siteJsonLd } from '@core/seo';
 import '@core/styles/global.css';
 import '@fontsource-variable/manrope';
 import '@fontsource-variable/newsreader';
@@ -9,28 +10,66 @@ interface Props {
   title: string;
   description?: string;
   wide?: boolean;
+  noindex?: boolean;
+  pageType?: 'website' | 'article';
 }
 const {
   title,
-  description = 'A machine-readable contract for visual intent. An open specification for how things look, move, behave and render.',
-  wide = false
+  description = SITE.description,
+  wide = false,
+  noindex = false,
+  pageType = 'website'
 } = Astro.props;
 const path = Astro.url.pathname;
+const canonical = canonicalUrl(path);
+const fullTitle = documentTitle(title);
+const jsonLd = siteJsonLd({
+  title: fullTitle,
+  description,
+  url: canonical,
+  pageType
+});
 ---
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{fullTitle}</title>
   <meta name="description" content={description}/>
-  <meta name="theme-color" content="#f7f8f3"/>
+  <meta name="author" content={SITE.author}/>
+  <meta name="creator" content={SITE.author}/>
+  {noindex
+    ? <meta name="robots" content="noindex, follow"/>
+    : <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"/>}
+  <meta name="googlebot" content={noindex ? 'noindex, follow' : 'index, follow'}/>
+  <link rel="canonical" href={canonical}/>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
-  <link rel="canonical" href={new URL(path, 'https://visualspec.dev')}/>
-  <meta property="og:title" content={`${title} - Visual Spec`}/>
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+  <link rel="manifest" href="/site.webmanifest"/>
+  <link rel="sitemap" type="application/xml" href="/sitemap.xml"/>
+  <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM index"/>
+  <link rel="license" href={SITE.license}/>
+  <meta name="theme-color" content="#f7f8f3" media="(prefers-color-scheme: light)"/>
+  <meta name="theme-color" content="#20231e" media="(prefers-color-scheme: dark)"/>
+  <meta name="color-scheme" content="light dark"/>
+  <meta name="application-name" content={SITE.name}/>
+  <meta property="og:site_name" content={SITE.name}/>
+  <meta property="og:locale" content={SITE.locale}/>
+  <meta property="og:title" content={fullTitle}/>
   <meta property="og:description" content={description}/>
-  <meta property="og:type" content="website"/>
-  <meta property="og:url" content={new URL(path, 'https://visualspec.dev')}/>
-  <title>{title === 'Visual Spec' ? 'Visual Spec - A contract for visual intent' : `${title} - Visual Spec`}</title>
+  <meta property="og:type" content={pageType === 'article' ? 'article' : 'website'}/>
+  <meta property="og:url" content={canonical}/>
+  <meta property="og:image" content={SITE.ogImage}/>
+  <meta property="og:image:alt" content={SITE.ogImageAlt}/>
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content={fullTitle}/>
+  <meta name="twitter:description" content={description}/>
+  <meta name="twitter:image" content={SITE.ogImage}/>
+  <meta name="twitter:image:alt" content={SITE.ogImageAlt}/>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd).replace(/</g, '\\u003c')} />
   <script is:inline>
     (function () {
       function resolve(stored) {

@@ -8,6 +8,7 @@ interface Props {
 const requested = Astro.props.path ?? Astro.url.searchParams.get('path');
 const path = requested && requested.startsWith('/') ? requested : Astro.url.pathname;
 Astro.response.status = 404;
+Astro.response.headers.set('X-Robots-Tag', 'noindex, follow');
 
 const suggestions = [
   { href: '/use-cases/', label: 'Use Cases' },
@@ -23,7 +24,7 @@ if (
   typoHints.push({ href: '/use-cases/', text: 'Browse use cases' });
 }
 ---
-<Base title="Page not found" description="The page you requested is not part of Visual Spec.">
+<Base title="Page not found" description="The page you requested is not part of Visual Spec." noindex={true}>
   <section class="not-found container">
     <div class="eyebrow">Outside the specification</div>
     <h1>404<span class="serif">.</span></h1>

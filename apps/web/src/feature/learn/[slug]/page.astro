@@ -18,7 +18,7 @@ const html = renderMarkdown(doc.body);
 const prev = index > 0 ? docs[index - 1] : null;
 const next = index < docs.length - 1 ? docs[index + 1] : null;
 ---
-<Base title={doc.title} description={doc.description}>
+<Base title={doc.title} description={doc.description} pageType="article">
   <div class="container doc-layout">
     <aside class="sidebar" aria-label="Learn navigation">
       <div class="sidebar-group">

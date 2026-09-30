@@ -34,6 +34,8 @@ This repository publishes that contract: the **JSON Schema** distribution, **sem
 
 **Schema id:** [https://visualspec.dev/schema/1.0/schema.json](https://visualspec.dev/schema/1.0/schema.json)  
 **Schema files:** [packages/schema/schema/1.0/schema.json](./packages/schema/schema/1.0/schema.json)  
+**Site:** [https://visualspec.dev](https://visualspec.dev)  
+**LLM index:** [https://visualspec.dev/llms.txt](https://visualspec.dev/llms.txt)  
 **Document format:** visualSpec 1.0 · **Release:** 1.0.0-rc.1  
 **Maintainer:** [Gustavo Franco](https://github.com/gfrancodev)
 

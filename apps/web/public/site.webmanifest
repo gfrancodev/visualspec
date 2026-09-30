@@ -1,0 +1,24 @@
+{
+  "name": "Visual Spec",
+  "short_name": "visualspec",
+  "description": "Open visual intermediate representation (Visual IR): a JSON Schema contract for visual intent.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "browser",
+  "lang": "en",
+  "background_color": "#f7f8f3",
+  "theme_color": "#20231e",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any",
+      "purpose": "any"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "type": "image/png",
+      "sizes": "180x180"
+    }
+  ]
+}

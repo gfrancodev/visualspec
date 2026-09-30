@@ -11,7 +11,7 @@ const html = renderSpecFile(`${slug}.md`);
 const title = slug.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
 const pages = sidebarPages();
 ---
-<Base title={`${title} - Specification 1.0`} description={`Visual Spec 1.0: ${title}.`}>
+<Base title={`${title} | Specification 1.0`} description={`Visual Spec 1.0 ${title.toLowerCase()} chapter: normative rules for the open visual intermediate representation (Visual IR).`} pageType="article">
   <div class="container doc-layout">
     <aside class="sidebar" aria-label="Specification navigation">
       <div class="sidebar-group">
