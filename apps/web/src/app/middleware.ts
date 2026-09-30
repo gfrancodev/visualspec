@@ -1,17 +1,13 @@
 import { hasFileExtension, isInternalPath } from "@astrojs/internal-helpers/path";
 import { defineMiddleware } from "astro:middleware";
 import { resetRequestLocale, setRequestLocale } from "@core/i18n/requestLocale";
-import { isLocale, LOCALE_COOKIE, resolveLocale } from "@core/i18n/resolve";
+import { resolveLocale } from "@core/i18n/resolve";
 
 export const onRequest = defineMiddleware(async (context, next) => {
-  const cookieValue = context.cookies.get(LOCALE_COOKIE)?.value;
-  const locale =
-    cookieValue && isLocale(cookieValue)
-      ? cookieValue
-      : resolveLocale(
-          context.request.headers.get("cookie"),
-          context.request.headers.get("accept-language"),
-        );
+  const locale = resolveLocale(
+    context.request.headers.get("cookie"),
+    context.request.headers.get("accept-language"),
+  );
   context.locals.locale = locale;
   setRequestLocale(locale);
 

@@ -22,6 +22,11 @@ const shortByLocale: Record<Locale, string> = {
   'pt-BR': 'PT',
   es: 'ES',
 };
+const ariaLabelByLocale: Record<Locale, string> = {
+  en: `${t('aria.language', undefined, 'en')}: ${t('chrome.langEn', undefined, 'en')}`,
+  'pt-BR': `${t('aria.language', undefined, 'pt-BR')}: ${t('chrome.langPtBr', undefined, 'pt-BR')}`,
+  es: `${t('aria.language', undefined, 'es')}: ${t('chrome.langEs', undefined, 'es')}`,
+};
 const listId = 'lang-switch-listbox';
 const triggerId = 'lang-switch-trigger';
 ---
@@ -56,7 +61,7 @@ const triggerId = 'lang-switch-trigger';
     ))}
   </ul>
 </div>
-<script is:inline define:vars={{ activeLocale, shortByLocale }}>
+<script is:inline define:vars={{ activeLocale, shortByLocale, ariaLabelByLocale }}>
   (function () {
     var root = document.getElementById('lang-switch');
     var trigger = document.getElementById('lang-switch-trigger');
@@ -65,19 +70,15 @@ const triggerId = 'lang-switch-trigger';
     var cookieName = 'vs_locale';
     var maxAge = 60 * 60 * 24 * 365;
 
-    function readCookieLocale() {
-      var parts = document.cookie.split(';');
-      for (var i = 0; i < parts.length; i++) {
-        var part = parts[i].trim();
-        if (part.indexOf(cookieName + '=') === 0) {
-          return decodeURIComponent(part.slice(cookieName.length + 1));
-        }
-      }
-      return null;
+    function isKnownLocale(loc) {
+      return loc && Object.prototype.hasOwnProperty.call(shortByLocale, loc);
     }
 
+    /** Match SSR: `<html lang>` and server `activeLocale`, not cookie alone (static builds ignore cookie). */
     function currentLocale() {
-      return readCookieLocale() || document.documentElement.getAttribute('lang') || activeLocale;
+      var lang = document.documentElement.getAttribute('lang');
+      if (isKnownLocale(lang)) return lang;
+      return activeLocale;
     }
 
     function optionEls() {
@@ -87,6 +88,9 @@ const triggerId = 'lang-switch-trigger';
     function syncUi() {
       var current = currentLocale();
       if (codeEl) codeEl.textContent = shortByLocale[current] || shortByLocale.en || 'EN';
+      if (trigger && ariaLabelByLocale[current]) {
+        trigger.setAttribute('aria-label', ariaLabelByLocale[current]);
+      }
       optionEls().forEach(function (opt) {
         var selected = opt.getAttribute('data-locale') === current;
         opt.setAttribute('aria-selected', selected ? 'true' : 'false');
