@@ -1,0 +1,38 @@
+---
+import Logo from './Logo.astro';
+import ThemeSwitch from './ThemeSwitch.astro';
+
+interface Props {
+  path: string;
+}
+const { path } = Astro.props;
+const nav = [
+  ['Learn', '/learn/'],
+  ['Specification', '/specification/1.0/'],
+  ['Reference', '/reference/'],
+  ['Use Cases', '/use-cases/']
+];
+---
+<header class="site-header">
+  <div class="nav-wrap">
+    <Logo />
+    <span class="version-tag">1.0 RC</span>
+    <nav class="desktop-nav" aria-label="Main navigation">
+      {nav.map(([label, href]) => (
+        <a href={href} aria-current={path.startsWith(href) ? 'page' : undefined}>{label}</a>
+      ))}
+    </nav>
+    <ThemeSwitch />
+    <a class="github-link" href="https://github.com/gfrancodev/visualspec" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+    <details class="mobile-nav">
+      <summary aria-label="Open navigation"><span></span><span></span></summary>
+      <nav aria-label="Mobile navigation">
+        {nav.map(([label, href]) => <a href={href}>{label}</a>)}
+        <a href="/schemas/">Schemas</a>
+        <a href="/reference-explorer/">Reference explorer</a>
+        <a href="/ecosystem/">Ecosystem</a>
+        <a href="/rfcs/">RFCs</a>
+      </nav>
+    </details>
+  </div>
+</header>

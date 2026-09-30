@@ -1,0 +1,36 @@
+---
+import Base from '@app/layouts/Base.astro';
+import { DocAside } from '@core';
+import { loadComponents } from './catalog';
+
+const components = loadComponents();
+---
+<Base title="Components" description="Semantic component ontology for Visual Spec.">
+  <div class="container doc-layout">
+    <DocAside current="components" />
+    <div>
+    <header class="page-head">
+      <div class="eyebrow">Ontology</div>
+      <h1>Components</h1>
+      <p>Reusable interface patterns defined by meaning and behavior-not by a framework component library.</p>
+    </header>
+    {components.length === 0 ? (
+      <div class="callout">
+        <strong>Registry pending.</strong> The component catalog at <code>content/components.json</code> is not available in this build yet.
+      </div>
+    ) : (
+      <div class="index-list">
+        {components.map((c) => (
+          <a class="index-row" href={`/components/${c.kind}/`}>
+            <div>
+              <div class="row-title">{c.title}</div>
+              <p>{c.summary}</p>
+            </div>
+            <span class="mono">{c.kind}</span>
+          </a>
+        ))}
+      </div>
+    )}
+    </div>
+  </div>
+</Base>

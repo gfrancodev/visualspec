@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 140" role="img" aria-labelledby="title desc">
+  <title id="title">Visual Spec</title>
+  <desc id="desc">Open visual intermediate representation for visual intent</desc>
+  <rect width="520" height="140" rx="28" fill="#20231e"/>
+  <g transform="translate(26 26)">
+    <rect width="88" height="88" rx="20" fill="#161a14"/>
+    <g transform="translate(12 12)">
+      <path d="m14 19 18 29 18-29M14 19h36M22 19l10 16 10-16" fill="none" stroke="#d9ed94" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+    </g>
+  </g>
+  <text x="138" y="84" fill="#f3f6ee" font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="42" font-weight="600" letter-spacing="-0.6">visualspec<tspan fill="#d9ed94">.</tspan></text>
+</svg>

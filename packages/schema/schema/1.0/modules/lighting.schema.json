@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://visualspec.dev/schema/1.0/modules/lighting.schema.json",
+  "title": "Lighting",
+  "description": "Physical and intent-oriented lights, environment illumination and shadows.",
+  "$defs": {
+    "light": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "type": {
+          "enum": [
+            "directional",
+            "point",
+            "spot",
+            "area",
+            "environment",
+            "natural"
+          ]
+        },
+        "color": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/appearance.schema.json#/$defs/color"
+        },
+        "intensity": {
+          "type": "number",
+          "minimum": 0
+        },
+        "intensityUnit": {
+          "enum": [
+            "normalized",
+            "lux",
+            "lumens",
+            "candela",
+            "watts"
+          ]
+        },
+        "temperature": {
+          "type": "number",
+          "minimum": 0
+        },
+        "position": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/vector3"
+        },
+        "direction": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/vector3"
+        },
+        "targetRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "softness": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "falloff": {
+          "enum": [
+            "none",
+            "linear",
+            "inverse-square"
+          ]
+        },
+        "range": {
+          "type": "number",
+          "minimum": 0
+        },
+        "coneAngle": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 180
+        },
+        "size": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/vector2"
+        },
+        "shadow": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "bias": {
+              "type": "number"
+            },
+            "softness": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "resolution": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        "assetRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "role": {
+          "enum": [
+            "key",
+            "fill",
+            "rim",
+            "background",
+            "ambient",
+            "practical"
+          ]
+        },
+        "extensions": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/extensions"
+        }
+      },
+      "required": [
+        "id",
+        "type"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$ref": "#/$defs/light"
+}

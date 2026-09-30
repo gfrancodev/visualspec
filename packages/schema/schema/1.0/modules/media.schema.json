@@ -1,0 +1,390 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://visualspec.dev/schema/1.0/modules/media.schema.json",
+  "title": "Media",
+  "description": "Image composition, illustration, audiovisual projects, captions and data visualization.",
+  "$defs": {
+    "composition": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "sceneRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "cameraRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "subjectRefs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+          },
+          "uniqueItems": true
+        },
+        "intent": {
+          "type": "string",
+          "minLength": 1
+        },
+        "style": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rules": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "rule-of-thirds",
+              "golden-ratio",
+              "symmetry",
+              "leading-lines",
+              "centered",
+              "diagonal",
+              "radial",
+              "free"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "subjectPlacement": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "entityRef": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+              },
+              "bounds": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/bounds"
+              },
+              "priority": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "entityRef",
+              "bounds"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "negativeSpace": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/bounds"
+          }
+        },
+        "balance": {
+          "enum": [
+            "symmetric",
+            "asymmetric",
+            "radial"
+          ]
+        },
+        "depth": {
+          "enum": [
+            "flat",
+            "layered",
+            "deep"
+          ]
+        },
+        "lightRefs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+          },
+          "uniqueItems": true
+        },
+        "effectRefs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+          },
+          "uniqueItems": true
+        },
+        "referenceRefs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+          },
+          "uniqueItems": true
+        },
+        "extensions": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/extensions"
+        }
+      },
+      "required": [
+        "id",
+        "sceneRef"
+      ],
+      "additionalProperties": false
+    },
+    "illustration": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "sceneRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "technique": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/taxonomy"
+        },
+        "style": {
+          "type": "string",
+          "minLength": 1
+        },
+        "palette": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/appearance.schema.json#/$defs/color"
+          }
+        },
+        "stroke": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/appearance.schema.json#/$defs/stroke"
+        },
+        "textureAssetRefs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+          },
+          "uniqueItems": true
+        },
+        "referenceRefs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+          },
+          "uniqueItems": true
+        },
+        "extensions": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/extensions"
+        }
+      },
+      "required": [
+        "id",
+        "sceneRef",
+        "technique"
+      ],
+      "additionalProperties": false
+    },
+    "caption": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "start": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/time"
+        },
+        "end": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/time"
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "speaker": {
+          "type": "string",
+          "minLength": 1
+        },
+        "language": {
+          "type": "string",
+          "minLength": 1
+        },
+        "position": {
+          "enum": [
+            "top",
+            "bottom",
+            "center"
+          ]
+        },
+        "nodeRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        }
+      },
+      "required": [
+        "id",
+        "start",
+        "end",
+        "text"
+      ],
+      "additionalProperties": false
+    },
+    "shot": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "sceneRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "cameraRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "start": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/time"
+        },
+        "duration": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/duration"
+        },
+        "intent": {
+          "type": "string",
+          "minLength": 1
+        },
+        "transition": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/timeline.schema.json#/$defs/transition"
+        }
+      },
+      "required": [
+        "id",
+        "sceneRef",
+        "start",
+        "duration"
+      ],
+      "additionalProperties": false
+    },
+    "video": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "timelineRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "shots": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/media.schema.json#/$defs/shot"
+          },
+          "minItems": 1
+        },
+        "captions": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/media.schema.json#/$defs/caption"
+          }
+        },
+        "subtitleAssetRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "audioAssetRefs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+          },
+          "uniqueItems": true
+        },
+        "effectRefs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+          },
+          "uniqueItems": true
+        },
+        "aspectRatio": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "extensions": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/extensions"
+        }
+      },
+      "required": [
+        "id",
+        "timelineRef",
+        "shots"
+      ],
+      "additionalProperties": false
+    },
+    "chart": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "enum": [
+            "bar",
+            "line",
+            "area",
+            "pie",
+            "donut",
+            "scatter",
+            "table"
+          ]
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "labels": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "series": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "values": {
+                "type": "array",
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "color": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/appearance.schema.json#/$defs/color"
+              }
+            },
+            "required": [
+              "name",
+              "values"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 1
+        },
+        "xLabel": {
+          "type": "string",
+          "minLength": 1
+        },
+        "yLabel": {
+          "type": "string",
+          "minLength": 1
+        },
+        "legend": {
+          "type": "boolean"
+        },
+        "showValues": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "type",
+        "series"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

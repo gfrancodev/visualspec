@@ -1,0 +1,158 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://visualspec.dev/schema/1.0/modules/camera.schema.json",
+  "title": "Camera",
+  "description": "Photographic and realtime cameras with shared optical and composition intent.",
+  "$defs": {
+    "camera": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "type": {
+          "enum": [
+            "perspective",
+            "orthographic",
+            "panoramic",
+            "photographic",
+            "realtime"
+          ]
+        },
+        "position": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/vector3"
+        },
+        "orientation": {
+          "anyOf": [
+            {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/vector3"
+            },
+            {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/quaternion"
+            }
+          ]
+        },
+        "targetRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "fieldOfView": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "exclusiveMaximum": 180
+        },
+        "focalLength": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "sensorWidth": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "aperture": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "near": {
+          "type": "number",
+          "minimum": 0
+        },
+        "far": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "orthographicSize": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "focus": {
+          "type": "object",
+          "properties": {
+            "targetRef": {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+            },
+            "distance": {
+              "type": "number",
+              "minimum": 0
+            },
+            "mode": {
+              "enum": [
+                "manual",
+                "auto",
+                "follow"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        "depthOfField": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "focusDistance": {
+              "type": "number",
+              "minimum": 0
+            },
+            "blur": {
+              "type": "number",
+              "minimum": 0
+            }
+          },
+          "additionalProperties": false
+        },
+        "framing": {
+          "enum": [
+            "extreme-close-up",
+            "close-up",
+            "medium",
+            "medium-wide",
+            "wide",
+            "extreme-wide",
+            "establishing",
+            "over-shoulder",
+            "point-of-view",
+            "custom"
+          ]
+        },
+        "shotType": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/taxonomy"
+        },
+        "movement": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/taxonomy"
+          },
+          "uniqueItems": true
+        },
+        "intent": {
+          "type": "string",
+          "minLength": 1
+        },
+        "actionRefs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+          },
+          "uniqueItems": true
+        },
+        "exposure": {
+          "type": "number"
+        },
+        "whiteBalance": {
+          "type": "number",
+          "minimum": 0
+        },
+        "extensions": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/extensions"
+        }
+      },
+      "required": [
+        "id",
+        "type"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$ref": "#/$defs/camera"
+}

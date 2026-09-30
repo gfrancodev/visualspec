@@ -1,0 +1,411 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://visualspec.dev/schema/1.0/modules/tokens.schema.json",
+  "title": "Tokens",
+  "description": "Typed design tokens, aliases, modes and provenance. Alias cycles require semantic validation.",
+  "$defs": {
+    "token": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "enum": [
+            "color",
+            "dimension",
+            "spacing",
+            "radius",
+            "border",
+            "shadow",
+            "typography",
+            "font",
+            "gradient",
+            "opacity",
+            "duration",
+            "easing",
+            "motion",
+            "material",
+            "breakpoint",
+            "z-index",
+            "number",
+            "string"
+          ]
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/jsonValue"
+              }
+            },
+            {
+              "type": "object",
+              "properties": {
+                "color": {
+                  "$ref": "https://visualspec.dev/schema/1.0/modules/appearance.schema.json#/$defs/color"
+                },
+                "width": {
+                  "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/size"
+                },
+                "style": {
+                  "enum": [
+                    "solid",
+                    "dashed",
+                    "dotted"
+                  ]
+                }
+              },
+              "required": [
+                "color",
+                "width"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/appearance.schema.json#/$defs/typography"
+            },
+            {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/appearance.schema.json#/$defs/gradient"
+            },
+            {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/appearance.schema.json#/$defs/shadow"
+            },
+            {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/appearance.schema.json#/$defs/color"
+            },
+            {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/motion.schema.json#/$defs/spring"
+            }
+          ]
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "modes": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/jsonValue"
+          }
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "provenance": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/provenance"
+        },
+        "extensions": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/extensions"
+        },
+        "$type": {
+          "enum": [
+            "color",
+            "dimension",
+            "spacing",
+            "radius",
+            "border",
+            "shadow",
+            "typography",
+            "font",
+            "gradient",
+            "opacity",
+            "duration",
+            "easing",
+            "motion",
+            "material",
+            "breakpoint",
+            "z-index",
+            "number",
+            "string"
+          ]
+        },
+        "$value": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/jsonValue"
+              }
+            },
+            {
+              "type": "object",
+              "properties": {
+                "color": {
+                  "$ref": "https://visualspec.dev/schema/1.0/modules/appearance.schema.json#/$defs/color"
+                },
+                "width": {
+                  "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/size"
+                },
+                "style": {
+                  "enum": [
+                    "solid",
+                    "dashed",
+                    "dotted"
+                  ]
+                }
+              },
+              "required": [
+                "color",
+                "width"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/appearance.schema.json#/$defs/typography"
+            },
+            {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/appearance.schema.json#/$defs/gradient"
+            },
+            {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/appearance.schema.json#/$defs/shadow"
+            },
+            {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/appearance.schema.json#/$defs/color"
+            },
+            {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/motion.schema.json#/$defs/spring"
+            }
+          ]
+        }
+      },
+      "required": [],
+      "additionalProperties": false,
+      "anyOf": [
+        {
+          "required": [
+            "value"
+          ]
+        },
+        {
+          "required": [
+            "$value"
+          ]
+        }
+      ]
+    },
+    "tokenRegistry": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^[A-Za-z_][A-Za-z0-9_.-]*$"
+      },
+      "additionalProperties": {
+        "$ref": "https://visualspec.dev/schema/1.0/modules/tokens.schema.json#/$defs/token"
+      }
+    },
+    "visualLanguage": {
+      "type": "object",
+      "properties": {
+        "personality": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "principles": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "palette": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/appearance.schema.json#/$defs/color"
+          }
+        },
+        "typography": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/appearance.schema.json#/$defs/typography"
+          }
+        },
+        "spacing": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/dimension"
+          }
+        },
+        "density": {
+          "enum": [
+            "compact",
+            "comfortable",
+            "spacious"
+          ]
+        },
+        "geometry": {
+          "type": "object",
+          "properties": {
+            "radius": {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/size"
+            },
+            "strokeWidth": {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/size"
+            },
+            "shape": {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/taxonomy"
+            }
+          },
+          "additionalProperties": false
+        },
+        "surface": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/appearance.schema.json#/$defs/appearance"
+        },
+        "iconography": {
+          "type": "object",
+          "properties": {
+            "style": {
+              "type": "string",
+              "minLength": 1
+            },
+            "strokeWidth": {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/size"
+            },
+            "assetRefs": {
+              "type": "array",
+              "items": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+              },
+              "uniqueItems": true
+            }
+          },
+          "additionalProperties": false
+        },
+        "photography": {
+          "type": "object",
+          "properties": {
+            "style": {
+              "type": "string",
+              "minLength": 1
+            },
+            "referenceRefs": {
+              "type": "array",
+              "items": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+              },
+              "uniqueItems": true
+            },
+            "composition": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        "illustration": {
+          "type": "object",
+          "properties": {
+            "style": {
+              "type": "string",
+              "minLength": 1
+            },
+            "referenceRefs": {
+              "type": "array",
+              "items": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+              },
+              "uniqueItems": true
+            },
+            "technique": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        "motion": {
+          "type": "object",
+          "properties": {
+            "duration": {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/duration"
+            },
+            "easing": {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/motion.schema.json#/$defs/easing"
+            },
+            "reducedMotion": {
+              "enum": [
+                "remove",
+                "reduce",
+                "substitute"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        "composition": {
+          "type": "object",
+          "properties": {
+            "principles": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "uniqueItems": true
+            },
+            "preferredLayout": {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/taxonomy"
+            }
+          },
+          "additionalProperties": false
+        },
+        "externalTokens": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "uri": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/uri"
+              },
+              "format": {
+                "enum": [
+                  "dtcg",
+                  "visualspec",
+                  "custom"
+                ]
+              },
+              "namespace": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "uri",
+              "format"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "extensions": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/extensions"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "$ref": "#/$defs/tokenRegistry"
+}

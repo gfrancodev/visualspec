@@ -1,0 +1,5 @@
+---
+import { SlugPage, getStaticPaths } from '@feature/use-cases';
+export { getStaticPaths };
+---
+<SlugPage slug={Astro.params.slug!} />

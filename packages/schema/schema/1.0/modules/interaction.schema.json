@@ -1,0 +1,416 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://visualspec.dev/schema/1.0/modules/interaction.schema.json",
+  "title": "Interaction",
+  "description": "Observable events, declarative visual actions and visual state graphs. No executable business logic.",
+  "$defs": {
+    "event": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "type": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/taxonomy"
+        },
+        "targetRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "modifiers": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "alt",
+              "ctrl",
+              "meta",
+              "shift"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "pointer": {
+          "enum": [
+            "mouse",
+            "touch",
+            "pen",
+            "any"
+          ]
+        },
+        "gesture": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "enum": [
+                "drag",
+                "swipe",
+                "pinch",
+                "rotate",
+                "long-press",
+                "tap"
+              ]
+            },
+            "axis": {
+              "enum": [
+                "x",
+                "y",
+                "both"
+              ]
+            },
+            "threshold": {
+              "type": "number",
+              "minimum": 0
+            },
+            "direction": {
+              "enum": [
+                "up",
+                "down",
+                "left",
+                "right",
+                "any"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        "markerRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "externalName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "actionRefs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+          },
+          "uniqueItems": true
+        },
+        "once": {
+          "type": "boolean"
+        },
+        "debounce": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/duration"
+        },
+        "extensions": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/extensions"
+        }
+      },
+      "required": [
+        "id",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "action": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "verb": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/taxonomy"
+        },
+        "targetRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "targetRefs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+          },
+          "uniqueItems": true
+        },
+        "intent": {
+          "type": "string",
+          "minLength": 1
+        },
+        "eventRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "stateRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "motionRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "boolean"
+                },
+                {
+                  "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/vector2"
+                },
+                {
+                  "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/vector3"
+                }
+              ]
+            },
+            "position": {
+              "anyOf": [
+                {
+                  "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/vector2"
+                },
+                {
+                  "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/vector3"
+                }
+              ]
+            },
+            "angle": {
+              "type": "number"
+            },
+            "scale": {
+              "type": "number"
+            },
+            "time": {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/time"
+            },
+            "destination": {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+            },
+            "materialRef": {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+            },
+            "duration": {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/duration"
+            },
+            "property": {
+              "type": "string",
+              "minLength": 1
+            },
+            "visible": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        },
+        "composition": {
+          "enum": [
+            "sequence",
+            "parallel",
+            "conditional",
+            "stagger"
+          ]
+        },
+        "actionRefs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+          },
+          "uniqueItems": true
+        },
+        "condition": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/condition"
+        },
+        "delay": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/duration"
+        },
+        "stagger": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/duration"
+        },
+        "onComplete": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+          },
+          "uniqueItems": true
+        },
+        "onCancel": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+          },
+          "uniqueItems": true
+        },
+        "extensions": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/extensions"
+        }
+      },
+      "required": [
+        "id",
+        "verb"
+      ],
+      "additionalProperties": false
+    },
+    "state": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "targetRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "initial": {
+          "type": "boolean"
+        },
+        "appearance": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/appearance.schema.json#/$defs/appearance"
+        },
+        "layout": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/layout.schema.json#/$defs/layout"
+        },
+        "visible": {
+          "type": "boolean"
+        },
+        "variant": {
+          "type": "string",
+          "minLength": 1
+        },
+        "motionRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "accessibility": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/accessibility.schema.json#/$defs/accessibility"
+        },
+        "onEnter": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+          },
+          "uniqueItems": true
+        },
+        "onExit": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+          },
+          "uniqueItems": true
+        },
+        "transitions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "to": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+              },
+              "eventRef": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+              },
+              "actionRef": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+              },
+              "motionRef": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+              },
+              "condition": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/condition"
+              }
+            },
+            "required": [
+              "to"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "extensions": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/extensions"
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ],
+      "additionalProperties": false
+    },
+    "flow": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "initial": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "sceneRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "states": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sceneRef": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+              }
+            },
+            "required": [
+              "id",
+              "name"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 1
+        },
+        "transitions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "from": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+              },
+              "to": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+              },
+              "eventRef": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+              },
+              "motionRef": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+              },
+              "condition": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/condition"
+              }
+            },
+            "required": [
+              "from",
+              "to"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "extensions": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/extensions"
+        }
+      },
+      "required": [
+        "id",
+        "initial",
+        "states"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

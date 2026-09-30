@@ -1,0 +1,150 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://visualspec.dev/schema/1.0/modules/presentation.schema.json",
+  "title": "Presentation",
+  "description": "Slides, masters, narrative sequence, presenter notes and per-slide timelines.",
+  "$defs": {
+    "master": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sceneRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "layout": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/layout.schema.json#/$defs/layout"
+        },
+        "background": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/appearance.schema.json#/$defs/paint"
+        },
+        "slots": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/components.schema.json#/$defs/slot"
+          }
+        },
+        "headerNodeRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "footerNodeRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "extensions": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/extensions"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "additionalProperties": false
+    },
+    "slide": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sceneRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "masterRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "layout": {
+          "type": "string",
+          "minLength": 1
+        },
+        "notes": {
+          "type": "string"
+        },
+        "transition": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/timeline.schema.json#/$defs/transition"
+        },
+        "timelineRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "duration": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/duration"
+        },
+        "hidden": {
+          "type": "boolean"
+        },
+        "mediaAssetRefs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+          },
+          "uniqueItems": true
+        },
+        "narrativeRole": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/taxonomy"
+        },
+        "extensions": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/extensions"
+        }
+      },
+      "required": [
+        "id",
+        "sceneRef"
+      ],
+      "additionalProperties": false
+    },
+    "presentation": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "size": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/viewport"
+        },
+        "masters": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/presentation.schema.json#/$defs/master"
+          }
+        },
+        "slides": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/presentation.schema.json#/$defs/slide"
+          },
+          "minItems": 1
+        },
+        "sequence": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+          },
+          "uniqueItems": true
+        },
+        "loop": {
+          "type": "boolean"
+        },
+        "extensions": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/extensions"
+        }
+      },
+      "required": [
+        "id",
+        "slides"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$ref": "#/$defs/presentation"
+}

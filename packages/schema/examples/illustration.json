@@ -1,0 +1,109 @@
+{
+  "$schema": "https://visualspec.dev/schema/1.0/schema.json",
+  "visualSpec": "1.0",
+  "metadata": {
+    "title": "Mark study",
+    "language": "en",
+    "status": "approved"
+  },
+  "profiles": [
+    "illustration"
+  ],
+  "tokens": {
+    "color.ink": {
+      "type": "color",
+      "value": "#22261f"
+    },
+    "color.leaf": {
+      "type": "color",
+      "value": "#4b621c"
+    }
+  },
+  "visualReferences": [
+    {
+      "id": "ref.mark",
+      "kind": "image",
+      "role": "inspiration",
+      "aspects": [
+        "shape"
+      ],
+      "uri": "https://example.com/references/orchard-mark.svg"
+    }
+  ],
+  "entities": [
+    {
+      "id": "entity.mark",
+      "kind": "graphic.symbol",
+      "name": "Orchard mark"
+    },
+    {
+      "id": "entity.leaf",
+      "kind": "graphic.symbol",
+      "name": "Leaf"
+    }
+  ],
+  "illustrations": [
+    {
+      "id": "illustration.mark",
+      "sceneRef": "scene.mark",
+      "technique": "vector.flat",
+      "style": "flat",
+      "palette": [
+        "#22261f",
+        "#d9ed94"
+      ],
+      "referenceRefs": [
+        "ref.mark"
+      ]
+    }
+  ],
+  "scenes": [
+    {
+      "id": "scene.mark",
+      "kind": "2d",
+      "viewport": {
+        "width": 360,
+        "height": 220
+      },
+      "background": "#f7f8f3",
+      "layout": {
+        "type": "row",
+        "gap": 28,
+        "align": "center",
+        "justify": "center"
+      },
+      "nodes": [
+        {
+          "id": "node.mark",
+          "kind": "path",
+          "entityRef": "entity.mark",
+          "geometry": {
+            "type": "path",
+            "path": "M8 28 16 8l8 20"
+          },
+          "appearance": {
+            "stroke": {
+              "color": "{color.ink}",
+              "width": 2
+            }
+          }
+        },
+        {
+          "id": "node.leaf",
+          "kind": "path",
+          "entityRef": "entity.leaf",
+          "geometry": {
+            "type": "path",
+            "path": "M6 26c8-18 18-8 20 2-8 4-14 0-20-2z"
+          },
+          "appearance": {
+            "stroke": {
+              "color": "{color.leaf}",
+              "width": 2
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

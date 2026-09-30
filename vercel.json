@@ -1,0 +1,19 @@
+{
+  "framework": null,
+  "installCommand": "pnpm install --frozen-lockfile",
+  "buildCommand": "pnpm run build",
+  "outputDirectory": "apps/web/dist",
+  "trailingSlash": true,
+  "git": {
+    "deploymentEnabled": false
+  },
+  "redirects": [
+    { "source": "/examples", "destination": "/use-cases/", "permanent": true },
+    { "source": "/examples/", "destination": "/use-cases/", "permanent": true },
+    { "source": "/examples/:slug/", "destination": "/use-cases/:slug/", "permanent": true },
+    { "source": "/generated", "destination": "/use-cases/", "permanent": true },
+    { "source": "/generated/", "destination": "/use-cases/", "permanent": true },
+    { "source": "/generated/:slug", "destination": "/use-cases/:slug/", "permanent": true },
+    { "source": "/generated/:slug/", "destination": "/use-cases/:slug/", "permanent": true }
+  ]
+}

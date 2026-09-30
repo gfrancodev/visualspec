@@ -1,0 +1,92 @@
+---
+interface Child {
+  name: string;
+  kind: string;
+  required: boolean;
+  node: NodeShape;
+}
+interface NodeShape {
+  summary: string;
+  description: string;
+  facts: [string, string][];
+  enumValues: string[];
+  children: Child[];
+  href: string;
+  plain: string[];
+}
+interface Props {
+  node: NodeShape;
+  title?: string;
+  required?: boolean;
+  depth?: number;
+}
+const { node, title, required = false, depth = 0 } = Astro.props as Props;
+const hasBody =
+  node.description ||
+  node.plain?.length > 0 ||
+  node.facts.length > 0 ||
+  node.enumValues.length > 0 ||
+  node.children.length > 0 ||
+  node.href;
+
+function parts(sentence: string) {
+  return sentence.split(/(`[^`]+`)/).map((part) =>
+    part.startsWith('`') && part.endsWith('`')
+      ? { code: true, text: part.slice(1, -1) }
+      : { code: false, text: part }
+  );
+}
+---
+<article class:list={['schema-node', depth > 0 && 'schema-node--nested']}>
+  {title && (
+    <header class="schema-node-head">
+      <code>{title}</code>
+      {required && <span class="schema-flag">required</span>}
+      {node.href ? (
+        <a class="schema-type" href={node.href}>{node.summary}</a>
+      ) : (
+        <span class="schema-type">{node.summary}</span>
+      )}
+    </header>
+  )}
+  {hasBody && (
+    <div class="schema-node-body">
+      {node.description && <p class="schema-lead">{node.description}</p>}
+      {node.plain?.length > 0 && (
+        <div class="schema-plain">
+          {node.plain.map((sentence) => (
+            <p>
+              {parts(sentence).map((part) => (part.code ? <code>{part.text}</code> : part.text))}
+            </p>
+          ))}
+        </div>
+      )}
+      {(node.facts.length > 0 || node.enumValues.length > 0) && (
+        <details class="schema-exact">
+          <summary>Exact constraints</summary>
+          {node.facts.length > 0 && (
+            <dl class="schema-facts">
+              {node.facts.map(([label, value]) => (
+                <div>
+                  <dt>{label}</dt>
+                  <dd><code>{value}</code></dd>
+                </div>
+              ))}
+            </dl>
+          )}
+          {node.enumValues.length > 0 && (
+            <div class="schema-enum">
+              <span>Allowed values</span>
+              <ul>
+                {node.enumValues.map((value) => <li><code>{value}</code></li>)}
+              </ul>
+            </div>
+          )}
+        </details>
+      )}
+      {node.children.map((child) => (
+        <Astro.self node={child.node} title={child.name} required={child.required} depth={depth + 1} />
+      ))}
+    </div>
+  )}
+</article>

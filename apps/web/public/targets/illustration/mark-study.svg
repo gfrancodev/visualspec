@@ -1,0 +1,37 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="360"
+  height="220"
+  viewBox="0 0 360 220"
+  role="img"
+  aria-labelledby="title desc"
+>
+  <title id="title">Mark study</title>
+  <desc id="desc">Flat vector study with an orchard mark and a leaf symbol.</desc>
+
+  <rect width="360" height="220" fill="#f7f8f3"/>
+
+  <!-- Orchard mark -->
+  <g transform="translate(140 92)">
+    <path
+      d="M8 28 16 8l8 20"
+      fill="none"
+      stroke="#22261f"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </g>
+
+  <!-- Leaf -->
+  <g transform="translate(186 92)">
+    <path
+      d="M6 26c8-18 18-8 20 2-8 4-14 0-20-2z"
+      fill="none"
+      stroke="#4b621c"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </g>
+</svg>

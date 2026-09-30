@@ -1,0 +1,37 @@
+---
+import Base from '@app/layouts/Base.astro';
+import { DocAside } from '@core';
+import { loadRfcs } from './catalog';
+
+const rfcs = loadRfcs();
+---
+<Base title="RFCs" description="Request for Comments process for Visual Spec.">
+  <div class="container doc-layout">
+    <DocAside current="rfcs" />
+    <div>
+    <header class="page-head">
+      <div class="eyebrow">Process</div>
+      <h1>RFCs</h1>
+      <p>Normative changes, new profiles and compatibility commitments go through an RFC. Editorial documentation fixes can use a normal pull request.</p>
+    </header>
+
+    {rfcs.length === 0 ? (
+      <div class="callout">
+        <strong>No RFCs published yet.</strong> Propose changes against the repository’s CONTRIBUTING and GOVERNANCE documents. Accepted RFCs will appear here with an id, title and status.
+      </div>
+    ) : (
+      <div class="index-list">
+        {rfcs.map((rfc) => (
+          <a class="index-row" href={`/rfcs/${rfc.slug}/`}>
+            <div>
+              <div class="row-title">{rfc.title}</div>
+              <p>Status: {rfc.status}</p>
+            </div>
+            <span class="mono">{rfc.id}</span>
+          </a>
+        ))}
+      </div>
+    )}
+    </div>
+  </div>
+</Base>

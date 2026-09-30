@@ -1,0 +1,53 @@
+---
+import Base from '@app/layouts/Base.astro';
+import { renderMarkdown } from '@core';
+import { hrefFor, loadDocs } from '../lib/docs';
+
+interface Props {
+  slug: string;
+}
+
+const { slug } = Astro.props;
+const docs = loadDocs();
+const index = docs.findIndex((d) => d.slug === slug);
+const doc = docs[index];
+if (!doc) {
+  return Astro.redirect(`/404/?path=${encodeURIComponent(Astro.url.pathname)}`);
+}
+const html = renderMarkdown(doc.body);
+const prev = index > 0 ? docs[index - 1] : null;
+const next = index < docs.length - 1 ? docs[index + 1] : null;
+---
+<Base title={doc.title} description={doc.description}>
+  <div class="container doc-layout">
+    <aside class="sidebar" aria-label="Learn navigation">
+      <div class="sidebar-group">
+        <h3>Learn</h3>
+        {docs.map((item) => (
+          <a href={hrefFor(item.slug)} class:list={[{ active: item.slug === slug }]}>{item.title}</a>
+        ))}
+      </div>
+      <div class="sidebar-group">
+        <h3>Site</h3>
+        <a href="/reference/">Reference</a>
+        <a href="/schemas/">Schemas</a>
+        <a href="/components/">Components</a>
+        <a href="/ecosystem/">Ecosystem</a>
+        <a href="/rfcs/">RFCs</a>
+        <a href="/learn/contributing/" class:list={[{ active: slug === 'contributing' }]}>Contributing</a>
+      </div>
+    </aside>
+    <div>
+      <header class="page-head" style="padding-top:0">
+        <div class="eyebrow">{doc.category}</div>
+        <h1>{doc.title}</h1>
+        <p>{doc.description}</p>
+      </header>
+      <article class="prose" set:html={html}></article>
+      <nav class="doc-footer-nav" aria-label="Previous and next">
+        {prev ? <a href={hrefFor(prev.slug)}>← {prev.title}</a> : <span></span>}
+        {next ? <a href={hrefFor(next.slug)}>{next.title} →</a> : <span></span>}
+      </nav>
+    </div>
+  </div>
+</Base>

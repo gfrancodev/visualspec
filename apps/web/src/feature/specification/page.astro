@@ -1,0 +1,30 @@
+---
+import Base from '@app/layouts/Base.astro';
+import { renderSpecFile, sidebarPages } from './lib/spec';
+
+const html = renderSpecFile('index.md');
+const pages = sidebarPages();
+---
+<Base title="Specification 1.0" description="Normative Visual Spec 1.0 documentation.">
+  <div class="container doc-layout">
+    <aside class="sidebar" aria-label="Specification navigation">
+      <div class="sidebar-group">
+        <h3>Specification 1.0</h3>
+        <a href="/specification/1.0/" class="active">Overview</a>
+        {pages.map((p) => <a href={p.href}>{p.label}</a>)}
+      </div>
+    </aside>
+    <div>
+      <header class="page-head" style="padding-top:0">
+        <div class="eyebrow">Normative text</div>
+      </header>
+      {html ? (
+        <article class="prose" set:html={html}></article>
+      ) : (
+        <div class="callout">
+          <strong>Specification unavailable.</strong> The markdown sources under <code>specification/1.0/</code> are not present in this build yet. Once published, this page will render the overview.
+        </div>
+      )}
+    </div>
+  </div>
+</Base>

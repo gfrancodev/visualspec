@@ -1,0 +1,65 @@
+---
+import { readdirSync, existsSync } from 'node:fs';
+import Base from '@app/layouts/Base.astro';
+import { DocAside, profilesSchemaDir } from '@core';
+
+const profileFiles = existsSync(profilesSchemaDir)
+  ? readdirSync(profilesSchemaDir).filter((n) => n.endsWith('.schema.json')).sort()
+  : [];
+---
+<Base title="Schemas" description="Download Visual Spec 1.0 JSON Schema artifacts.">
+  <div class="container doc-layout">
+    <DocAside current="schemas" />
+    <div>
+    <header class="page-head">
+      <div class="eyebrow">Downloads</div>
+      <h1>Schemas</h1>
+      <p>
+        Canonical schema identifiers live under <code>https://visualspec.dev/schema/1.0/</code>.
+        Pin versioned <code>1.0</code> URLs in builds. <code>/schema/latest/</code> is a discovery copy of 1.0 and may move.
+      </p>
+    </header>
+
+    <div class="callout">
+      <strong>Validate locally.</strong> After cloning the repository:
+      <code>npm run validate -- &lt;file&gt;</code>. Schemas resolve from the packaged files; validators must not fetch references at runtime.
+    </div>
+
+    <section class="index-list" aria-labelledby="core-artifacts">
+      <h2 id="core-artifacts" style="font-size:23px;margin:0 0 8px">Core artifacts</h2>
+      {[
+        ['Root schema', '/schema/1.0/schema.json', 'Entry schema for documents'],
+        ['Standalone bundle', '/schema/1.0/schema.bundle.json', 'Self-contained schema for offline validation'],
+        ['Manifest', '/schema/1.0/manifest.json', 'Version, modules, profiles and semantic rule codes'],
+        ['Semantic rules', '/schema/1.0/semantic-rules.json', 'Rules beyond JSON Schema'],
+        ['Checksums', '/schema/1.0/SHA256SUMS', 'SHA-256 sums for published artifacts']
+      ].map(([title, href, desc]) => (
+        <a class="index-row" href={href}>
+          <div>
+            <div class="row-title">{title}</div>
+            <p>{desc}</p>
+          </div>
+          <span class="mono">{href}</span>
+        </a>
+      ))}
+    </section>
+
+    <section class="index-list" aria-labelledby="profile-artifacts">
+      <h2 id="profile-artifacts" style="font-size:23px;margin:0 0 8px">Profile schemas</h2>
+      {profileFiles.map((file) => {
+        const id = file.replace(/\.schema\.json$/, '');
+        const href = `/schema/1.0/profiles/${file}`;
+        return (
+          <a class="index-row" href={href}>
+            <div>
+              <div class="row-title">{id}</div>
+              <p>Profile constraints for {id}.</p>
+            </div>
+            <span class="mono">{href}</span>
+          </a>
+        );
+      })}
+    </section>
+    </div>
+  </div>
+</Base>

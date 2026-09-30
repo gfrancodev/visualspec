@@ -1,0 +1,23 @@
+---
+import Base from '@app/layouts/Base.astro';
+import { renderMarkdown } from '@core';
+import { loadDocs } from './lib/docs';
+
+const docs = loadDocs();
+const doc = docs.find((d) => d.slug === 'why');
+if (!doc) throw new Error('docs.json is missing the why entry');
+const html = renderMarkdown(doc.body);
+---
+<Base title={doc.title} description={doc.description}>
+  <div class="container">
+    <header class="page-head">
+      <div class="eyebrow">Learn</div>
+      <h1>{doc.title}</h1>
+      <p>{doc.description}</p>
+    </header>
+    <article class="prose" set:html={html}></article>
+    <nav class="doc-footer-nav doc-footer-nav--end" aria-label="Continue learning">
+      <a href="/learn/quick-start/">Next: Quick start →</a>
+    </nav>
+  </div>
+</Base>

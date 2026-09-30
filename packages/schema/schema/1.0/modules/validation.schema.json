@@ -1,0 +1,184 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://visualspec.dev/schema/1.0/modules/validation.schema.json",
+  "title": "Validation",
+  "description": "Structural, semantic, accessibility, visual and reference conformance expectations.",
+  "$defs": {
+    "tolerance": {
+      "type": "object",
+      "description": "Comparison thresholds; metric-specific interpretation is declared by the validator.",
+      "properties": {
+        "absolute": {
+          "type": "number",
+          "minimum": 0
+        },
+        "relative": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "rule": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "type": {
+          "enum": [
+            "schema",
+            "semantic",
+            "capability",
+            "accessibility",
+            "visual",
+            "reference-conformance"
+          ]
+        },
+        "targetRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "referenceRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "aspect": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/taxonomy"
+        },
+        "metric": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/taxonomy"
+        },
+        "matchMode": {
+          "enum": [
+            "exact",
+            "structural",
+            "perceptual",
+            "semantic",
+            "stylistic",
+            "inspirational"
+          ]
+        },
+        "conformance": {
+          "enum": [
+            "strict",
+            "approximate",
+            "inspiration"
+          ]
+        },
+        "tolerance": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/validation.schema.json#/$defs/tolerance"
+        },
+        "severity": {
+          "enum": [
+            "error",
+            "warning",
+            "info"
+          ]
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "viewport": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/viewport"
+        },
+        "stateRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "time": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/time"
+        },
+        "extensions": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/extensions"
+        }
+      },
+      "required": [
+        "id",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "validation": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "boolean"
+        },
+        "semantic": {
+          "type": "boolean"
+        },
+        "accessibility": {
+          "type": "boolean"
+        },
+        "capabilities": {
+          "type": "boolean"
+        },
+        "rules": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/validation.schema.json#/$defs/rule"
+          }
+        },
+        "referenceConformance": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "referenceRef": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+              },
+              "aspect": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/taxonomy"
+              },
+              "conformance": {
+                "enum": [
+                  "strict",
+                  "approximate",
+                  "inspiration"
+                ]
+              },
+              "matchMode": {
+                "enum": [
+                  "exact",
+                  "structural",
+                  "perceptual",
+                  "semantic",
+                  "stylistic",
+                  "inspirational"
+                ]
+              },
+              "tolerance": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/validation.schema.json#/$defs/tolerance"
+              }
+            },
+            "required": [
+              "referenceRef",
+              "aspect",
+              "conformance"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "failOn": {
+          "enum": [
+            "error",
+            "warning",
+            "info"
+          ]
+        },
+        "extensions": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/extensions"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "$ref": "#/$defs/validation"
+}

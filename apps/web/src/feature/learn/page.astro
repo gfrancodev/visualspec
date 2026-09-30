@@ -1,0 +1,30 @@
+---
+import Base from '@app/layouts/Base.astro';
+import { hrefFor, loadDocs } from './lib/docs';
+
+const docs = loadDocs();
+const categories = [...new Set(docs.map((d) => d.category))];
+---
+<Base title="Learn" description="Guides for understanding and applying Visual Spec.">
+  <div class="container">
+    <header class="page-head">
+      <div class="eyebrow">Documentation</div>
+      <h1>Learn Visual Spec</h1>
+      <p>Start with the motivation, then move through concepts, profiles, validation and adapter guidance.</p>
+    </header>
+    {categories.map((category) => (
+      <section class="index-list" aria-labelledby={`cat-${category}`}>
+        <h2 id={`cat-${category}`} class="mono" style="font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin:0 0 8px">{category}</h2>
+        {docs.filter((d) => d.category === category).map((doc) => (
+          <a class="index-row" href={hrefFor(doc.slug)}>
+            <div>
+              <div class="row-title">{doc.title}</div>
+              <p>{doc.description}</p>
+            </div>
+            <span class="mono">{doc.slug}</span>
+          </a>
+        ))}
+      </section>
+    ))}
+  </div>
+</Base>

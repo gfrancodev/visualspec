@@ -1,0 +1,287 @@
+{
+  "$schema": "https://visualspec.dev/schema/1.0/schema.json",
+  "visualSpec": "1.0",
+  "metadata": {
+    "title": "Grove HUD",
+    "language": "en",
+    "status": "approved"
+  },
+  "profiles": [
+    "game"
+  ],
+  "world": {
+    "id": "world.grove",
+    "name": "Grove",
+    "environment": {
+      "kind": "environment.forest",
+      "timeOfDay": "afternoon"
+    }
+  },
+  "entities": [
+    {
+      "id": "entity.guide",
+      "kind": "living.person",
+      "name": "Guide",
+      "lifecycle": "persistent"
+    }
+  ],
+  "materials": [
+    {
+      "id": "material.guide",
+      "model": "unlit",
+      "baseColor": "#c4d68a"
+    }
+  ],
+  "components": [
+    {
+      "id": "component.status",
+      "kind": "feedback.toast",
+      "name": "Guide status",
+      "appearance": {
+        "fill": "#243024",
+        "color": "#f7f8f3",
+        "radius": 999
+      },
+      "accessibility": {
+        "role": "status",
+        "name": {
+          "source": "literal",
+          "value": "Guide"
+        }
+      }
+    }
+  ],
+  "effects": [
+    {
+      "id": "effect.alert",
+      "type": "flash",
+      "targetRefs": [
+        "node.guide"
+      ],
+      "particles": {
+        "color": "#d9ed94",
+        "count": 12
+      }
+    }
+  ],
+  "motion": [
+    {
+      "id": "motion.alert",
+      "targets": [
+        "node.status"
+      ],
+      "essential": false,
+      "duration": {
+        "value": 180,
+        "unit": "ms"
+      },
+      "tracks": [
+        {
+          "property": "appearance.opacity",
+          "from": 1,
+          "to": 0.72
+        }
+      ],
+      "reducedMotion": {
+        "strategy": "instant"
+      }
+    }
+  ],
+  "timelines": [
+    {
+      "id": "timeline.intro",
+      "duration": 3,
+      "tracks": [
+        {
+          "id": "track.intro",
+          "type": "visual",
+          "clips": [
+            {
+              "id": "clip.intro",
+              "start": 0,
+              "duration": 3,
+              "sceneRef": "scene.grove"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "scenes": [
+    {
+      "id": "scene.grove",
+      "kind": "3d",
+      "nodes": [
+        {
+          "id": "node.guide",
+          "kind": "character",
+          "entityRef": "entity.guide",
+          "materialRef": "material.guide"
+        }
+      ]
+    },
+    {
+      "id": "scene.hud",
+      "kind": "2d",
+      "viewport": {
+        "width": 390,
+        "height": 96
+      },
+      "background": "#1c241c",
+      "layout": {
+        "type": "row",
+        "padding": 16,
+        "align": "center"
+      },
+      "nodes": [
+        {
+          "id": "node.status",
+          "kind": "component",
+          "componentRef": "component.status",
+          "text": "Guide"
+        }
+      ]
+    }
+  ],
+  "states": [
+    {
+      "id": "state.alert",
+      "name": "alert",
+      "targetRef": "node.status",
+      "appearance": {
+        "fill": "#d9ed94"
+      }
+    }
+  ],
+  "threeD": {
+    "sceneRefs": [
+      "scene.grove"
+    ],
+    "meshes": [
+      {
+        "id": "mesh.guide",
+        "geometry": {
+          "type": "box"
+        },
+        "materialRefs": [
+          "material.guide"
+        ]
+      }
+    ]
+  },
+  "game": {
+    "worldRef": "world.grove",
+    "levels": [
+      {
+        "id": "level.grove",
+        "name": "Grove",
+        "sceneRefs": [
+          "scene.grove"
+        ]
+      }
+    ],
+    "characters": [
+      {
+        "id": "character.guide",
+        "entityRef": "entity.guide",
+        "animationController": {
+          "initialState": "anim.idle",
+          "states": [
+            {
+              "id": "anim.idle",
+              "name": "idle",
+              "loop": true
+            },
+            {
+              "id": "anim.alert",
+              "name": "alert",
+              "motionRef": "motion.alert"
+            }
+          ],
+          "transitions": [
+            {
+              "from": "anim.idle",
+              "to": "anim.alert",
+              "duration": {
+                "value": 180,
+                "unit": "ms"
+              },
+              "blend": "crossfade"
+            }
+          ]
+        },
+        "visualStateMappings": {
+          "alert": {
+            "stateRef": "state.alert",
+            "motionRef": "motion.alert",
+            "effectRefs": [
+              "effect.alert"
+            ],
+            "appearance": {
+              "fill": "#d9ed94"
+            }
+          }
+        }
+      }
+    ],
+    "hud": {
+      "sceneRef": "scene.hud",
+      "componentRefs": [
+        "component.status"
+      ],
+      "safeArea": true
+    },
+    "visualStates": [
+      {
+        "id": "visual.alert",
+        "externalName": "alert",
+        "stateRefs": [
+          "state.alert"
+        ],
+        "effectRefs": [
+          "effect.alert"
+        ]
+      }
+    ],
+    "cutscenes": [
+      {
+        "id": "cutscene.intro",
+        "timelineRef": "timeline.intro",
+        "skippable": true,
+        "restoreCamera": true
+      }
+    ],
+    "spatialUI": [
+      {
+        "mode": "entity-attached",
+        "anchorRef": "entity.guide",
+        "billboard": "camera",
+        "scaleMode": "screen",
+        "interaction": "none"
+      }
+    ]
+  },
+  "rendering": {
+    "targets": [
+      {
+        "id": "target.play",
+        "platform": "web",
+        "capabilities": [
+          {
+            "name": "scene.2d",
+            "level": "required"
+          },
+          {
+            "name": "mesh.pbr",
+            "level": "required",
+            "fallback": {
+              "strategy": "omit",
+              "description": "The grove mesh is drawn as a solid, not a shaded mesh."
+            }
+          }
+        ]
+      }
+    ],
+    "fallbackPolicy": "report-and-approximate"
+  }
+}

@@ -1,0 +1,86 @@
+[
+  {
+    "file": "hello.json",
+    "slug": "hello",
+    "title": "Hello Visual Spec",
+    "profiles": ["ui"],
+    "model": "openai/gpt5.6-sol"
+  },
+  {
+    "file": "ui.json",
+    "slug": "ui",
+    "title": "Checkout card",
+    "profiles": ["ui"],
+    "model": "openai/gpt5.6-sol"
+  },
+  {
+    "file": "image.json",
+    "slug": "image",
+    "title": "Ceramic cup still",
+    "profiles": ["image"],
+    "model": "openai/gpt5.6-sol"
+  },
+  {
+    "file": "illustration.json",
+    "slug": "illustration",
+    "title": "Mark study",
+    "profiles": ["illustration"],
+    "model": "openai/gpt5.6-sol"
+  },
+  {
+    "file": "document.json",
+    "slug": "document",
+    "title": "Field notes",
+    "profiles": ["document"],
+    "model": "openai/gpt5.6-sol"
+  },
+  {
+    "file": "presentation.json",
+    "slug": "presentation",
+    "title": "Intent deck",
+    "profiles": ["presentation"],
+    "model": "openai/gpt5.6-sol"
+  },
+  {
+    "file": "video.json",
+    "slug": "video",
+    "title": "Four second still",
+    "profiles": ["video"],
+    "model": "openai/gpt5.6-sol"
+  },
+  {
+    "file": "motion-graphics.json",
+    "slug": "motion-graphics",
+    "title": "Title fade",
+    "profiles": ["motion-graphics"],
+    "model": "openai/gpt5.6-sol"
+  },
+  {
+    "file": "3d.json",
+    "slug": "3d",
+    "title": "Cup study",
+    "profiles": ["3d"],
+    "model": "openai/gpt5.6-sol"
+  },
+  {
+    "file": "game.json",
+    "slug": "game",
+    "title": "Grove HUD",
+    "profiles": ["game"],
+    "model": "openai/gpt5.6-sol"
+  },
+  {
+    "file": "ui-3d.json",
+    "slug": "ui-3d",
+    "title": "Product configurator",
+    "profiles": ["ui", "3d"],
+    "model": "openai/gpt5.6-sol"
+  },
+  {
+    "file": "presentation-video.json",
+    "slug": "presentation-video",
+    "title": "Narrated deck",
+    "profiles": ["presentation", "video"],
+    "model": "openai/gpt5.6-sol"
+  }
+]

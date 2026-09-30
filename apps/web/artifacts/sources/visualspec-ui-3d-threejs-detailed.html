@@ -1,0 +1,503 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Product configurator</title>
+
+  <style>
+    :root {
+      --color-glaze: #d9ed94;
+      --controls-bg: #f7f8f3;
+      --ink: #22261f;
+      --muted: #6f756b;
+      --stage-bg: #eef1e8;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+    }
+
+    body {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background: #dde2d6;
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    .configurator {
+      width: min(920px, 100%);
+      overflow: hidden;
+      border-radius: 22px;
+      background: var(--stage-bg);
+      box-shadow: 0 24px 70px rgba(32, 38, 31, 0.14);
+    }
+
+    .stage {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      min-height: 380px;
+      background:
+        radial-gradient(circle at 50% 36%, #fafbf7 0 14%, transparent 55%),
+        linear-gradient(180deg, #f0f3eb 0%, #e6ebdf 100%);
+    }
+
+    #stage-canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      outline: none;
+    }
+
+    .stage-label {
+      position: absolute;
+      top: 18px;
+      left: 20px;
+      display: grid;
+      gap: 2px;
+      pointer-events: none;
+    }
+
+    .stage-label strong {
+      font-size: 13px;
+      letter-spacing: 0.02em;
+    }
+
+    .stage-label span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .control-bar {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      background: var(--controls-bg);
+      border-top: 1px solid rgba(34, 38, 31, 0.08);
+    }
+
+    .controls {
+      width: min(360px, 100%);
+      min-height: 88px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px;
+    }
+
+    .swatch-option {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 44px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .swatch-option input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .swatch {
+      width: 36px;
+      height: 36px;
+      border-radius: 999px;
+      background: var(--color-glaze);
+      border: 2px solid transparent;
+      box-shadow: inset 0 0 0 1px rgba(34, 38, 31, 0.1);
+      transition: transform 140ms ease, border-color 140ms ease;
+    }
+
+    .swatch-option input:checked + .swatch {
+      border-color: var(--ink);
+    }
+
+    .swatch-option input:focus-visible + .swatch {
+      outline: 3px solid rgba(75, 98, 28, 0.28);
+      outline-offset: 3px;
+    }
+
+    .swatch-option:active .swatch {
+      transform: scale(0.94);
+    }
+
+    .swatch-copy {
+      display: grid;
+      gap: 2px;
+    }
+
+    .swatch-copy strong {
+      font-size: 14px;
+      line-height: 1.1;
+    }
+
+    .swatch-copy span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .load-error {
+      position: absolute;
+      inset: 0;
+      display: none;
+      place-items: center;
+      padding: 24px;
+      text-align: center;
+      color: var(--muted);
+      background: var(--stage-bg);
+      font-size: 14px;
+    }
+
+    .load-error.show { display: grid; }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 0;
+        background: var(--stage-bg);
+      }
+
+      .configurator {
+        width: 100%;
+        min-height: 100vh;
+        border-radius: 0;
+        box-shadow: none;
+      }
+
+      .stage {
+        min-height: 440px;
+        aspect-ratio: auto;
+      }
+
+      .control-bar {
+        justify-content: flex-start;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .swatch { transition: none; }
+    }
+  </style>
+
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <main class="configurator" aria-label="Product configurator">
+    <section class="stage" aria-label="3D product preview">
+      <canvas
+        id="stage-canvas"
+        tabindex="0"
+        aria-label="Interactive 3D preview of the configurable cup"
+      ></canvas>
+
+      <div class="stage-label" aria-hidden="true">
+        <strong>Configurable cup</strong>
+        <span>Drag to orbit · scroll to zoom</span>
+      </div>
+
+      <div id="load-error" class="load-error" role="status">
+        The 3D renderer could not be loaded.
+      </div>
+    </section>
+
+    <div class="control-bar">
+      <section class="controls" aria-label="Product controls">
+        <label class="swatch-option">
+          <input
+            id="glaze-radio"
+            type="radio"
+            name="glaze"
+            value="#d9ed94"
+            checked
+            aria-label="Glaze"
+          />
+          <span class="swatch" aria-hidden="true"></span>
+          <span class="swatch-copy">
+            <strong>Glaze</strong>
+            <span>#d9ed94</span>
+          </span>
+        </label>
+      </section>
+    </div>
+  </main>
+
+  <script type="module">
+    const canvas = document.getElementById("stage-canvas");
+    const errorEl = document.getElementById("load-error");
+    const glazeRadio = document.getElementById("glaze-radio");
+
+    try {
+      const THREE = await import("three");
+      const { OrbitControls } = await import("three/addons/controls/OrbitControls.js");
+
+      const renderer = new THREE.WebGLRenderer({
+        canvas,
+        antialias: true,
+        alpha: true
+      });
+
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      renderer.outputColorSpace = THREE.SRGBColorSpace;
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      renderer.toneMappingExposure = 1.08;
+      renderer.shadowMap.enabled = true;
+      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+      const scene = new THREE.Scene();
+
+      const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 100);
+      camera.position.set(4.3, 3.0, 5.4);
+
+      // PBR glaze from the Visual Spec.
+      const glaze = new THREE.MeshStandardMaterial({
+        color: 0xd9ed94,
+        roughness: 0.2,
+        metalness: 0,
+        side: THREE.FrontSide
+      });
+
+      // Slightly darker inner ceramic to give depth.
+      const innerGlaze = new THREE.MeshStandardMaterial({
+        color: 0xcfe183,
+        roughness: 0.28,
+        metalness: 0,
+        side: THREE.DoubleSide
+      });
+
+      const cup = new THREE.Group();
+      cup.rotation.y = -0.35;
+      cup.rotation.x = -0.03;
+      scene.add(cup);
+
+      // Detailed cylindrical body, still respecting geometry.type = cylinder.
+      const bodyGeometry = new THREE.CylinderGeometry(
+        1.14,  // top radius
+        1.00,  // base radius
+        2.18,  // height
+        128,
+        6,
+        true
+      );
+      const body = new THREE.Mesh(bodyGeometry, glaze);
+      body.castShadow = true;
+      body.receiveShadow = true;
+      cup.add(body);
+
+      // Bottom disk.
+      const bottom = new THREE.Mesh(
+        new THREE.CylinderGeometry(1.005, 1.005, 0.12, 128),
+        glaze
+      );
+      bottom.position.y = -1.05;
+      bottom.castShadow = true;
+      bottom.receiveShadow = true;
+      cup.add(bottom);
+
+      // Raised foot ring for a more believable ceramic base.
+      const foot = new THREE.Mesh(
+        new THREE.TorusGeometry(0.79, 0.055, 20, 128),
+        glaze
+      );
+      foot.rotation.x = Math.PI / 2;
+      foot.position.y = -1.135;
+      foot.castShadow = true;
+      cup.add(foot);
+
+      // Inner cavity.
+      const innerWall = new THREE.Mesh(
+        new THREE.CylinderGeometry(
+          0.98,
+          0.87,
+          1.72,
+          128,
+          4,
+          true
+        ),
+        innerGlaze
+      );
+      innerWall.position.y = 0.18;
+      innerWall.material.side = THREE.BackSide;
+      cup.add(innerWall);
+
+      // Inner floor.
+      const innerFloor = new THREE.Mesh(
+        new THREE.CircleGeometry(0.87, 128),
+        innerGlaze
+      );
+      innerFloor.rotation.x = -Math.PI / 2;
+      innerFloor.position.y = -0.68;
+      cup.add(innerFloor);
+
+      // Rounded top rim.
+      const rim = new THREE.Mesh(
+        new THREE.TorusGeometry(1.06, 0.08, 24, 160),
+        glaze
+      );
+      rim.rotation.x = Math.PI / 2;
+      rim.position.y = 1.09;
+      rim.castShadow = true;
+      cup.add(rim);
+
+      // Cup handle: D-shaped profile with both ends embedded in the cup wall.
+      // This keeps the handle visually continuous with the cylindrical body
+      // instead of looking like a detached torus segment.
+      const handleCurve = new THREE.CatmullRomCurve3(
+        [
+          new THREE.Vector3(0.99,  0.76, 0.00),
+          new THREE.Vector3(1.46,  0.88, 0.00),
+          new THREE.Vector3(1.93,  0.63, 0.00),
+          new THREE.Vector3(2.10,  0.00, 0.00),
+          new THREE.Vector3(1.93, -0.63, 0.00),
+          new THREE.Vector3(1.46, -0.88, 0.00),
+          new THREE.Vector3(0.99, -0.76, 0.00)
+        ],
+        false,
+        "centripetal",
+        0.35
+      );
+
+      const handle = new THREE.Mesh(
+        new THREE.TubeGeometry(
+          handleCurve,
+          144,
+          0.155,
+          32,
+          false
+        ),
+        glaze
+      );
+      handle.castShadow = true;
+      handle.receiveShadow = true;
+      cup.add(handle);
+
+      // Blended ceramic attachment pads. They overlap both the handle tube
+      // and the cup wall, eliminating visible gaps at the joints.
+      const jointGeometry = new THREE.SphereGeometry(0.23, 40, 28);
+
+      const upperJoint = new THREE.Mesh(jointGeometry, glaze);
+      upperJoint.scale.set(1.28, 0.72, 0.86);
+      upperJoint.position.set(1.00, 0.76, 0);
+      upperJoint.rotation.z = -0.10;
+      upperJoint.castShadow = true;
+      cup.add(upperJoint);
+
+      const lowerJoint = new THREE.Mesh(jointGeometry, glaze);
+      lowerJoint.scale.set(1.28, 0.72, 0.86);
+      lowerJoint.position.set(1.00, -0.76, 0);
+      lowerJoint.rotation.z = 0.10;
+      lowerJoint.castShadow = true;
+      cup.add(lowerJoint);
+
+      // Key light exactly from spec.
+      const keyLight = new THREE.DirectionalLight(0xfff4e5, 1);
+      keyLight.position.set(-4.5, 6.0, 5.5);
+      keyLight.castShadow = true;
+      keyLight.shadow.mapSize.set(1024, 1024);
+      scene.add(keyLight);
+
+      // Low-energy neutral environment fill so PBR form remains readable.
+      const hemi = new THREE.HemisphereLight(0xf8f8ef, 0x76806f, 0.62);
+      scene.add(hemi);
+
+      // Soft contact surface.
+      const ground = new THREE.Mesh(
+        new THREE.CircleGeometry(4.2, 96),
+        new THREE.MeshStandardMaterial({
+          color: 0xe4e9de,
+          roughness: 1,
+          metalness: 0
+        })
+      );
+      ground.rotation.x = -Math.PI / 2;
+      ground.position.y = -1.22;
+      ground.receiveShadow = true;
+      scene.add(ground);
+
+      const controls = new OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.06;
+      controls.enablePan = false;
+      controls.minDistance = 3.4;
+      controls.maxDistance = 8.5;
+      controls.minPolarAngle = Math.PI * 0.18;
+      controls.maxPolarAngle = Math.PI * 0.78;
+      controls.target.set(0.15, 0.05, 0);
+
+      function applyGlaze() {
+        const color = new THREE.Color(glazeRadio.value);
+        glaze.color.copy(color);
+
+        // Keep inner surface perceptibly darker while derived from the same glaze.
+        innerGlaze.color.copy(color).multiplyScalar(0.94);
+
+        glaze.needsUpdate = true;
+        innerGlaze.needsUpdate = true;
+      }
+
+      glazeRadio.addEventListener("change", applyGlaze);
+      applyGlaze();
+
+      function resize() {
+        const width = canvas.clientWidth;
+        const height = canvas.clientHeight;
+        if (!width || !height) return;
+
+        renderer.setSize(width, height, false);
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+      }
+
+      const resizeObserver = new ResizeObserver(resize);
+      resizeObserver.observe(canvas);
+      resize();
+
+      let raf = 0;
+
+      function render() {
+        controls.update();
+        renderer.render(scene, camera);
+        raf = requestAnimationFrame(render);
+      }
+
+      render();
+
+      window.addEventListener("pagehide", () => {
+        cancelAnimationFrame(raf);
+        resizeObserver.disconnect();
+        controls.dispose();
+
+        cup.traverse(object => {
+          if (object.geometry) object.geometry.dispose();
+        });
+
+        ground.geometry.dispose();
+        ground.material.dispose();
+        glaze.dispose();
+        innerGlaze.dispose();
+        renderer.dispose();
+      }, { once: true });
+
+    } catch (error) {
+      console.error(error);
+      errorEl.classList.add("show");
+    }
+  </script>
+</body>
+</html>

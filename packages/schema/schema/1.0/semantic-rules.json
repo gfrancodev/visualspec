@@ -1,0 +1,65 @@
+{
+  "specification": "1.0",
+  "rules": [
+    {
+      "code": "VS-ID-001",
+      "severity": "error",
+      "summary": "Document IDs must be unique."
+    },
+    {
+      "code": "VS-REF-001",
+      "severity": "error",
+      "summary": "Identifier references must resolve to an object in the same document. Validators must not fetch external resources."
+    },
+    {
+      "code": "VS-TOKEN-001",
+      "severity": "error",
+      "summary": "Token alias graphs must be acyclic."
+    },
+    {
+      "code": "VS-TOKEN-002",
+      "severity": "error",
+      "summary": "Brace token references must name a token declared in the document."
+    },
+    {
+      "code": "VS-TIME-001",
+      "severity": "error",
+      "summary": "Timed intervals must end at or after they start. Clips must fit their timeline and must not overlap on the same track."
+    },
+    {
+      "code": "VS-GRAPH-001",
+      "severity": "error",
+      "summary": "Entity parts, component composition, scene instanceOf and joint parent graphs must be acyclic."
+    },
+    {
+      "code": "VS-STATE-001",
+      "severity": "error",
+      "summary": "State transitions must target a declared state."
+    },
+    {
+      "code": "VS-TOKEN-003",
+      "severity": "error",
+      "summary": "A token alias must target a token of the same type."
+    },
+    {
+      "code": "VS-MOTION-001",
+      "severity": "error",
+      "summary": "Non-essential motion must declare a reduced-motion alternative."
+    },
+    {
+      "code": "VS-MOTION-002",
+      "severity": "error",
+      "summary": "Keyframe offsets must be non-decreasing."
+    },
+    {
+      "code": "VS-FLOW-001",
+      "severity": "error",
+      "summary": "A flow initial state and its transitions must name states declared on that flow."
+    },
+    {
+      "code": "VS-PROV-001",
+      "severity": "error",
+      "summary": "A provenance path must be a JSON Pointer that exists in the document."
+    }
+  ]
+}

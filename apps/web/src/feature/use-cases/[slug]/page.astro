@@ -1,0 +1,81 @@
+---
+import Base from '@app/layouts/Base.astro';
+import { SpecWindow, jsonToSpecCodeHtml } from '@core';
+import { getUseCase, readUseCaseDocument } from '../catalog';
+
+interface Props {
+  slug: string;
+}
+
+const { slug } = Astro.props;
+const item = getUseCase(slug);
+if (!item) {
+  return Astro.redirect(`/404/?path=${encodeURIComponent(Astro.url.pathname)}`);
+}
+const doc = readUseCaseDocument(item.file);
+const pretty = JSON.stringify(doc, null, 2);
+const specCodeHtml = jsonToSpecCodeHtml(pretty);
+const openLabel =
+  item.artifact?.kind === 'pptx'
+    ? 'Download deck'
+    : item.artifact?.kind === 'pdf'
+      ? 'Open PDF'
+      : item.artifact?.kind === 'video'
+        ? 'Open video'
+        : 'Open artifact';
+---
+<Base
+  title={`${item.title} - Use Case`}
+  description={`Visual Spec document and agent implementation: ${item.title}.`}
+>
+  <div class="container">
+    <header class="page-head">
+      <div class="eyebrow">Use case</div>
+      <h1>{item.title}</h1>
+      <p>
+        Profiles: {item.profiles.join(', ')}
+        {item.modelLabel && (
+          <>
+            {' '}
+            · Generated with <span class="mono">{item.modelLabel}</span>
+          </>
+        )}
+      </p>
+      <div class="hero-actions" style="margin-top:18px">
+        <a class="button secondary small" href={`/examples/${item.file}`}>Download JSON <span>↓</span></a>
+        {item.ready && (
+          <a class="button secondary small" href={item.download} download={item.artifact?.kind === 'pptx' ? '' : undefined}>
+            {openLabel} <span>↗</span>
+          </a>
+        )}
+      </div>
+    </header>
+    {item.ready ? (
+      <div class="target-stage-shell">
+        <iframe
+          class="target-stage"
+          title={`${item.title} artifact preview`}
+          src={item.preview}
+          sandbox="allow-scripts allow-same-origin"
+        ></iframe>
+      </div>
+    ) : (
+      <p class="callout">The artifact for this document has not been published yet.</p>
+    )}
+    <header class="page-head" style="margin-top:48px">
+      <div class="eyebrow">Input</div>
+      <h2>Visual Spec document</h2>
+      <p class="mono">{item.file}</p>
+    </header>
+    <div class="code-block">
+      <button class="copy-button" type="button" data-copy-text={pretty}>Copy</button>
+      <SpecWindow caption={item.file} badge="JSON" variant="doc">
+        <pre class="spec-code" set:html={specCodeHtml}></pre>
+      </SpecWindow>
+    </div>
+  </div>
+  <script>
+    import { bindCopyButtons } from '@core/components/CopyButton';
+    bindCopyButtons();
+  </script>
+</Base>

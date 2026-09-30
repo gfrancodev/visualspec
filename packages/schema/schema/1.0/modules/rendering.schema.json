@@ -1,0 +1,237 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://visualspec.dev/schema/1.0/modules/rendering.schema.json",
+  "title": "Rendering",
+  "description": "Output requirements, capability negotiation, explicit fallbacks and platform overrides.",
+  "$defs": {
+    "capability": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/taxonomy"
+        },
+        "level": {
+          "enum": [
+            "required",
+            "preferred",
+            "optional",
+            "unsupported"
+          ]
+        },
+        "fallback": {
+          "type": "object",
+          "properties": {
+            "strategy": {
+              "enum": [
+                "omit",
+                "approximate",
+                "substitute",
+                "rasterize",
+                "flatten"
+              ]
+            },
+            "description": {
+              "type": "string",
+              "minLength": 1
+            },
+            "assetRef": {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+            },
+            "motionRef": {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+            },
+            "capability": {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/taxonomy"
+            }
+          },
+          "additionalProperties": false
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "name",
+        "level"
+      ],
+      "additionalProperties": false
+    },
+    "target": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "platform": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/taxonomy"
+        },
+        "width": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "pixelDensity": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "colorSpace": {
+          "enum": [
+            "srgb",
+            "display-p3",
+            "rec2020",
+            "linear"
+          ]
+        },
+        "colorSpaceFallback": {
+          "enum": [
+            "srgb",
+            "display-p3",
+            "rec2020",
+            "linear"
+          ]
+        },
+        "frameRate": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "aspectRatio": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "quality": {
+          "enum": [
+            "draft",
+            "preview",
+            "production",
+            "lossless"
+          ]
+        },
+        "format": {
+          "type": "string",
+          "minLength": 1
+        },
+        "capabilities": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/rendering.schema.json#/$defs/capability"
+          }
+        },
+        "profileRefs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/taxonomy"
+          },
+          "uniqueItems": true
+        },
+        "transparent": {
+          "type": "boolean"
+        },
+        "extensions": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/extensions"
+        }
+      },
+      "required": [
+        "id",
+        "platform"
+      ],
+      "additionalProperties": false
+    },
+    "rendering": {
+      "type": "object",
+      "properties": {
+        "targets": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/rendering.schema.json#/$defs/target"
+          },
+          "minItems": 1
+        },
+        "capabilities": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/rendering.schema.json#/$defs/capability"
+          }
+        },
+        "quality": {
+          "enum": [
+            "draft",
+            "preview",
+            "production",
+            "lossless"
+          ]
+        },
+        "deterministic": {
+          "type": "boolean"
+        },
+        "seed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "fallbackPolicy": {
+          "enum": [
+            "explicit-only",
+            "report-and-approximate",
+            "error"
+          ]
+        },
+        "background": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/appearance.schema.json#/$defs/color"
+        },
+        "extensions": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/extensions"
+        }
+      },
+      "additionalProperties": false
+    },
+    "override": {
+      "type": "object",
+      "properties": {
+        "platform": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/taxonomy"
+        },
+        "targetRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "layout": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/layout.schema.json#/$defs/layout"
+        },
+        "appearance": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/appearance.schema.json#/$defs/appearance"
+        },
+        "accessibility": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/accessibility.schema.json#/$defs/accessibility"
+        },
+        "componentRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "motionRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "capabilities": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/rendering.schema.json#/$defs/capability"
+          }
+        },
+        "extensions": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/extensions"
+        }
+      },
+      "required": [
+        "platform",
+        "targetRef",
+        "reason"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$ref": "#/$defs/rendering"
+}

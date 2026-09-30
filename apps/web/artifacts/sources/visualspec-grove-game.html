@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Grove HUD</title>
+<style>
+:root{--bg:#1c241c;--pill:#243024;--guide:#c4d68a;--alert:#d9ed94;--text:#f7f8f3;--ink:#20261f}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#1c241c;font-family:Inter,system-ui,sans-serif;color:var(--text)}
+body{touch-action:none}#game{position:relative;width:100%;height:100%}canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hud{position:absolute;z-index:5;left:max(16px,env(safe-area-inset-left));top:max(16px,env(safe-area-inset-top));width:min(390px,calc(100% - 32px));min-height:96px;padding:16px;border-radius:14px;background:var(--bg);display:flex;align-items:center;gap:12px;box-shadow:0 10px 30px #0003}
+.status{min-height:44px;padding:10px 16px;border-radius:999px;background:var(--pill);display:flex;align-items:center;gap:10px;font-weight:800;transition:background 180ms,color 180ms,opacity 180ms}
+.status:before{content:"";width:10px;height:10px;border-radius:50%;background:var(--guide)}
+.status.alert{background:var(--alert);color:var(--ink);animation:pulse 180ms ease-in-out 2 alternate}.status.alert:before{background:var(--ink)}
+@keyframes pulse{to{opacity:.72}}
+.hint{margin-left:auto;text-align:right;color:#b8c3ad;font-size:12px;line-height:1.35}
+.prompt{position:absolute;z-index:5;left:50%;bottom:max(26px,env(safe-area-inset-bottom));transform:translateX(-50%);padding:10px 15px;border-radius:999px;background:#1c241ce8;font-size:13px;font-weight:800;opacity:0;transition:opacity 160ms;pointer-events:none}.prompt.show{opacity:1}
+kbd{border:1px solid #ffffff3d;border-bottom-width:2px;border-radius:6px;padding:3px 7px;background:#ffffff12;font:inherit;font-size:11px}
+.intro{position:absolute;inset:0;z-index:10;display:grid;place-items:center;background:#1c241c;transition:opacity 260ms,visibility 260ms}.intro.hidden{opacity:0;visibility:hidden;pointer-events:none}.intro-inner{text-align:center;padding:28px}.intro h1{margin:0;color:var(--guide);font:600 clamp(48px,10vw,94px)/1 Georgia,serif}.intro p{color:#b8c3ad;margin:14px 0 22px}
+button{min-width:44px;min-height:44px;border:0;cursor:pointer;font:800 14px system-ui}.skip{border-radius:999px;padding:0 18px;background:var(--alert);color:var(--ink)}
+.mobile{position:absolute;z-index:6;left:0;right:0;bottom:max(18px,env(safe-area-inset-bottom));padding:0 18px;display:none;justify-content:space-between;align-items:end;pointer-events:none}.dpad,.action{pointer-events:auto}.dpad{display:grid;grid-template:54px 54px/54px 54px 54px;gap:7px}.dpad button,.action{width:54px;height:54px;padding:0;border-radius:16px;background:#1c241ce8;color:#fff;border:1px solid #ffffff24}.dpad .up{grid-column:2}.dpad .left{grid-row:2}.dpad .down{grid-row:2;grid-column:2}.dpad .right{grid-row:2;grid-column:3}.action{width:72px;height:72px;border-radius:50%;background:var(--alert);color:var(--ink);font-size:18px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+@media(pointer:coarse),(max-width:780px){.mobile{display:flex}.prompt{bottom:108px}.hint{display:none}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:1ms!important;transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<main id="game" aria-label="Grove game">
+  <canvas id="stage" aria-label="3D Grove"></canvas>
+  <section class="hud" aria-label="Game HUD">
+    <div id="status" class="status" role="status" aria-live="polite">Guide</div>
+    <div class="hint">Move: WASD / arrows<br>Interact: E</div>
+  </section>
+  <div id="prompt" class="prompt" aria-hidden="true"><kbd>E</kbd> Alert the Guide</div>
+  <section id="intro" class="intro">
+    <div class="intro-inner">
+      <h1>Grove</h1>
+      <p>Find the Guide in the afternoon grove.</p>
+      <button id="skip" class="skip" type="button">Skip intro</button>
+    </div>
+  </section>
+  <div class="mobile" aria-label="Touch controls">
+    <div class="dpad">
+      <button class="up" data-code="ArrowUp" aria-label="Move up">▲</button>
+      <button class="left" data-code="ArrowLeft" aria-label="Move left">◀</button>
+      <button class="down" data-code="ArrowDown" aria-label="Move down">▼</button>
+      <button class="right" data-code="ArrowRight" aria-label="Move right">▶</button>
+    </div>
+    <button id="action" class="action" type="button" aria-label="Interact">E</button>
+  </div>
+  <div id="announce" class="sr" aria-live="polite"></div>
+</main>
+<script type="module">
+const root=document.querySelector('#game'),canvas=document.querySelector('#stage'),statusEl=document.querySelector('#status'),promptEl=document.querySelector('#prompt'),intro=document.querySelector('#intro'),announce=document.querySelector('#announce');
+const keys=new Set();let introDone=false,near=false,busy=false;
+function endIntro(){if(introDone)return;introDone=true;intro.classList.add('hidden');announce.textContent='Explore the Grove and find the Guide.'}
+document.querySelector('#skip').addEventListener('click',endIntro);setTimeout(endIntro,3000);
+addEventListener('keydown',e=>{if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','KeyW','KeyA','KeyS','KeyD','KeyE','Escape'].includes(e.code))e.preventDefault();keys.add(e.code);if(e.code==='Escape')endIntro();if(e.code==='KeyE')alertGuide()},{passive:false});addEventListener('keyup',e=>keys.delete(e.code));
+document.querySelectorAll('[data-code]').forEach(b=>{const c=b.dataset.code;const on=e=>{e.preventDefault();keys.add(c)},off=e=>{e.preventDefault();keys.delete(c)};b.addEventListener('pointerdown',on);b.addEventListener('pointerup',off);b.addEventListener('pointercancel',off);b.addEventListener('pointerleave',off)});document.querySelector('#action').addEventListener('click',alertGuide);
+function setNear(v){if(v===near)return;near=v;promptEl.classList.toggle('show',v);promptEl.setAttribute('aria-hidden',String(!v))}
+function alertGuide(){if(!introDone||!near||busy)return;busy=true;statusEl.textContent='Guide · Alert';statusEl.classList.add('alert');announce.textContent='Guide entered alert state.';window.__alertEffect?.();setTimeout(()=>{statusEl.textContent='Guide';statusEl.classList.remove('alert');busy=false},720)}
+try{
+ const THREE=await import('https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js');
+ const renderer=new THREE.WebGLRenderer({canvas,antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.setClearColor(0x9dad7f);renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.shadowMap.enabled=true;
+ const scene=new THREE.Scene();scene.fog=new THREE.Fog(0x9dad7f,18,45);const camera=new THREE.PerspectiveCamera(52,1,.1,100);camera.position.set(0,7.7,10);
+ scene.add(new THREE.HemisphereLight(0xfff1ce,0x30432c,2));const sun=new THREE.DirectionalLight(0xffe0a2,2.5);sun.position.set(-8,12,6);sun.castShadow=true;scene.add(sun);
+ const ground=new THREE.Mesh(new THREE.PlaneGeometry(80,80),new THREE.MeshStandardMaterial({color:0x526246,roughness:1}));ground.rotation.x=-Math.PI/2;ground.receiveShadow=true;scene.add(ground);
+ const trunkMat=new THREE.MeshStandardMaterial({color:0x514a34,roughness:1});const leaves=[0x38513a,0x425d3c,0x4f6740].map(c=>new THREE.MeshStandardMaterial({color:c,roughness:1}));
+ for(let z=-18;z<=18;z+=4.5)for(let x=-18;x<=18;x+=4.5){if(Math.abs(x)<4.5&&Math.abs(z)<5.5)continue;const xx=x+Math.sin(x*3.1+z)*.8,zz=z+Math.cos(z*2.7-x)*.8,t=new THREE.Mesh(new THREE.CylinderGeometry(.18,.28,2.7,8),trunkMat),c=new THREE.Mesh(new THREE.ConeGeometry(1.25,3.7,10),leaves[Math.abs(Math.round(x+z))%3]);t.position.set(xx,1.35,zz);c.position.set(xx,3.75,zz);t.castShadow=c.castShadow=true;scene.add(t,c)}
+ const guideMat=new THREE.MeshBasicMaterial({color:0xc4d68a}),guide=new THREE.Mesh(new THREE.BoxGeometry(1.2,2.2,1.2),guideMat);guide.position.set(0,1.1,0);scene.add(guide);
+ const lc=document.createElement('canvas');lc.width=256;lc.height=96;const g=lc.getContext('2d');g.fillStyle='#243024';g.beginPath();g.roundRect(20,18,216,60,30);g.fill();g.fillStyle='#f7f8f3';g.font='700 30px system-ui';g.textAlign='center';g.textBaseline='middle';g.fillText('Guide',128,48);const tex=new THREE.CanvasTexture(lc),sprite=new THREE.Sprite(new THREE.SpriteMaterial({map:tex,transparent:true,depthTest:false}));sprite.position.set(0,2.9,0);sprite.scale.set(2.5,.94,1);scene.add(sprite);
+ const player=new THREE.Mesh(new THREE.CapsuleGeometry(.34,.55,6,10),new THREE.MeshStandardMaterial({color:0xf7f8f3,roughness:.8}));player.position.set(0,.62,7);player.castShadow=true;scene.add(player);
+ const ring=new THREE.Mesh(new THREE.RingGeometry(.42,.54,32),new THREE.MeshBasicMaterial({color:0x20261f,transparent:true,opacity:.42,side:THREE.DoubleSide}));ring.rotation.x=-Math.PI/2;ring.position.y=.01;scene.add(ring);
+ const pg=new THREE.SphereGeometry(.075,8,8),parts=Array.from({length:12},(_,i)=>{const m=new THREE.Mesh(pg,new THREE.MeshBasicMaterial({color:0xd9ed94,transparent:true}));m.visible=false;scene.add(m);return{m,v:new THREE.Vector3(),born:0}});let flash=0;
+ window.__alertEffect=()=>{const now=performance.now();flash=now+360;parts.forEach((p,i)=>{const a=i/12*Math.PI*2;p.m.position.set(Math.cos(a)*.5,1.2+(i%3)*.35,Math.sin(a)*.5);p.v.set(Math.cos(a)*1.8,1+(i%4)*.24,Math.sin(a)*1.8);p.m.material.opacity=1;p.m.visible=true;p.born=now})};
+ function resize(){const w=root.clientWidth,h=root.clientHeight;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix()}new ResizeObserver(resize).observe(root);resize();
+ const clock=new THREE.Clock(),mv=new THREE.Vector3(),camPos=new THREE.Vector3();
+ function frame(now){requestAnimationFrame(frame);const dt=Math.min(clock.getDelta(),.05);mv.set(0,0,0);if(keys.has('KeyW')||keys.has('ArrowUp'))mv.z--;if(keys.has('KeyS')||keys.has('ArrowDown'))mv.z++;if(keys.has('KeyA')||keys.has('ArrowLeft'))mv.x--;if(keys.has('KeyD')||keys.has('ArrowRight'))mv.x++;if(mv.lengthSq()){mv.normalize().multiplyScalar(4.1*dt);player.position.add(mv);player.position.x=THREE.MathUtils.clamp(player.position.x,-15,15);player.position.z=THREE.MathUtils.clamp(player.position.z,-15,15);player.rotation.y=Math.atan2(mv.x,mv.z)}ring.position.x=player.position.x;ring.position.z=player.position.z;setNear(player.position.distanceTo(guide.position)<2.8);camPos.set(player.position.x,7.7,player.position.z+9.2);camera.position.lerp(camPos,1-Math.pow(.002,dt));camera.lookAt(player.position.x,.8,player.position.z-2.3);guide.position.y=1.1+Math.sin(now*.0022)*.04;sprite.position.y=2.9+Math.sin(now*.0022)*.04;guideMat.color.set(now<flash&&(Math.floor(now/90)%2)?0xd9ed94:0xc4d68a);parts.forEach(p=>{if(!p.m.visible)return;const age=(now-p.born)/1000;if(age>.62){p.m.visible=false;return}p.m.position.addScaledVector(p.v,dt);p.v.y-=2.6*dt;p.m.material.opacity=Math.max(0,1-age/.62)});renderer.render(scene,camera)}requestAnimationFrame(frame);
+}catch(err){
+ console.error(err);const ctx=canvas.getContext('2d');function resize2(){const d=Math.min(devicePixelRatio,2);canvas.width=root.clientWidth*d;canvas.height=root.clientHeight*d;ctx.setTransform(d,0,0,d,0,0)}new ResizeObserver(resize2).observe(root);resize2();let px=0,py=7,last=performance.now(),flash=0;window.__alertEffect=()=>flash=performance.now()+360;function draw(now){requestAnimationFrame(draw);const dt=Math.min((now-last)/1000,.05);last=now;let dx=0,dy=0;if(keys.has('KeyW')||keys.has('ArrowUp'))dy--;if(keys.has('KeyS')||keys.has('ArrowDown'))dy++;if(keys.has('KeyA')||keys.has('ArrowLeft'))dx--;if(keys.has('KeyD')||keys.has('ArrowRight'))dx++;const l=Math.hypot(dx,dy)||1;px+=dx/l*4*dt;py+=dy/l*4*dt;px=Math.max(-15,Math.min(15,px));py=Math.max(-15,Math.min(15,py));setNear(Math.hypot(px,py)<2.8);const w=root.clientWidth,h=root.clientHeight,sy=h*.58;const grd=ctx.createLinearGradient(0,0,0,h);grd.addColorStop(0,'#a7b586');grd.addColorStop(.56,'#8f9d72');grd.addColorStop(.561,'#526246');grd.addColorStop(1,'#364532');ctx.fillStyle=grd;ctx.fillRect(0,0,w,h);ctx.fillStyle='#38513a';for(let i=0;i<24;i++){const x=(i*97)%w,y=sy-50-((i*37)%120);ctx.beginPath();ctx.moveTo(x,y-90);ctx.lineTo(x-38,y);ctx.lineTo(x+38,y);ctx.closePath();ctx.fill()}const s=Math.min(w,h)/28,gx=w/2-px*s,gy=sy-py*s*.55;ctx.fillStyle=now<flash?'#d9ed94':'#c4d68a';ctx.fillRect(gx-24,gy-55,48,55);ctx.fillStyle='#243024';ctx.beginPath();ctx.roundRect(gx-38,gy-92,76,26,13);ctx.fill();ctx.fillStyle='#f7f8f3';ctx.font='700 13px system-ui';ctx.textAlign='center';ctx.fillText('Guide',gx,gy-74);ctx.fillStyle='#f7f8f3';ctx.beginPath();ctx.arc(w/2,sy+50,12,0,Math.PI*2);ctx.fill()}requestAnimationFrame(draw)
+}
+</script>
+</body>
+</html>

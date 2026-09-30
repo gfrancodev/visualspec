@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://visualspec.dev/schema/1.0/profiles/illustration.schema.json",
+  "title": "Visual Spec 1.0 illustration profile",
+  "description": "Constraints applied when the illustration profile is selected. Combine profile schemas when a document selects more than one profile.",
+  "allOf": [
+    {
+      "$ref": "https://visualspec.dev/schema/1.0/schema.json"
+    },
+    {
+      "properties": {
+        "profiles": {
+          "contains": {
+            "const": "illustration"
+          }
+        }
+      }
+    }
+  ]
+}

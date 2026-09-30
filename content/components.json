@@ -1,0 +1,391 @@
+[
+  {
+    "kind": "action.button",
+    "title": "Button",
+    "summary": "A pressable control that performs a single activation action.",
+    "anatomy": [
+      { "name": "label", "required": true, "description": "Visible text or equivalent naming content for the action." },
+      { "name": "icon", "required": false, "description": "Optional graphic that accompanies or replaces the label; icon-only buttons still need an accessible name." }
+    ],
+    "states": ["default", "hover", "focus-visible", "pressed", "disabled", "loading"],
+    "keyboard": [
+      "Enter activates the button",
+      "Space activates the button"
+    ],
+    "accessibility": "Expose a button role with a clear accessible name from content or an explicit literal. Keep a visible focus indicator. Disabled buttons must not be activatable. Do not rely on color alone to convey the pressed or loading condition.",
+    "motion": "Press feedback may scale or darken briefly; under reduced motion, snap to the pressed appearance without bouncing.",
+    "mappings": {
+      "web": "Prefer native HTML button; ARIA role=button only when a native button cannot be used.",
+      "apple": "SwiftUI Button or UIKit UIButton with an explicit accessibility label when needed.",
+      "android": "Compose Button or Material Button; ensure contentDescription when icon-only."
+    }
+  },
+  {
+    "kind": "action.link",
+    "title": "Link",
+    "summary": "A navigation affordance that moves to another location or view.",
+    "anatomy": [
+      { "name": "label", "required": true, "description": "Visible destination name." },
+      { "name": "icon", "required": false, "description": "Optional leading or trailing icon." }
+    ],
+    "states": ["default", "hover", "focus-visible", "visited", "disabled"],
+    "keyboard": [
+      "Enter activates the link"
+    ],
+    "accessibility": "Expose a link role with a destination-oriented name. Distinguish links from buttons in semantics even when styled similarly. Disabled or inert links must not remain in the tab order as activatable controls.",
+    "motion": "Underline or color transitions may ease in; under reduced motion, apply the hover and focus styles immediately.",
+    "mappings": {
+      "web": "Prefer native HTML a with href; role=link only as a last resort.",
+      "apple": "SwiftUI Link or NavigationLink mapped to the platform navigation pattern.",
+      "android": "Compose TextButton/Clickable Text or Material navigation affordances with proper semantics."
+    }
+  },
+  {
+    "kind": "input.text-field",
+    "title": "Text field",
+    "summary": "A single-line or multi-line field for entering text.",
+    "anatomy": [
+      { "name": "label", "required": true, "description": "Visible label associated with the field." },
+      { "name": "input", "required": true, "description": "Editable text surface." },
+      { "name": "description", "required": false, "description": "Helper or instructional text." },
+      { "name": "error", "required": false, "description": "Validation message when the value is invalid." }
+    ],
+    "states": ["default", "hover", "focus-visible", "filled", "disabled", "read-only", "invalid"],
+    "keyboard": [
+      "Tab moves focus into and out of the field",
+      "Printable keys insert text when editable"
+    ],
+    "accessibility": "Provide an accessible name via the visible label relationship. Describe errors with a programmatic relationship to the input. Do not convey required or invalid status by color alone.",
+    "motion": "Caret and subtle focus ring transitions are acceptable; under reduced motion, show focus without pulsing.",
+    "mappings": {
+      "web": "Native input or textarea with associated label; aria-invalid and aria-describedby when needed.",
+      "apple": "SwiftUI TextField or TextEditor with labeled accessibility traits.",
+      "android": "Compose TextField or OutlinedTextField with supporting and error text semantics."
+    }
+  },
+  {
+    "kind": "input.checkbox",
+    "title": "Checkbox",
+    "summary": "A dual-state or tri-state control for selecting an option independently of others.",
+    "anatomy": [
+      { "name": "input", "required": true, "description": "The checkable box affordance." },
+      { "name": "label", "required": true, "description": "Visible text naming the option." }
+    ],
+    "states": ["default", "hover", "focus-visible", "checked", "unchecked", "mixed", "disabled"],
+    "keyboard": [
+      "Space toggles the checkbox when focused"
+    ],
+    "accessibility": "Expose a checkbox role with checked, unchecked, or mixed state. The name comes from the associated label. Group related checkboxes with a visible group label when they form a set.",
+    "motion": "Checkmark may draw in quickly; under reduced motion, set the checked glyph instantly.",
+    "mappings": {
+      "web": "Native input type=checkbox with label; aria-checked for custom mixed states.",
+      "apple": "SwiftUI Toggle with checkbox style or UIKit UISwitch alternatives only when the contract matches.",
+      "android": "Compose Checkbox with labeled semantics."
+    }
+  },
+  {
+    "kind": "input.radio",
+    "title": "Radio",
+    "summary": "A single-select option within a mutually exclusive group.",
+    "anatomy": [
+      { "name": "input", "required": true, "description": "The radio affordance." },
+      { "name": "label", "required": true, "description": "Visible text naming the option." },
+      { "name": "group-label", "required": true, "description": "Name of the mutually exclusive set." }
+    ],
+    "states": ["default", "hover", "focus-visible", "selected", "unselected", "disabled"],
+    "keyboard": [
+      "Arrow keys move selection within the group",
+      "Space selects the focused radio when appropriate for the platform pattern"
+    ],
+    "accessibility": "Expose radio semantics inside a radiogroup with a group name. Only one option in the group is selected. Arrow-key navigation must not jump out of the group unexpectedly.",
+    "motion": "Selection indicator may fade or scale slightly; under reduced motion, switch selection without animation.",
+    "mappings": {
+      "web": "Native input type=radio within a fieldset/legend or radiogroup pattern.",
+      "apple": "SwiftUI Picker with radio-group semantics or equivalent exclusive selection control.",
+      "android": "Compose RadioButton inside a RadioGroup."
+    }
+  },
+  {
+    "kind": "input.switch",
+    "title": "Switch",
+    "summary": "A binary toggle that immediately commits an on or off setting.",
+    "anatomy": [
+      { "name": "track", "required": true, "description": "Background track indicating off and on." },
+      { "name": "thumb", "required": true, "description": "Sliding thumb affordance." },
+      { "name": "label", "required": true, "description": "Visible name of the setting." }
+    ],
+    "states": ["default", "hover", "focus-visible", "on", "off", "disabled"],
+    "keyboard": [
+      "Space toggles the switch",
+      "Enter may toggle where the platform convention allows"
+    ],
+    "accessibility": "Expose a switch role with on/off state and a clear label. Do not use a switch for actions that only navigate; prefer a button or link for those cases.",
+    "motion": "Thumb travel may ease across the track; under reduced motion, jump to the on or off position.",
+    "mappings": {
+      "web": "Native checkbox styled as a switch with switch role, or a button with aria-checked when appropriate.",
+      "apple": "SwiftUI Toggle or UISwitch.",
+      "android": "Compose Switch."
+    }
+  },
+  {
+    "kind": "input.combobox",
+    "title": "Combobox",
+    "summary": "An editable input combined with a listbox of suggested or constrained options.",
+    "anatomy": [
+      { "name": "label", "required": true, "description": "Visible field label." },
+      { "name": "input", "required": true, "description": "Editable text field for filtering or free text." },
+      { "name": "trigger", "required": false, "description": "Optional button that expands the popup." },
+      { "name": "popup", "required": true, "description": "Popup surface hosting the listbox." },
+      { "name": "listbox", "required": true, "description": "List of selectable options." },
+      { "name": "option", "required": true, "description": "An individual selectable option." }
+    ],
+    "states": ["default", "hover", "focus-visible", "expanded", "collapsed", "disabled", "invalid"],
+    "keyboard": [
+      "Arrow keys move the active option in the listbox while preserving the editable input",
+      "Enter selects the active option",
+      "Escape collapses the popup without losing input focus unexpectedly",
+      "Printable keys edit the input value"
+    ],
+    "accessibility": "Preserve editable-text behavior while exposing combobox, listbox, and option relationships, including expanded state and the active descendant or focused option. The accessible name comes from the field label. Collapsing the popup must leave the user oriented in the input.",
+    "motion": "Popup may fade or slide a short distance; under reduced motion, show or hide the list instantly.",
+    "mappings": {
+      "web": "ARIA combobox pattern with native input plus listbox; prefer proven design-system comboboxes.",
+      "apple": "SwiftUI searchable picker or custom field + menu that keeps text editing intact.",
+      "android": "Compose ExposedDropdownMenuBox or equivalent editable dropdown pattern."
+    }
+  },
+  {
+    "kind": "navigation.tabs",
+    "title": "Tabs",
+    "summary": "A selection pattern that connects a tab list to corresponding tab panels.",
+    "anatomy": [
+      { "name": "tablist", "required": true, "description": "Container for tab controls." },
+      { "name": "tab", "required": true, "description": "Selectable tab control." },
+      { "name": "tabpanel", "required": true, "description": "Panel whose visibility follows the selected tab." }
+    ],
+    "states": ["default", "hover", "focus-visible", "selected", "disabled"],
+    "keyboard": [
+      "Arrow keys move focus among tabs according to orientation",
+      "In automatic activation, focus also selects and shows the panel",
+      "In manual activation, focus moves without selecting until Space or Enter activates",
+      "Home and End may jump to first and last tab when supported"
+    ],
+    "accessibility": "Distinguish selection from activation: selection identifies the current tab and visible panel; activation is the gesture that commits selection when the pattern is manual. Expose tab, tablist, and tabpanel relationships with correct orientation. Do not confuse this pattern with a top-level application tab bar that only performs navigation.",
+    "motion": "Panel crossfades or indicator slides may run on selection; under reduced motion, switch panels without sliding content.",
+    "mappings": {
+      "web": "ARIA tabs pattern or native design-system tabs with correct roles and keyboard mode.",
+      "apple": "SwiftUI TabView only when it matches in-page selection; otherwise a segmented picker or custom tabs.",
+      "android": "Compose TabRow / ScrollableTabRow with pager or panel binding."
+    }
+  },
+  {
+    "kind": "navigation.navbar",
+    "title": "Navbar",
+    "summary": "A landmark region for primary or secondary destination links across an application shell.",
+    "anatomy": [
+      { "name": "brand", "required": false, "description": "Product or site identity." },
+      { "name": "items", "required": true, "description": "Collection of navigation links or menus." },
+      { "name": "actions", "required": false, "description": "Utility actions such as search or account." }
+    ],
+    "states": ["default", "scrolled", "compact", "expanded"],
+    "keyboard": [
+      "Tab moves through interactive items",
+      "Enter activates the focused link or control"
+    ],
+    "accessibility": "Expose a navigation landmark with a clear name when multiple nav regions exist. Current page or section should be programmatically indicated. Compact menus must remain operable by keyboard when items collapse behind a trigger.",
+    "motion": "Collapse and expand transitions may animate height; under reduced motion, toggle layout without height animation.",
+    "mappings": {
+      "web": "nav landmark with links; disclosure button for compact menus.",
+      "apple": "SwiftUI NavigationBar / toolbar patterns appropriate to the platform idiom.",
+      "android": "Compose TopAppBar or navigation bar components."
+    }
+  },
+  {
+    "kind": "navigation.sidebar",
+    "title": "Sidebar",
+    "summary": "A persistent or dismissible side region for hierarchical navigation.",
+    "anatomy": [
+      { "name": "header", "required": false, "description": "Optional title or brand region." },
+      { "name": "items", "required": true, "description": "Hierarchical navigation items." },
+      { "name": "footer", "required": false, "description": "Secondary actions or metadata." }
+    ],
+    "states": ["default", "expanded", "collapsed", "overlay"],
+    "keyboard": [
+      "Tab and arrow keys move among items according to the tree or list pattern used",
+      "Enter activates the focused destination",
+      "Escape dismisses an overlay sidebar"
+    ],
+    "accessibility": "Provide a navigation landmark or complementary region with an accessible name. Overlay sidebars must manage focus while open and restore focus on close. Collapsed icon-only items still need names.",
+    "motion": "Width or slide transitions may ease; under reduced motion, snap between expanded and collapsed layouts.",
+    "mappings": {
+      "web": "nav or complementary with disclosure controls; dialog-like focus handling when modal overlay.",
+      "apple": "SwiftUI NavigationSplitView sidebar column.",
+      "android": "Compose ModalNavigationDrawer or permanent navigation rail/drawer."
+    }
+  },
+  {
+    "kind": "overlay.dialog",
+    "title": "Dialog",
+    "summary": "A modal or explicitly modality-declared overlay that interrupts the page for a focused task.",
+    "anatomy": [
+      { "name": "backdrop", "required": true, "description": "Dimmed or blocking layer behind the surface." },
+      { "name": "surface", "required": true, "description": "Dialog container." },
+      { "name": "title", "required": true, "description": "Accessible and visible title." },
+      { "name": "description", "required": false, "description": "Supporting explanation." },
+      { "name": "content", "required": false, "description": "Main body content." },
+      { "name": "actions", "required": false, "description": "Action buttons such as confirm and cancel." },
+      { "name": "close", "required": false, "description": "Explicit close control." }
+    ],
+    "states": ["default", "open", "opening", "closing", "closed"],
+    "keyboard": [
+      "Initial focus moves to the element declared by the focus contract when the dialog opens",
+      "Tab cycles inside the focus trap while open",
+      "Escape dismisses when escape dismissal is enabled",
+      "On close, focus restores to the previously focused trigger"
+    ],
+    "accessibility": "Modal dialogs must trap focus while open, set initial focus deliberately, allow Escape and/or backdrop dismissal when those mechanisms are part of the contract, and restore focus to the invoking control on close. Provide an accessible name from the title and optional description relationship. Do not leave inert background content reachable by keyboard or assistive technology while the modal is open.",
+    "motion": "Entrance may fade and scale the surface; under reduced motion, show the settled open state without springy motion while keeping focus behavior intact.",
+    "mappings": {
+      "web": "Native HTML dialog or ARIA dialog/alertdialog with documented focus management.",
+      "apple": "SwiftUI confirmationDialog/sheet/alert matched to modality; UIKit UIAlertController or modal presentation.",
+      "android": "Compose Dialog or AlertDialog with back-handler dismissal aligned to the contract."
+    }
+  },
+  {
+    "kind": "overlay.drawer",
+    "title": "Drawer",
+    "summary": "A panel that slides in from an edge to present supplementary UI.",
+    "anatomy": [
+      { "name": "backdrop", "required": false, "description": "Optional blocking layer for modal drawers." },
+      { "name": "surface", "required": true, "description": "Sliding panel surface." },
+      { "name": "title", "required": false, "description": "Drawer title." },
+      { "name": "content", "required": true, "description": "Primary drawer content." },
+      { "name": "close", "required": false, "description": "Explicit dismiss control." }
+    ],
+    "states": ["default", "open", "opening", "closing", "closed"],
+    "keyboard": [
+      "Escape dismisses when enabled",
+      "Tab moves through interactive content while open",
+      "Focus restores to the trigger on close for modal drawers"
+    ],
+    "accessibility": "Declare modality. Modal drawers need focus containment and restoration; non-modal drawers must not steal focus unexpectedly. Provide an accessible name and a clear dismiss mechanism.",
+    "motion": "Edge slide is expected; under reduced motion, fade or instant open/close without long travel.",
+    "mappings": {
+      "web": "Dialog-like pattern or complementary region depending on modality.",
+      "apple": "SwiftUI sheet or drawer-style presentation.",
+      "android": "Compose ModalBottomSheet or ModalNavigationDrawer as appropriate to edge and modality."
+    }
+  },
+  {
+    "kind": "overlay.popover",
+    "title": "Popover",
+    "summary": "A non-modal anchored overlay for lightweight additional UI.",
+    "anatomy": [
+      { "name": "anchor", "required": true, "description": "Element that owns the popover." },
+      { "name": "surface", "required": true, "description": "Floating surface." },
+      { "name": "content", "required": true, "description": "Popover body." }
+    ],
+    "states": ["default", "open", "closed"],
+    "keyboard": [
+      "Escape closes the popover",
+      "Tab may move into the surface when it contains focusable controls",
+      "Outside dismissal closes when enabled"
+    ],
+    "accessibility": "Keep non-modal behavior unless explicitly declared otherwise. Anchor and surface relationships must be programmatically exposed. Closing restores a predictable focus target, usually the anchor.",
+    "motion": "Short fade or anchored scale is common; under reduced motion, show and hide without scale.",
+    "mappings": {
+      "web": "ARIA popover pattern or anchored dialog without modal trapping when non-modal.",
+      "apple": "SwiftUI popover presentation.",
+      "android": "Compose Popup or DropdownMenu anchored to a trigger."
+    }
+  },
+  {
+    "kind": "overlay.tooltip",
+    "title": "Tooltip",
+    "summary": "A short descriptive overlay that clarifies a control without requiring commitment.",
+    "anatomy": [
+      { "name": "anchor", "required": true, "description": "Described control." },
+      { "name": "surface", "required": true, "description": "Tooltip text surface." }
+    ],
+    "states": ["default", "open", "closed"],
+    "keyboard": [
+      "Focusing the anchor may show the tooltip",
+      "Escape dismisses a visible tooltip"
+    ],
+    "accessibility": "Tooltips must not be the only path to essential information. Prefer accessible names on icon-only controls; use tooltips as supplemental descriptions. Pointer-only tooltips are insufficient for keyboard users.",
+    "motion": "Delay and fade are typical; under reduced motion, appear without fade delay beyond accessibility timing needs.",
+    "mappings": {
+      "web": "title only as a last resort; prefer accessible naming and aria-describedby patterns.",
+      "apple": "SwiftUI help or tooltip modifiers.",
+      "android": "Compose TooltipBox / plain tooltip APIs."
+    }
+  },
+  {
+    "kind": "feedback.toast",
+    "title": "Toast",
+    "summary": "A transient feedback message that confirms an outcome without blocking the entire UI.",
+    "anatomy": [
+      { "name": "message", "required": true, "description": "Primary feedback text." },
+      { "name": "action", "required": false, "description": "Optional follow-up action such as Undo." },
+      { "name": "close", "required": false, "description": "Manual dismiss control." }
+    ],
+    "states": ["default", "entering", "visible", "leaving"],
+    "keyboard": [
+      "Action and close controls are reachable by keyboard when present",
+      "Escape may dismiss when the toast is focusable or has a close control"
+    ],
+    "accessibility": "Announce the message through an appropriate live region or platform notification API without stealing focus unless the toast requires immediate interaction. Timeouts must give users enough time to read and act. Do not place critical errors only in ephemeral toasts.",
+    "motion": "Slide or fade in/out is common; under reduced motion, fade briefly or appear statically, preserving the settled message.",
+    "mappings": {
+      "web": "role=status or alert depending on urgency; avoid focus traps.",
+      "apple": "SwiftUI notice banners or system-style transient alerts.",
+      "android": "Snackbar or Toast APIs with action affordances when required."
+    }
+  },
+  {
+    "kind": "data.table",
+    "title": "Table",
+    "summary": "A tabular structure for comparing rows of related data across columns.",
+    "anatomy": [
+      { "name": "caption", "required": false, "description": "Visible or accessible table title." },
+      { "name": "columnheader", "required": true, "description": "Header cell describing a column." },
+      { "name": "row", "required": true, "description": "Data row." },
+      { "name": "cell", "required": true, "description": "Data cell." }
+    ],
+    "states": ["default", "sorted", "selected-row", "loading", "empty"],
+    "keyboard": [
+      "Tab moves to interactive cells and controls",
+      "Arrow keys may navigate grid-like interaction when a grid pattern is declared"
+    ],
+    "accessibility": "Expose table or grid semantics consistently with interaction. Associate headers with cells. Sortable headers must expose sort direction. Empty and loading states need text alternatives, not only spinners.",
+    "motion": "Row reordering or sort animations should be subtle; under reduced motion, update order without sliding rows.",
+    "mappings": {
+      "web": "Native table markup for tabular data; ARIA grid only when interaction requires it.",
+      "apple": "SwiftUI Table where available, or accessible list/grid alternatives.",
+      "android": "Compose table or lazy grid patterns with header semantics."
+    }
+  },
+  {
+    "kind": "container.card",
+    "title": "Card",
+    "summary": "A grouped surface that presents a single related unit of content and optional actions.",
+    "anatomy": [
+      { "name": "media", "required": false, "description": "Optional image or media header." },
+      { "name": "title", "required": false, "description": "Card title." },
+      { "name": "body", "required": true, "description": "Primary content." },
+      { "name": "actions", "required": false, "description": "Optional action row." }
+    ],
+    "states": ["default", "hover", "focus-visible", "selected", "disabled"],
+    "keyboard": [
+      "If the whole card is activatable, Enter activates it",
+      "Interactive children remain reachable by Tab"
+    ],
+    "accessibility": "Avoid nested conflicting interactive targets. If the card is a single control, give it one accessible name; if it contains multiple controls, do not also make the entire card a separate button without a clear pattern. Decorative media must not add redundant announcements.",
+    "motion": "Hover elevation or slight translate is optional; under reduced motion, change border or background without movement.",
+    "mappings": {
+      "web": "article or section grouping; button/link wrapping only when the entire card is one action.",
+      "apple": "SwiftUI GroupBox or custom card layout.",
+      "android": "Compose Card."
+    }
+  }
+]

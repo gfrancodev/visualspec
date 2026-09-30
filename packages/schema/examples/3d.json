@@ -1,0 +1,158 @@
+{
+  "$schema": "https://visualspec.dev/schema/1.0/schema.json",
+  "visualSpec": "1.0",
+  "metadata": {
+    "title": "Cup study",
+    "language": "en",
+    "status": "approved"
+  },
+  "profiles": [
+    "3d"
+  ],
+  "world": {
+    "id": "world.studio",
+    "name": "Studio",
+    "environment": {
+      "kind": "environment.interior",
+      "timeOfDay": "afternoon"
+    }
+  },
+  "entities": [
+    {
+      "id": "entity.cup",
+      "kind": "object.product",
+      "name": "Ceramic cup",
+      "lifecycle": "persistent"
+    }
+  ],
+  "materials": [
+    {
+      "id": "material.ceramic",
+      "model": "pbr-metallic-roughness",
+      "baseColor": "#f4f1ea",
+      "roughness": 0.45,
+      "metalness": 0
+    }
+  ],
+  "assets": [
+    {
+      "id": "asset.cup",
+      "type": "model",
+      "uri": "https://example.com/models/cup.glb",
+      "mediaType": "model/gltf-binary"
+    }
+  ],
+  "cameras": [
+    {
+      "id": "camera.orbit",
+      "type": "perspective",
+      "fieldOfView": 35,
+      "framing": "close-up"
+    }
+  ],
+  "lights": [
+    {
+      "id": "light.key",
+      "type": "directional",
+      "role": "key",
+      "color": "#fff4e5",
+      "intensity": 1
+    }
+  ],
+  "threeD": {
+    "sceneRefs": [
+      "scene.product"
+    ],
+    "assetRefs": [
+      "asset.cup"
+    ],
+    "skeletons": [
+      {
+        "id": "skeleton.cup",
+        "rootRef": "joint.root",
+        "joints": [
+          {
+            "id": "joint.root",
+            "name": "root"
+          },
+          {
+            "id": "joint.handle",
+            "name": "handle",
+            "parentRef": "joint.root"
+          }
+        ]
+      }
+    ],
+    "rigs": [
+      {
+        "id": "rig.cup",
+        "skeletonRef": "skeleton.cup"
+      }
+    ],
+    "meshes": [
+      {
+        "id": "mesh.cup",
+        "assetRef": "asset.cup",
+        "geometry": {
+          "type": "cylinder"
+        },
+        "materialRefs": [
+          "material.ceramic"
+        ],
+        "skeletonRef": "skeleton.cup",
+        "lod": [
+          {
+            "distance": 0,
+            "assetRef": "asset.cup",
+            "screenCoverage": 0.6
+          },
+          {
+            "distance": 4,
+            "screenCoverage": 0.15
+          }
+        ]
+      }
+    ]
+  },
+  "scenes": [
+    {
+      "id": "scene.product",
+      "kind": "3d",
+      "cameraRef": "camera.orbit",
+      "lightRefs": [
+        "light.key"
+      ],
+      "nodes": [
+        {
+          "id": "node.cup",
+          "kind": "mesh",
+          "entityRef": "entity.cup",
+          "materialRef": "material.ceramic"
+        }
+      ]
+    }
+  ],
+  "rendering": {
+    "targets": [
+      {
+        "id": "target.web",
+        "platform": "web",
+        "capabilities": [
+          {
+            "name": "scene.3d",
+            "level": "required"
+          },
+          {
+            "name": "mesh.pbr",
+            "level": "required",
+            "fallback": {
+              "strategy": "omit",
+              "description": "This preview draws the solid and its material color, not a path-traced mesh."
+            }
+          }
+        ]
+      }
+    ],
+    "fallbackPolicy": "report-and-approximate"
+  }
+}

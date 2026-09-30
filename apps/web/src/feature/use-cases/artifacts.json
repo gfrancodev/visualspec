@@ -1,0 +1,74 @@
+[
+  {
+    "slug": "hello",
+    "kind": "html",
+    "preview": "/targets/hello/index.html",
+    "download": "/targets/hello/index.html"
+  },
+  {
+    "slug": "ui",
+    "kind": "html",
+    "preview": "/targets/ui/index.html",
+    "download": "/targets/ui/index.html"
+  },
+  {
+    "slug": "image",
+    "kind": "model",
+    "preview": "/targets/image/index.html",
+    "download": "/targets/image/cup-study.glb"
+  },
+  {
+    "slug": "illustration",
+    "kind": "svg",
+    "preview": "/targets/illustration/index.html",
+    "download": "/targets/illustration/mark-study.svg"
+  },
+  {
+    "slug": "document",
+    "kind": "pdf",
+    "preview": "/targets/document/index.html",
+    "download": "/targets/document/field-notes.pdf"
+  },
+  {
+    "slug": "presentation",
+    "kind": "pptx",
+    "preview": "/targets/presentation/index.html",
+    "download": "/targets/presentation/intent-deck.pptx"
+  },
+  {
+    "slug": "video",
+    "kind": "video",
+    "preview": "/targets/video/index.html",
+    "download": "/targets/video/visualspec-video.mp4"
+  },
+  {
+    "slug": "motion-graphics",
+    "kind": "video",
+    "preview": "/targets/motion-graphics/index.html",
+    "download": "/targets/motion-graphics/visualspec-motion-graphics.mp4"
+  },
+  {
+    "slug": "3d",
+    "kind": "model",
+    "preview": "/targets/3d/index.html",
+    "download": "/targets/3d/cup-study.glb"
+  },
+  {
+    "slug": "game",
+    "kind": "html",
+    "preview": "/targets/game/index.html",
+    "download": "/targets/game/index.html"
+  },
+  {
+    "slug": "ui-3d",
+    "kind": "html",
+    "preview": "/targets/ui-3d/index.html",
+    "download": "/targets/ui-3d/index.html"
+  },
+  {
+    "slug": "presentation-video",
+    "kind": "video",
+    "preview": "/targets/presentation-video/index.html",
+    "download": "/targets/presentation-video/narrated-deck.mp4"
+  }
+]

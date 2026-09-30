@@ -1,0 +1,33 @@
+---
+import Base from '@app/layouts/Base.astro';
+import { DocAside } from '@core';
+import { loadRfc } from '../catalog';
+
+interface Props {
+  slug: string;
+}
+
+const { slug } = Astro.props;
+const rfc = loadRfc(slug);
+---
+<Base title={`${rfc.id}: ${rfc.title}`} description={`RFC ${rfc.id}: ${rfc.title}`}>
+  <div class="container doc-layout">
+    <DocAside current="rfcs" />
+    <div>
+    <header class="page-head">
+      <div class="eyebrow">RFC</div>
+      <h1>{rfc.title}</h1>
+      <div class="doc-meta">
+        <span>{rfc.id}</span>
+        <span>·</span>
+        <span>status: {rfc.status}</span>
+      </div>
+    </header>
+    <article class="prose" set:html={rfc.html}></article>
+    <nav class="doc-footer-nav">
+      <a href="/rfcs/">← All RFCs</a>
+      <span></span>
+    </nav>
+    </div>
+  </div>
+</Base>

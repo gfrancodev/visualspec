@@ -1,0 +1,162 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://visualspec.dev/schema/1.0/modules/materials.schema.json",
+  "title": "Materials",
+  "description": "Interoperable material intent, texture bindings and physically based surface parameters.",
+  "$defs": {
+    "texture": {
+      "type": "object",
+      "properties": {
+        "assetRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "channel": {
+          "enum": [
+            "r",
+            "g",
+            "b",
+            "a",
+            "rgb",
+            "rgba"
+          ]
+        },
+        "coordinateSet": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "scale": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/vector2"
+        },
+        "offset": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/vector2"
+        },
+        "rotation": {
+          "type": "number"
+        },
+        "wrap": {
+          "enum": [
+            "repeat",
+            "clamp",
+            "mirror"
+          ]
+        },
+        "filter": {
+          "enum": [
+            "nearest",
+            "linear",
+            "anisotropic"
+          ]
+        },
+        "strength": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "assetRef"
+      ],
+      "additionalProperties": false
+    },
+    "material": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "model": {
+          "enum": [
+            "pbr-metallic-roughness",
+            "pbr-specular-glossiness",
+            "unlit",
+            "toon",
+            "custom"
+          ]
+        },
+        "baseColor": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/appearance.schema.json#/$defs/color"
+        },
+        "metalness": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "roughness": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "normal": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/materials.schema.json#/$defs/texture"
+        },
+        "emissive": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/appearance.schema.json#/$defs/color"
+        },
+        "emissiveIntensity": {
+          "type": "number",
+          "minimum": 0
+        },
+        "opacity": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "transmission": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "ior": {
+          "type": "number",
+          "minimum": 1
+        },
+        "clearCoat": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "clearCoatRoughness": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "doubleSided": {
+          "type": "boolean"
+        },
+        "alphaMode": {
+          "enum": [
+            "opaque",
+            "mask",
+            "blend"
+          ]
+        },
+        "alphaCutoff": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "textures": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/materials.schema.json#/$defs/texture"
+          }
+        },
+        "assetRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "extensions": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/extensions"
+        }
+      },
+      "required": [
+        "id",
+        "model"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$ref": "#/$defs/material"
+}

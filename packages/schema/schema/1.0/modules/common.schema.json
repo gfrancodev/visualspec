@@ -1,0 +1,585 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://visualspec.dev/schema/1.0/modules/common.schema.json",
+  "title": "Common",
+  "description": "Shared constrained identifiers, values, units, bounds, provenance and extension payloads.",
+  "$defs": {
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Stable document-wide identifier; references resolve locally, never through network execution.",
+      "pattern": "^[A-Za-z_][A-Za-z0-9_.:/-]*$"
+    },
+    "taxonomy": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Open taxonomy. Standard terms and namespaced vendor terms are accepted.",
+      "pattern": "^[a-zA-Z][a-zA-Z0-9_-]*(?:[.:/][a-zA-Z0-9_-]+)*$"
+    },
+    "uri": {
+      "type": "string",
+      "format": "uri-reference",
+      "minLength": 1
+    },
+    "time": {
+      "anyOf": [
+        {
+          "type": "number",
+          "minimum": 0
+        },
+        {
+          "type": "string",
+          "pattern": "^(?:0|[0-9]+(?:\\.[0-9]+)?)(?:ms|s|f)$",
+          "description": "Nonnegative time in seconds (number), an ms/s/f string, or {value,unit}."
+        },
+        {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": "number",
+              "minimum": 0
+            },
+            "unit": {
+              "enum": [
+                "ms",
+                "s",
+                "f"
+              ]
+            }
+          },
+          "required": [
+            "value",
+            "unit"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "duration": {
+      "anyOf": [
+        {
+          "type": "number",
+          "minimum": 0
+        },
+        {
+          "type": "string",
+          "pattern": "^(?:0|[0-9]+(?:\\.[0-9]+)?)(?:ms|s|f)$"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": "number",
+              "minimum": 0
+            },
+            "unit": {
+              "enum": [
+                "ms",
+                "s",
+                "f"
+              ]
+            }
+          },
+          "required": [
+            "value",
+            "unit"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "delay": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "string",
+          "pattern": "^-?(?:0|[0-9]+(?:\\.[0-9]+)?)(?:ms|s|f)$"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": "number"
+            },
+            "unit": {
+              "enum": [
+                "ms",
+                "s",
+                "f"
+              ]
+            }
+          },
+          "required": [
+            "value",
+            "unit"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "dimension": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "string",
+          "pattern": "^-?[0-9]+(?:\\.[0-9]+)?(?:px|%|rem|em|pt|mm|cm|in|vw|vh|vmin|vmax|m)$"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": "number"
+            },
+            "unit": {
+              "enum": [
+                "px",
+                "%",
+                "rem",
+                "em",
+                "pt",
+                "mm",
+                "cm",
+                "in",
+                "vw",
+                "vh",
+                "m"
+              ]
+            },
+            "confidence": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "provenance": {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/provenance"
+            }
+          },
+          "required": [
+            "value",
+            "unit"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/tokenRef"
+        }
+      ]
+    },
+    "size": {
+      "anyOf": [
+        {
+          "type": "number",
+          "minimum": 0
+        },
+        {
+          "type": "string",
+          "pattern": "^[0-9]+(?:\\.[0-9]+)?(?:px|%|rem|em|pt|mm|cm|in|vw|vh|vmin|vmax|m)$"
+        },
+        {
+          "enum": [
+            "auto",
+            "fill",
+            "hug",
+            "min-content",
+            "max-content"
+          ]
+        },
+        {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/tokenRef"
+        }
+      ]
+    },
+    "tokenRef": {
+      "type": "string",
+      "pattern": "^\\{[A-Za-z_][A-Za-z0-9_.-]*\\}$"
+    },
+    "jsonValue": {
+      "anyOf": [
+        {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "null"
+          ]
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/jsonValue"
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/jsonValue"
+          }
+        }
+      ]
+    },
+    "extensions": {
+      "type": "object",
+      "description": "Only namespaced extension keys are allowed. Unknown optional extensions may be retained without interpretation.",
+      "propertyNames": {
+        "pattern": "^(?:x-[a-zA-Z0-9-]+(?:[.:/][a-zA-Z0-9_.-]+)*|[a-zA-Z][a-zA-Z0-9-]*\\.[a-zA-Z0-9_.-]+)$"
+      },
+      "additionalProperties": {
+        "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/jsonValue"
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "properties": {
+        "sourceRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "method": {
+          "enum": [
+            "explicit",
+            "measured",
+            "extracted",
+            "inferred",
+            "generated",
+            "defaulted",
+            "platform-derived",
+            "vision-inference",
+            "reference-derived"
+          ]
+        },
+        "tool": {
+          "type": "string",
+          "minLength": 1
+        },
+        "agent": {
+          "type": "string",
+          "minLength": 1
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "notes": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "method"
+      ],
+      "additionalProperties": false
+    },
+    "evidence": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "enum": [
+            "explicit",
+            "measured",
+            "extracted",
+            "inferred",
+            "generated",
+            "defaulted",
+            "platform-derived",
+            "unknown"
+          ]
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "provenance": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/provenance"
+        }
+      },
+      "required": [
+        "status"
+      ],
+      "additionalProperties": false
+    },
+    "vector2": {
+      "type": "object",
+      "properties": {
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "x",
+        "y"
+      ],
+      "additionalProperties": false
+    },
+    "vector3": {
+      "type": "object",
+      "properties": {
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        },
+        "z": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "x",
+        "y",
+        "z"
+      ],
+      "additionalProperties": false
+    },
+    "quaternion": {
+      "type": "object",
+      "properties": {
+        "x": {
+          "type": "number",
+          "minimum": -1,
+          "maximum": 1
+        },
+        "y": {
+          "type": "number",
+          "minimum": -1,
+          "maximum": 1
+        },
+        "z": {
+          "type": "number",
+          "minimum": -1,
+          "maximum": 1
+        },
+        "w": {
+          "type": "number",
+          "minimum": -1,
+          "maximum": 1
+        }
+      },
+      "required": [
+        "x",
+        "y",
+        "z",
+        "w"
+      ],
+      "additionalProperties": false
+    },
+    "bounds": {
+      "type": "object",
+      "properties": {
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        },
+        "z": {
+          "type": "number"
+        },
+        "width": {
+          "type": "number",
+          "minimum": 0
+        },
+        "height": {
+          "type": "number",
+          "minimum": 0
+        },
+        "depth": {
+          "type": "number",
+          "minimum": 0
+        },
+        "coordinateSpace": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/coordinateSpace"
+        }
+      },
+      "required": [
+        "x",
+        "y",
+        "width",
+        "height"
+      ],
+      "additionalProperties": false
+    },
+    "coordinateSpace": {
+      "enum": [
+        "absolute",
+        "normalized",
+        "local",
+        "parent",
+        "viewport",
+        "world",
+        "camera",
+        "screen",
+        "document"
+      ]
+    },
+    "viewport": {
+      "type": "object",
+      "properties": {
+        "width": {
+          "type": "number",
+          "minimum": 0
+        },
+        "height": {
+          "type": "number",
+          "minimum": 0
+        },
+        "pixelRatio": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "orientation": {
+          "enum": [
+            "portrait",
+            "landscape"
+          ]
+        }
+      },
+      "required": [
+        "width",
+        "height"
+      ],
+      "additionalProperties": false
+    },
+    "condition": {
+      "type": "object",
+      "description": "Declarative visual conditions only; no executable expressions or gameplay logic.",
+      "properties": {
+        "stateRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "eventRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "capability": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/taxonomy"
+        },
+        "equals": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "boolean"
+            }
+          ]
+        },
+        "not": {
+          "type": "boolean"
+        },
+        "all": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/condition"
+          },
+          "minItems": 1
+        },
+        "any": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/condition"
+          },
+          "minItems": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "language": {
+          "type": "string",
+          "pattern": "^[A-Za-z]{2,8}(?:-[A-Za-z0-9]{1,8})*$"
+        },
+        "authors": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "url": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/uri"
+              },
+              "email": {
+                "type": "string",
+                "format": "email"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "license": {
+          "type": "string",
+          "minLength": 1
+        },
+        "created": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "modified": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "status": {
+          "enum": [
+            "draft",
+            "review",
+            "approved",
+            "deprecated"
+          ]
+        },
+        "links": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/uri"
+          }
+        },
+        "extensions": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/extensions"
+        }
+      },
+      "required": [
+        "title"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

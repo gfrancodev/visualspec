@@ -1,0 +1,26 @@
+---
+import Base from '@app/layouts/Base.astro';
+import { loadProfiles } from './catalog';
+
+const profiles = loadProfiles();
+---
+<Base title="Profiles" description="Nine combinable Visual Spec profiles.">
+  <div class="container">
+    <header class="page-head">
+      <div class="eyebrow">Specializations</div>
+      <h1>Profiles</h1>
+      <p>Select a profile by the kind of visual artifact you describe. Combine profiles when an experience crosses media.</p>
+    </header>
+    <div class="index-list">
+      {profiles.map((p) => (
+        <a class="index-row" href={`/profiles/${p.id}/`}>
+          <div>
+            <div class="row-title">{p.title}</div>
+            <p>{p.description}</p>
+          </div>
+          <span class="mono">{p.id}</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</Base>

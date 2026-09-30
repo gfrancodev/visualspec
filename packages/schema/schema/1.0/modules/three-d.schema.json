@@ -1,0 +1,279 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://visualspec.dev/schema/1.0/modules/three-d.schema.json",
+  "title": "Three D",
+  "description": "3D scene intent, geometry instances, LOD, skeletons, skins, rigs and morph targets.",
+  "$defs": {
+    "joint": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parentRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "transform": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/geometry.schema.json#/$defs/transform"
+        },
+        "inverseBindMatrix": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "minItems": 16,
+          "maxItems": 16
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "additionalProperties": false
+    },
+    "skeleton": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "joints": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/three-d.schema.json#/$defs/joint"
+          },
+          "minItems": 1
+        },
+        "rootRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "extensions": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/extensions"
+        }
+      },
+      "required": [
+        "id",
+        "joints"
+      ],
+      "additionalProperties": false
+    },
+    "mesh": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "assetRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "geometry": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/geometry.schema.json#/$defs/geometry"
+        },
+        "materialRefs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+          },
+          "uniqueItems": true
+        },
+        "skeletonRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "skin": {
+          "type": "object",
+          "properties": {
+            "jointRefs": {
+              "type": "array",
+              "items": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+              },
+              "uniqueItems": true
+            },
+            "weightsAssetRef": {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+            },
+            "bindPoseAssetRef": {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+            }
+          },
+          "additionalProperties": false
+        },
+        "morphTargets": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "assetRef": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+              },
+              "weight": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "lod": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "distance": {
+                "type": "number",
+                "minimum": 0
+              },
+              "assetRef": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+              },
+              "meshRef": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+              },
+              "screenCoverage": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              }
+            },
+            "required": [
+              "distance"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "instanceRefs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+          },
+          "uniqueItems": true
+        },
+        "extensions": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/extensions"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "additionalProperties": false
+    },
+    "rig": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "skeletonRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "assetRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "controls": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+              },
+              "jointRefs": {
+                "type": "array",
+                "items": {
+                  "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+                },
+                "uniqueItems": true
+              },
+              "kind": {
+                "enum": [
+                  "fk",
+                  "ik",
+                  "look-at",
+                  "constraint"
+                ]
+              },
+              "targetRef": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+              }
+            },
+            "required": [
+              "id",
+              "kind"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "extensions": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/extensions"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "additionalProperties": false
+    },
+    "threeD": {
+      "type": "object",
+      "properties": {
+        "sceneRefs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+          },
+          "uniqueItems": true
+        },
+        "meshes": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/three-d.schema.json#/$defs/mesh"
+          }
+        },
+        "skeletons": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/three-d.schema.json#/$defs/skeleton"
+          }
+        },
+        "rigs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/three-d.schema.json#/$defs/rig"
+          }
+        },
+        "assetRefs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+          },
+          "uniqueItems": true
+        },
+        "animationRefs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+          },
+          "uniqueItems": true
+        },
+        "extensions": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/extensions"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "$ref": "#/$defs/threeD"
+}

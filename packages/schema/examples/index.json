@@ -1,0 +1,88 @@
+[
+  {
+    "file": "hello.json",
+    "title": "Hello Visual Spec",
+    "profiles": [
+      "ui"
+    ]
+  },
+  {
+    "file": "ui.json",
+    "title": "Checkout card",
+    "profiles": [
+      "ui"
+    ]
+  },
+  {
+    "file": "image.json",
+    "title": "Ceramic cup still",
+    "profiles": [
+      "image"
+    ]
+  },
+  {
+    "file": "illustration.json",
+    "title": "Mark study",
+    "profiles": [
+      "illustration"
+    ]
+  },
+  {
+    "file": "document.json",
+    "title": "Field notes",
+    "profiles": [
+      "document"
+    ]
+  },
+  {
+    "file": "presentation.json",
+    "title": "Intent deck",
+    "profiles": [
+      "presentation"
+    ]
+  },
+  {
+    "file": "video.json",
+    "title": "Four second still",
+    "profiles": [
+      "video"
+    ]
+  },
+  {
+    "file": "motion-graphics.json",
+    "title": "Title fade",
+    "profiles": [
+      "motion-graphics"
+    ]
+  },
+  {
+    "file": "3d.json",
+    "title": "Cup study",
+    "profiles": [
+      "3d"
+    ]
+  },
+  {
+    "file": "game.json",
+    "title": "Grove HUD",
+    "profiles": [
+      "game"
+    ]
+  },
+  {
+    "file": "ui-3d.json",
+    "title": "Product configurator",
+    "profiles": [
+      "ui",
+      "3d"
+    ]
+  },
+  {
+    "file": "presentation-video.json",
+    "title": "Narrated deck",
+    "profiles": [
+      "presentation",
+      "video"
+    ]
+  }
+]

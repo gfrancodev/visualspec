@@ -1,0 +1,451 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://visualspec.dev/schema/1.0/modules/layout.schema.json",
+  "title": "Layout",
+  "description": "Framework-independent layout, constraints, responsive rules and adaptive alternatives.",
+  "$defs": {
+    "insets": {
+      "anyOf": [
+        {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/dimension"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "top": {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/dimension"
+            },
+            "right": {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/dimension"
+            },
+            "bottom": {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/dimension"
+            },
+            "left": {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/dimension"
+            },
+            "start": {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/dimension"
+            },
+            "end": {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/dimension"
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "constraint": {
+      "type": "object",
+      "properties": {
+        "attribute": {
+          "enum": [
+            "left",
+            "right",
+            "top",
+            "bottom",
+            "width",
+            "height",
+            "center-x",
+            "center-y",
+            "baseline",
+            "aspect-ratio"
+          ]
+        },
+        "relation": {
+          "enum": [
+            "equal",
+            "less-than-or-equal",
+            "greater-than-or-equal"
+          ]
+        },
+        "targetRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "targetAttribute": {
+          "enum": [
+            "left",
+            "right",
+            "top",
+            "bottom",
+            "width",
+            "height",
+            "center-x",
+            "center-y",
+            "baseline"
+          ]
+        },
+        "constant": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/dimension"
+        },
+        "multiplier": {
+          "type": "number"
+        },
+        "priority": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000
+        }
+      },
+      "required": [
+        "attribute",
+        "relation"
+      ],
+      "additionalProperties": false
+    },
+    "layout": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "enum": [
+            "stack",
+            "row",
+            "column",
+            "grid",
+            "overlay",
+            "flow",
+            "absolute",
+            "constraint-based"
+          ]
+        },
+        "width": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/size"
+        },
+        "height": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/size"
+        },
+        "minWidth": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/size"
+        },
+        "maxWidth": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/size"
+        },
+        "minHeight": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/size"
+        },
+        "maxHeight": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/size"
+        },
+        "gap": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/dimension"
+        },
+        "rowGap": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/dimension"
+        },
+        "columnGap": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/dimension"
+        },
+        "padding": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/layout.schema.json#/$defs/insets"
+        },
+        "margin": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/layout.schema.json#/$defs/insets"
+        },
+        "align": {
+          "enum": [
+            "start",
+            "end",
+            "center",
+            "stretch",
+            "baseline"
+          ]
+        },
+        "justify": {
+          "enum": [
+            "start",
+            "end",
+            "center",
+            "space-between",
+            "space-around",
+            "space-evenly"
+          ]
+        },
+        "alignSelf": {
+          "enum": [
+            "auto",
+            "start",
+            "end",
+            "center",
+            "stretch",
+            "baseline"
+          ]
+        },
+        "wrap": {
+          "enum": [
+            "none",
+            "wrap",
+            "reverse"
+          ]
+        },
+        "columns": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/size"
+              },
+              "minItems": 1
+            }
+          ]
+        },
+        "rows": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/size"
+              },
+              "minItems": 1
+            }
+          ]
+        },
+        "column": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "row": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "columnSpan": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "rowSpan": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "grow": {
+          "type": "number",
+          "minimum": 0
+        },
+        "shrink": {
+          "type": "number",
+          "minimum": 0
+        },
+        "basis": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/size"
+        },
+        "aspectRatio": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "position": {
+          "enum": [
+            "flow",
+            "relative",
+            "absolute",
+            "fixed",
+            "sticky"
+          ]
+        },
+        "inset": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/layout.schema.json#/$defs/insets"
+        },
+        "zIndex": {
+          "type": "integer"
+        },
+        "clip": {
+          "type": "boolean"
+        },
+        "overflow": {
+          "enum": [
+            "visible",
+            "hidden",
+            "clip",
+            "scroll",
+            "auto"
+          ]
+        },
+        "scroll": {
+          "type": "object",
+          "properties": {
+            "axis": {
+              "enum": [
+                "x",
+                "y",
+                "both"
+              ]
+            },
+            "snap": {
+              "enum": [
+                "none",
+                "mandatory",
+                "proximity"
+              ]
+            },
+            "snapAlign": {
+              "enum": [
+                "start",
+                "center",
+                "end"
+              ]
+            },
+            "overscroll": {
+              "enum": [
+                "auto",
+                "contain",
+                "none"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        "constraints": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/layout.schema.json#/$defs/constraint"
+          }
+        },
+        "safeArea": {
+          "type": "boolean"
+        },
+        "direction": {
+          "enum": [
+            "ltr",
+            "rtl"
+          ]
+        },
+        "extensions": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/extensions"
+        }
+      },
+      "additionalProperties": false
+    },
+    "query": {
+      "type": "object",
+      "properties": {
+        "minWidth": {
+          "type": "number",
+          "minimum": 0
+        },
+        "maxWidth": {
+          "type": "number",
+          "minimum": 0
+        },
+        "minHeight": {
+          "type": "number",
+          "minimum": 0
+        },
+        "maxHeight": {
+          "type": "number",
+          "minimum": 0
+        },
+        "orientation": {
+          "enum": [
+            "portrait",
+            "landscape"
+          ]
+        },
+        "minAspectRatio": {
+          "type": "number",
+          "minimum": 0
+        },
+        "maxAspectRatio": {
+          "type": "number",
+          "minimum": 0
+        },
+        "pixelDensity": {
+          "type": "number",
+          "minimum": 0
+        },
+        "inputModality": {
+          "enum": [
+            "pointer",
+            "touch",
+            "keyboard",
+            "voice",
+            "gamepad",
+            "spatial"
+          ]
+        },
+        "windowClass": {
+          "enum": [
+            "compact",
+            "medium",
+            "expanded"
+          ]
+        },
+        "platform": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/taxonomy"
+        },
+        "capabilities": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/taxonomy"
+          },
+          "uniqueItems": true
+        },
+        "containerRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "safeArea": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "responsive": {
+      "type": "object",
+      "properties": {
+        "strategy": {
+          "enum": [
+            "responsive",
+            "adaptive"
+          ]
+        },
+        "rules": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "when": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/layout.schema.json#/$defs/query"
+              },
+              "layout": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/layout.schema.json#/$defs/layout"
+              },
+              "appearance": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/appearance.schema.json#/$defs/appearance"
+              },
+              "variant": {
+                "type": "string",
+                "minLength": 1
+              },
+              "visible": {
+                "type": "boolean"
+              },
+              "componentRef": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+              },
+              "priority": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 1000
+              }
+            },
+            "required": [
+              "when"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "strategy",
+        "rules"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$ref": "#/$defs/layout"
+}

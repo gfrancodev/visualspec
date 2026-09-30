@@ -1,0 +1,119 @@
+{
+  "$schema": "https://visualspec.dev/schema/1.0/schema.json",
+  "visualSpec": "1.0",
+  "metadata": {
+    "title": "Narrated deck",
+    "language": "en",
+    "status": "approved"
+  },
+  "profiles": [
+    "presentation",
+    "video"
+  ],
+  "cameras": [
+    {
+      "id": "camera.opener",
+      "type": "photographic",
+      "framing": "wide"
+    }
+  ],
+  "scenes": [
+    {
+      "id": "scene.opener",
+      "kind": "2d",
+      "viewport": {
+        "width": 960,
+        "height": 540
+      },
+      "background": "#20261f",
+      "layout": {
+        "type": "column",
+        "padding": 48,
+        "justify": "center"
+      },
+      "nodes": [
+        {
+          "id": "node.word",
+          "kind": "text",
+          "text": "Begin",
+          "appearance": {
+            "color": "#d9ed94",
+            "typography": {
+              "fontFamily": "Newsreader",
+              "fontSize": 72,
+              "fontWeight": 500
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "timelines": [
+    {
+      "id": "timeline.opener",
+      "duration": 6,
+      "fps": 24,
+      "tracks": [
+        {
+          "id": "track.picture",
+          "type": "video",
+          "clips": [
+            {
+              "id": "clip.opener",
+              "start": 0,
+              "duration": 6,
+              "sceneRef": "scene.opener",
+              "cameraRef": "camera.opener"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "id": "video.opener",
+      "timelineRef": "timeline.opener",
+      "shots": [
+        {
+          "id": "shot.opener",
+          "sceneRef": "scene.opener",
+          "cameraRef": "camera.opener",
+          "start": 0,
+          "duration": 6
+        }
+      ],
+      "captions": [
+        {
+          "id": "caption.begin",
+          "start": 0,
+          "end": 6,
+          "text": "Begin.",
+          "language": "en"
+        }
+      ]
+    }
+  ],
+  "presentations": [
+    {
+      "id": "presentation.narrated",
+      "slides": [
+        {
+          "id": "slide.opener",
+          "title": "Begin",
+          "sceneRef": "scene.opener",
+          "timelineRef": "timeline.opener",
+          "duration": 6,
+          "transition": {
+            "type": "fade",
+            "duration": {
+              "value": 300,
+              "unit": "ms"
+            }
+          },
+          "notes": "Hold the word, then cut."
+        }
+      ]
+    }
+  ]
+}

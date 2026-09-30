@@ -1,0 +1,52 @@
+<div class="theme-switch" id="theme-switch" role="group" aria-label="Color theme">
+  <button type="button" class="theme-switch-btn" data-theme-mode="light" aria-pressed="false" aria-label="Light theme">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="3.2" stroke="currentColor" stroke-width="1.4"/><path d="M8 1.2v1.6M8 13.2v1.6M1.2 8h1.6M13.2 8h1.6M3.1 3.1l1.1 1.1M11.8 11.8l1.1 1.1M3.1 12.9l1.1-1.1M11.8 4.2l1.1-1.1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+  </button>
+  <button type="button" class="theme-switch-btn" data-theme-mode="dark" aria-pressed="false" aria-label="Dark theme">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6.2 2.1a5.8 5.8 0 1 0 7.7 7.7A6.2 6.2 0 1 1 6.2 2.1Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+  </button>
+  <button type="button" class="theme-switch-btn" data-theme-mode="system" aria-pressed="false" aria-label="System theme">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="2" y="3" width="12" height="8.5" rx="1" stroke="currentColor" stroke-width="1.4"/><path d="M5.5 13h5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+  </button>
+</div>
+<script is:inline>
+  (function () {
+    var switchEl = document.getElementById('theme-switch');
+    var buttons = switchEl ? switchEl.querySelectorAll('.theme-switch-btn') : [];
+    function resolve(mode) {
+      if (mode === 'dark' || mode === 'light') return mode;
+      return matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    function syncButtons(mode) {
+      buttons.forEach(function (btn) {
+        var active = btn.getAttribute('data-theme-mode') === mode;
+        btn.classList.toggle('is-active', active);
+        btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+      });
+    }
+    function applyMode(mode) {
+      var theme = resolve(mode);
+      document.documentElement.dataset.theme = theme;
+      document.documentElement.dataset.themeMode = mode;
+      document.documentElement.style.colorScheme = theme;
+      localStorage.setItem('visualspec-theme', mode);
+      var meta = document.querySelector('meta[name="theme-color"]');
+      if (meta) meta.setAttribute('content', theme === 'dark' ? '#161a14' : '#f7f8f3');
+      syncButtons(mode);
+      window.dispatchEvent(new CustomEvent('visualspec-theme', { detail: theme }));
+    }
+    var stored = localStorage.getItem('visualspec-theme');
+    var initial = stored === 'dark' || stored === 'light' || stored === 'system' ? stored : 'system';
+    applyMode(initial);
+    if (matchMedia) {
+      matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function () {
+        if (document.documentElement.dataset.themeMode === 'system') applyMode('system');
+      });
+    }
+    buttons.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        applyMode(btn.getAttribute('data-theme-mode') || 'system');
+      });
+    });
+  })();
+</script>

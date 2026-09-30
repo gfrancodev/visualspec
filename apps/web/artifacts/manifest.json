@@ -1,0 +1,71 @@
+{
+  "hello": {
+    "kind": "html",
+    "source": "hello-visual-spec-clean.html"
+  },
+  "ui": {
+    "kind": "html",
+    "source": "visualspec-ui.html"
+  },
+  "image": {
+    "kind": "model",
+    "source": "visualspec-cup-study.glb",
+    "asset": "cup-study.glb",
+    "title": "Ceramic cup still"
+  },
+  "illustration": {
+    "kind": "svg",
+    "source": "visualspec-illustration.svg",
+    "asset": "mark-study.svg"
+  },
+  "document": {
+    "kind": "pdf",
+    "source": "visualspec-document.pdf",
+    "asset": "field-notes.pdf",
+    "title": "Field notes"
+  },
+  "presentation": {
+    "kind": "pptx",
+    "source": "visualspec-presentation-animated.pptx",
+    "asset": "intent-deck.pptx",
+    "title": "Intent deck"
+  },
+  "video": {
+    "kind": "video",
+    "source": "visualspec-video.mp4",
+    "asset": "visualspec-video.mp4",
+    "title": "Four second still",
+    "loop": false,
+    "muted": false
+  },
+  "motion-graphics": {
+    "kind": "video",
+    "source": "visualspec-motion-graphics.mp4",
+    "asset": "visualspec-motion-graphics.mp4",
+    "title": "Title fade",
+    "loop": true,
+    "muted": true
+  },
+  "3d": {
+    "kind": "model",
+    "source": "visualspec-cup-study.glb",
+    "asset": "cup-study.glb",
+    "title": "Cup study"
+  },
+  "game": {
+    "kind": "html",
+    "source": "visualspec-grove-game.html"
+  },
+  "ui-3d": {
+    "kind": "html",
+    "source": "visualspec-ui-3d-threejs-detailed.html"
+  },
+  "presentation-video": {
+    "kind": "video",
+    "source": "visualspec-video.mp4",
+    "asset": "narrated-deck.mp4",
+    "title": "Narrated deck",
+    "loop": false,
+    "muted": false
+  }
+}

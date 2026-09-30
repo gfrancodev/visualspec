@@ -1,0 +1,14 @@
+---
+import Base from '@app/layouts/Base.astro';
+import ReferenceExplorer from './explorer';
+---
+<Base title="Reference explorer" description="Build visual-reference descriptors without fetching sources.">
+  <div class="container">
+    <header class="page-head">
+      <div class="eyebrow">Locators</div>
+      <h1>Reference explorer</h1>
+      <p>Construct a visual-reference descriptor with kind, role, aspects and a kind-specific locator. No network calls are made.</p>
+    </header>
+    <ReferenceExplorer client:load />
+  </div>
+</Base>

@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://visualspec.dev/schema/1.0/modules/semantics.schema.json",
+  "title": "Semantics",
+  "description": "A semantic tree independently describes meaning, roles and reading relationships.",
+  "$defs": {
+    "semanticNode": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "role": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/taxonomy"
+        },
+        "name": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/accessibility.schema.json#/$defs/name"
+        },
+        "nodeRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "entityRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "componentRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "accessibility": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/accessibility.schema.json#/$defs/accessibility"
+        },
+        "children": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/semantics.schema.json#/$defs/semanticNode"
+          }
+        },
+        "relationshipRefs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+          },
+          "uniqueItems": true
+        },
+        "extensions": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/extensions"
+        }
+      },
+      "required": [
+        "id",
+        "role"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$ref": "#/$defs/semanticNode"
+}

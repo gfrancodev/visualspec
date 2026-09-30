@@ -1,0 +1,458 @@
+{
+  "$schema": "https://visualspec.dev/schema/1.0/schema.json",
+  "visualSpec": "1.0",
+  "metadata": {
+    "title": "Checkout card",
+    "language": "en",
+    "status": "approved"
+  },
+  "profiles": [
+    "ui"
+  ],
+  "visualLanguage": {
+    "personality": [
+      "calm",
+      "precise"
+    ],
+    "principles": [
+      "use-motion-for-causality"
+    ],
+    "density": "comfortable",
+    "geometry": {
+      "radius": 12,
+      "shape": "rounded-rectangle"
+    }
+  },
+  "tokens": {
+    "color.brand": {
+      "type": "color",
+      "value": "#4b621c"
+    },
+    "color.ink": {
+      "type": "color",
+      "value": "#22261f"
+    },
+    "color.on-brand": {
+      "type": "color",
+      "value": "#f7f8f3"
+    },
+    "color.surface": {
+      "type": "color",
+      "value": "#ffffff"
+    },
+    "button.background": {
+      "type": "color",
+      "value": "{color.brand}"
+    }
+  },
+  "components": [
+    {
+      "id": "component.primary-button",
+      "kind": "action.button",
+      "name": "Primary button",
+      "states": [
+        "default",
+        "hover",
+        "focus-visible",
+        "pressed",
+        "disabled"
+      ],
+      "anatomy": {
+        "slots": {
+          "label": {
+            "semanticRole": "text",
+            "required": true
+          }
+        }
+      },
+      "appearance": {
+        "fill": "{button.background}",
+        "color": "{color.on-brand}",
+        "radius": 8
+      },
+      "accessibility": {
+        "role": "button",
+        "name": {
+          "source": "content"
+        },
+        "keyboard": {
+          "activate": [
+            "Enter",
+            "Space"
+          ]
+        },
+        "focus": {
+          "strategy": "natural",
+          "visible": true
+        }
+      }
+    },
+    {
+      "id": "component.confirm",
+      "kind": "overlay.dialog",
+      "name": "Confirm dialog",
+      "anatomy": {
+        "slots": {
+          "title": {
+            "semanticRole": "heading",
+            "required": true
+          },
+          "description": {
+            "semanticRole": "text"
+          },
+          "actions": {
+            "semanticRole": "group",
+            "required": true
+          }
+        }
+      },
+      "behavior": {
+        "modal": true,
+        "modality": "modal",
+        "dismiss": [
+          "escape",
+          "backdrop"
+        ],
+        "focus": {
+          "strategy": "programmatic",
+          "trap": true,
+          "restoreOnClose": true,
+          "initial": "node.button"
+        }
+      },
+      "accessibility": {
+        "role": "dialog",
+        "name": {
+          "source": "literal",
+          "value": "Review order"
+        },
+        "focus": {
+          "strategy": "programmatic",
+          "trap": true,
+          "restoreOnClose": true
+        }
+      }
+    }
+  ],
+  "scenes": [
+    {
+      "id": "scene.checkout",
+      "kind": "2d",
+      "viewport": {
+        "width": 440,
+        "height": 520
+      },
+      "background": "#f7f8f3",
+      "layout": {
+        "type": "column",
+        "padding": 24,
+        "gap": 16,
+        "align": "stretch"
+      },
+      "nodes": [
+        {
+          "id": "node.card",
+          "kind": "container",
+          "layout": {
+            "type": "column",
+            "gap": 12,
+            "padding": 20,
+            "align": "stretch"
+          },
+          "responsive": {
+            "strategy": "responsive",
+            "rules": [
+              {
+                "when": {
+                  "maxWidth": 480
+                },
+                "layout": {
+                  "type": "column",
+                  "padding": 12,
+                  "gap": 8,
+                  "align": "stretch"
+                },
+                "priority": 1
+              }
+            ]
+          },
+          "appearance": {
+            "fill": "{color.surface}",
+            "radius": 12
+          },
+          "children": [
+            {
+              "id": "node.title",
+              "kind": "text",
+              "text": "Review order",
+              "appearance": {
+                "color": "{color.ink}",
+                "typography": {
+                  "fontFamily": "Newsreader",
+                  "fontSize": 22,
+                  "fontWeight": 650,
+                  "lineHeight": 1.15
+                }
+              }
+            },
+            {
+              "id": "node.copy",
+              "kind": "text",
+              "text": "Shipping arrives Tuesday.",
+              "appearance": {
+                "color": "#73786e",
+                "typography": {
+                  "fontFamily": "Manrope",
+                  "fontSize": 14,
+                  "fontWeight": 500,
+                  "lineHeight": 1.5
+                }
+              }
+            },
+            {
+              "id": "node.button",
+              "kind": "component",
+              "componentRef": "component.primary-button",
+              "text": "Continue"
+            }
+          ]
+        },
+        {
+          "id": "node.dialog",
+          "kind": "component",
+          "componentRef": "component.confirm",
+          "layout": {
+            "type": "column",
+            "padding": 16,
+            "gap": 8
+          },
+          "appearance": {
+            "fill": "#ffffff",
+            "radius": 12
+          },
+          "children": [
+            {
+              "id": "node.dialog-title",
+              "kind": "text",
+              "text": "Confirm checkout",
+              "appearance": {
+                "color": "{color.ink}",
+                "typography": {
+                  "fontFamily": "Newsreader",
+                  "fontSize": 18,
+                  "fontWeight": 600
+                }
+              }
+            },
+            {
+              "id": "node.dialog-body",
+              "kind": "text",
+              "text": "Continue is a visual action. It does not call an API.",
+              "appearance": {
+                "color": "#73786e",
+                "typography": {
+                  "fontSize": 13,
+                  "lineHeight": 1.4
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "accessibility": {
+    "readingOrder": [
+      "node.title",
+      "node.copy",
+      "node.button",
+      "node.dialog-title"
+    ],
+    "reducedMotion": "respect",
+    "conformance": "WCAG-2.2-AA"
+  },
+  "semantics": [
+    {
+      "id": "sem.title",
+      "role": "heading",
+      "name": {
+        "source": "content",
+        "value": "Review order"
+      },
+      "nodeRef": "node.title"
+    },
+    {
+      "id": "sem.button",
+      "role": "button",
+      "name": {
+        "source": "content",
+        "value": "Continue"
+      },
+      "nodeRef": "node.button",
+      "componentRef": "component.primary-button"
+    }
+  ],
+  "states": [
+    {
+      "id": "state.hover",
+      "name": "hover",
+      "targetRef": "node.button",
+      "appearance": {
+        "opacity": 0.92
+      }
+    },
+    {
+      "id": "state.pressed",
+      "name": "pressed",
+      "targetRef": "node.button",
+      "appearance": {
+        "opacity": 0.84
+      },
+      "transitions": [
+        {
+          "to": "state.hover",
+          "eventRef": "event.press"
+        }
+      ]
+    }
+  ],
+  "events": [
+    {
+      "id": "event.press",
+      "type": "activate",
+      "targetRef": "node.button",
+      "actionRefs": [
+        "action.confirm"
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "id": "action.confirm",
+      "verb": "open",
+      "targetRef": "component.confirm",
+      "intent": "Open the review dialog."
+    }
+  ],
+  "motion": [
+    {
+      "id": "motion.enter",
+      "targets": [
+        "node.card"
+      ],
+      "essential": false,
+      "timing": {
+        "duration": {
+          "value": 240,
+          "unit": "ms"
+        },
+        "delay": {
+          "value": 0,
+          "unit": "ms"
+        },
+        "iterations": 1,
+        "direction": "normal",
+        "fill": "forwards"
+      },
+      "easing": {
+        "type": "cubic-bezier",
+        "x1": 0.2,
+        "y1": 0,
+        "x2": 0,
+        "y2": 1
+      },
+      "tracks": [
+        {
+          "property": "appearance.opacity",
+          "from": 0,
+          "to": 1,
+          "keyframes": [
+            {
+              "offset": 0,
+              "value": 0
+            },
+            {
+              "offset": 1,
+              "values": {
+                "opacity": 1
+              }
+            }
+          ]
+        }
+      ],
+      "interrupt": {
+        "policy": "retarget",
+        "preserveVelocity": true
+      },
+      "reducedMotion": {
+        "strategy": "replace",
+        "duration": {
+          "value": 1,
+          "unit": "ms"
+        }
+      }
+    }
+  ],
+  "flows": [
+    {
+      "id": "flow.checkout",
+      "initial": "flow.review",
+      "states": [
+        {
+          "id": "flow.review",
+          "name": "review",
+          "sceneRef": "scene.checkout"
+        },
+        {
+          "id": "flow.done",
+          "name": "done",
+          "sceneRef": "scene.checkout"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "flow.review",
+          "to": "flow.done",
+          "eventRef": "event.press",
+          "motionRef": "motion.enter"
+        }
+      ]
+    }
+  ],
+  "provenance": [
+    {
+      "path": "/tokens/color.brand",
+      "method": "explicit",
+      "confidence": 1,
+      "source": "manual:brand"
+    }
+  ],
+  "platforms": [
+    "web"
+  ],
+  "rendering": {
+    "targets": [
+      {
+        "id": "target.web",
+        "platform": "web",
+        "width": 440,
+        "height": 320,
+        "capabilities": [
+          {
+            "name": "scene.2d",
+            "level": "required"
+          },
+          {
+            "name": "node.text",
+            "level": "required"
+          },
+          {
+            "name": "node.component",
+            "level": "required"
+          }
+        ]
+      }
+    ],
+    "fallbackPolicy": "report-and-approximate"
+  }
+}

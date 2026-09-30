@@ -1,0 +1,61 @@
+---
+import Base from '@app/layouts/Base.astro';
+import { listUseCases } from './catalog';
+
+const useCases = listUseCases();
+---
+<Base title="Use Cases" description="Examples of Visual Spec documents used as contracts for LLM-generated visual artifacts across every profile.">
+  <div class="container">
+    <header class="page-head">
+      <div class="eyebrow">Specification-driven generation</div>
+      <h1>Use Cases</h1>
+      <p>
+        These examples show how Visual Spec acts as the contract for visual intent: a validated document
+        describes what should exist, and a large language model reads that specification to produce the
+        finished artifact-UI, illustration, document, motion, 3D, or interactive output. Each card
+        pairs the source JSON with the generated result so you can inspect input and output side by side.
+      </p>
+    </header>
+    <div class="preview-grid">
+      {useCases.map((item) => (
+        <article class="preview-card">
+          <a class="preview-shot" href={`/use-cases/${item.slug}/`} aria-label={`Open ${item.title}`}>
+            {!item.ready ? (
+              <span class="preview-empty">Not written yet</span>
+            ) : item.artifactKind === 'pdf' ? (
+              <div class="preview-embed preview-embed--pdf" aria-hidden="true">
+                <embed src={`${item.download}#toolbar=0&navpanes=0`} type="application/pdf" title="" />
+              </div>
+            ) : item.artifactKind === 'pptx' ? (
+              <div class="preview-file preview-file--deck" aria-hidden="true">
+                <span class="preview-file-badge">PPTX</span>
+                <strong>{item.title}</strong>
+              </div>
+            ) : (
+              <iframe src={item.preview} title="" tabindex="-1" loading="lazy" sandbox="allow-scripts allow-same-origin"></iframe>
+            )}
+          </a>
+          <div class="preview-body">
+            <a class="row-title" href={`/use-cases/${item.slug}/`}>{item.title}</a>
+            <p>{item.profiles.join(' · ')}</p>
+            <div class="preview-meta">
+              {item.modelLabel && <span class="mono" title={item.target?.model}>{item.modelLabel}</span>}
+              <a
+                class="mono"
+                href={`/examples/${item.file}`}
+                download={item.file}
+              >
+                spec ↓
+              </a>
+              {item.ready && (
+                <a class="mono" href={item.download} target="_blank" rel="noreferrer">
+                  artifact ↗
+                </a>
+              )}
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</Base>

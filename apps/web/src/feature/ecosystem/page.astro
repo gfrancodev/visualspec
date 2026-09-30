@@ -1,0 +1,60 @@
+---
+import Base from '@app/layouts/Base.astro';
+import { DocAside } from '@core';
+---
+<Base title="Ecosystem" description="Honest status of Visual Spec tooling and adapters.">
+  <div class="container doc-layout">
+    <DocAside current="ecosystem" />
+    <div>
+    <header class="page-head">
+      <div class="eyebrow">Status</div>
+      <h1>Ecosystem</h1>
+      <p>What this repository ships today, and what remains an interoperability idea rather than a product claim.</p>
+    </header>
+
+    <div class="grid-2">
+      <article class="resource-card">
+        <div class="mono"><span class="status-dot"></span>SHIPPED</div>
+        <h3>Specification &amp; JSON Schema</h3>
+        <p>Normative text, modular Draft 2020-12 schemas, profile constraints, examples and checksums live in this repository and are published under <code>/schema/1.0/</code>.</p>
+        <a class="text-link" href="/specification/1.0/">Read the specification <span>↗</span></a>
+      </article>
+
+      <article class="resource-card">
+        <div class="mono"><span class="status-dot"></span>SHIPPED</div>
+        <h3>Validator CLI</h3>
+        <p>Structural and implemented semantic checks run locally with <code>npm run validate -- &lt;file&gt;</code>. Schemas resolve from packaged files without fetching reference content.</p>
+        <a class="text-link" href="/learn/conformance/">Conformance model <span>↗</span></a>
+      </article>
+
+      <article class="resource-card">
+        <div class="mono"><span class="status-dot"></span>SHIPPED</div>
+        <h3>Generated pages</h3>
+        <p>Agent-built HTML targets from the example documents. They illustrate consumption of Visual Spec, not runtime conformance or a full renderer.</p>
+        <a class="text-link" href="/use-cases/">Browse use cases <span>↗</span></a>
+      </article>
+
+      <article class="resource-card">
+        <div class="mono"><span class="status-dot"></span>SHIPPED</div>
+        <h3>Reference explorer</h3>
+        <p>Build visual-reference descriptors and locators for websites, images, video, Figma, PDFs and more. It does not fetch or verify external sources.</p>
+        <a class="text-link" href="/reference-explorer/">Open explorer <span>↗</span></a>
+      </article>
+    </div>
+
+    <section class="schema-section">
+      <h2>Adapters</h2>
+      <div class="callout">
+        <strong>None shipped in this release.</strong> Platform mappings in the component catalog are informative design guidance. Visual Spec does not claim React, Swift, Unity or Android adapters are implemented.
+      </div>
+      <p>
+        An adapter should begin with a capability declaration: the format versions, profiles, component kinds, layout modes, motion features and accessibility contracts it supports.
+        Unsupported required capabilities must be reported rather than silently dropped. Approximations need an inspectable record of what changed.
+      </p>
+      <p>
+        Read the <a href="/learn/adapter-guide/">adapter guide</a> and propose normative interoperability changes through the <a href="/rfcs/">RFC process</a>.
+      </p>
+    </section>
+    </div>
+  </div>
+</Base>

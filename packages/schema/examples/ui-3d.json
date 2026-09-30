@@ -1,0 +1,130 @@
+{
+  "$schema": "https://visualspec.dev/schema/1.0/schema.json",
+  "visualSpec": "1.0",
+  "metadata": {
+    "title": "Product configurator",
+    "language": "en",
+    "status": "approved"
+  },
+  "profiles": [
+    "ui",
+    "3d"
+  ],
+  "tokens": {
+    "color.glaze": {
+      "type": "color",
+      "value": "#d9ed94"
+    }
+  },
+  "components": [
+    {
+      "id": "component.swatch",
+      "kind": "input.radio",
+      "name": "Glaze",
+      "appearance": {
+        "fill": "{color.glaze}",
+        "radius": 999
+      },
+      "accessibility": {
+        "role": "radio",
+        "name": {
+          "source": "literal",
+          "value": "Glaze"
+        }
+      }
+    }
+  ],
+  "entities": [
+    {
+      "id": "entity.cup",
+      "kind": "object.product",
+      "name": "Configurable cup"
+    }
+  ],
+  "materials": [
+    {
+      "id": "material.glaze",
+      "model": "pbr-metallic-roughness",
+      "baseColor": "{color.glaze}",
+      "roughness": 0.2,
+      "metalness": 0
+    }
+  ],
+  "lights": [
+    {
+      "id": "light.key",
+      "type": "directional",
+      "role": "key",
+      "color": "#fff4e5",
+      "intensity": 1
+    }
+  ],
+  "threeD": {
+    "sceneRefs": [
+      "scene.stage"
+    ],
+    "meshes": [
+      {
+        "id": "mesh.cup",
+        "geometry": {
+          "type": "cylinder"
+        },
+        "materialRefs": [
+          "material.glaze"
+        ]
+      }
+    ]
+  },
+  "semantics": [
+    {
+      "id": "sem.swatch",
+      "role": "radio",
+      "name": {
+        "source": "literal",
+        "value": "Glaze"
+      },
+      "nodeRef": "node.swatch",
+      "componentRef": "component.swatch"
+    }
+  ],
+  "scenes": [
+    {
+      "id": "scene.stage",
+      "kind": "3d",
+      "lightRefs": [
+        "light.key"
+      ],
+      "nodes": [
+        {
+          "id": "node.cup",
+          "kind": "mesh",
+          "entityRef": "entity.cup",
+          "materialRef": "material.glaze"
+        }
+      ]
+    },
+    {
+      "id": "scene.controls",
+      "kind": "2d",
+      "viewport": {
+        "width": 360,
+        "height": 88
+      },
+      "background": "#f7f8f3",
+      "layout": {
+        "type": "row",
+        "padding": 16,
+        "align": "center",
+        "gap": 12
+      },
+      "nodes": [
+        {
+          "id": "node.swatch",
+          "kind": "component",
+          "componentRef": "component.swatch",
+          "text": "Glaze"
+        }
+      ]
+    }
+  ]
+}

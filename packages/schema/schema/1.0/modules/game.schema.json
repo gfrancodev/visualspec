@@ -1,0 +1,359 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://visualspec.dev/schema/1.0/modules/game.schema.json",
+  "title": "Game",
+  "description": "Visual-only game profile: levels, HUD, characters, animation controllers, spatial UI and cutscenes.",
+  "$defs": {
+    "spatialUI": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "enum": [
+            "world-space",
+            "screen-space",
+            "anchored",
+            "entity-attached"
+          ]
+        },
+        "anchorRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "billboard": {
+          "enum": [
+            "none",
+            "camera",
+            "axis-y"
+          ]
+        },
+        "occlusion": {
+          "enum": [
+            "depth-test",
+            "always-visible",
+            "fade"
+          ]
+        },
+        "scaleMode": {
+          "enum": [
+            "world",
+            "screen",
+            "distance"
+          ]
+        },
+        "interaction": {
+          "enum": [
+            "pointer",
+            "gaze",
+            "ray",
+            "direct",
+            "none"
+          ]
+        },
+        "distance": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "mode"
+      ],
+      "additionalProperties": false
+    },
+    "character": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "entityRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "rigRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "skeletonRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "animationController": {
+          "type": "object",
+          "properties": {
+            "initialState": {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+            },
+            "states": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "motionRef": {
+                    "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+                  },
+                  "assetRef": {
+                    "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+                  },
+                  "speed": {
+                    "type": "number",
+                    "minimum": 0
+                  },
+                  "loop": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "id",
+                  "name"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "transitions": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "from": {
+                    "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+                  },
+                  "to": {
+                    "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+                  },
+                  "duration": {
+                    "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/duration"
+                  },
+                  "blend": {
+                    "enum": [
+                      "linear",
+                      "crossfade",
+                      "additive"
+                    ]
+                  },
+                  "eventRef": {
+                    "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+                  }
+                },
+                "required": [
+                  "from",
+                  "to"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "visualStateMappings": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "stateRef": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+              },
+              "motionRef": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+              },
+              "effectRefs": {
+                "type": "array",
+                "items": {
+                  "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+                },
+                "uniqueItems": true
+              },
+              "appearance": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/appearance.schema.json#/$defs/appearance"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "extensions": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/extensions"
+        }
+      },
+      "required": [
+        "id",
+        "entityRef"
+      ],
+      "additionalProperties": false
+    },
+    "level": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sceneRefs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+          },
+          "uniqueItems": true
+        },
+        "areas": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+              },
+              "sceneRef": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+              },
+              "bounds": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/bounds"
+              },
+              "environment": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/world.schema.json#/$defs/environment"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "environment": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/world.schema.json#/$defs/environment"
+        },
+        "extensions": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/extensions"
+        }
+      },
+      "required": [
+        "id",
+        "sceneRefs"
+      ],
+      "additionalProperties": false
+    },
+    "game": {
+      "type": "object",
+      "properties": {
+        "worldRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "levels": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/game.schema.json#/$defs/level"
+          }
+        },
+        "characters": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/game.schema.json#/$defs/character"
+          }
+        },
+        "hud": {
+          "type": "object",
+          "properties": {
+            "sceneRef": {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+            },
+            "componentRefs": {
+              "type": "array",
+              "items": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+              },
+              "uniqueItems": true
+            },
+            "safeArea": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        },
+        "cameraRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "visualStates": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+              },
+              "externalName": {
+                "type": "string",
+                "minLength": 1
+              },
+              "stateRefs": {
+                "type": "array",
+                "items": {
+                  "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+                },
+                "uniqueItems": true
+              },
+              "actionRefs": {
+                "type": "array",
+                "items": {
+                  "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+                },
+                "uniqueItems": true
+              },
+              "effectRefs": {
+                "type": "array",
+                "items": {
+                  "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+                },
+                "uniqueItems": true
+              }
+            },
+            "required": [
+              "id",
+              "externalName"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "cutscenes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+              },
+              "timelineRef": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+              },
+              "skippable": {
+                "type": "boolean"
+              },
+              "restoreCamera": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "id",
+              "timelineRef"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "spatialUI": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/game.schema.json#/$defs/spatialUI"
+          }
+        },
+        "extensions": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/extensions"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "$ref": "#/$defs/game"
+}

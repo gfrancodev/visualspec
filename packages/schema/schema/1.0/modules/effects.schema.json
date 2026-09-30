@@ -1,0 +1,185 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://visualspec.dev/schema/1.0/modules/effects.schema.json",
+  "title": "Effects",
+  "description": "Reusable visual effects, particle systems and post-processing intent.",
+  "$defs": {
+    "effect": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "type": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/taxonomy"
+        },
+        "targetRefs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+          },
+          "uniqueItems": true
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "assetRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "duration": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/duration"
+        },
+        "blend": {
+          "enum": [
+            "normal",
+            "add",
+            "multiply",
+            "screen"
+          ]
+        },
+        "particles": {
+          "type": "object",
+          "properties": {
+            "count": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "rate": {
+              "type": "number",
+              "minimum": 0
+            },
+            "lifetime": {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/duration"
+            },
+            "size": {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/size"
+            },
+            "velocity": {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/vector3"
+            },
+            "spread": {
+              "type": "number",
+              "minimum": 0
+            },
+            "color": {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/appearance.schema.json#/$defs/color"
+            },
+            "seed": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "additionalProperties": false
+        },
+        "trail": {
+          "type": "object",
+          "properties": {
+            "length": {
+              "type": "number",
+              "minimum": 0
+            },
+            "width": {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/size"
+            },
+            "color": {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/appearance.schema.json#/$defs/color"
+            }
+          },
+          "additionalProperties": false
+        },
+        "postProcessing": {
+          "type": "object",
+          "properties": {
+            "exposure": {
+              "type": "number"
+            },
+            "contrast": {
+              "type": "number",
+              "minimum": 0
+            },
+            "saturation": {
+              "type": "number",
+              "minimum": 0
+            },
+            "temperature": {
+              "type": "number"
+            },
+            "tint": {
+              "type": "number"
+            },
+            "bloom": {
+              "type": "number",
+              "minimum": 0
+            },
+            "vignette": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "grain": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "chromaticAberration": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "lutAssetRef": {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+            },
+            "toneMapping": {
+              "enum": [
+                "none",
+                "linear",
+                "reinhard",
+                "aces",
+                "filmic"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        "shaderAssetRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "parameters": {
+          "type": "object",
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/vector2"
+              },
+              {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/vector3"
+              },
+              {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/appearance.schema.json#/$defs/color"
+              }
+            ]
+          }
+        },
+        "extensions": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/extensions"
+        }
+      },
+      "required": [
+        "id",
+        "type"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$ref": "#/$defs/effect"
+}

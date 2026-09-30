@@ -1,0 +1,274 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://visualspec.dev/schema/1.0/modules/timeline.schema.json",
+  "title": "Timeline",
+  "description": "Tracks, clips, markers, editorial transitions and audio-visual synchronization.",
+  "$defs": {
+    "transition": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/taxonomy"
+        },
+        "duration": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/duration"
+        },
+        "easing": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/motion.schema.json#/$defs/easing"
+        },
+        "motionRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        }
+      },
+      "required": [
+        "type",
+        "duration"
+      ],
+      "additionalProperties": false
+    },
+    "clip": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "start": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/time"
+        },
+        "duration": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/duration"
+        },
+        "sourceIn": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/time"
+        },
+        "sourceOut": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/time"
+        },
+        "sceneRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "assetRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "entityRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "motionRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "actionRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "cameraRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "lightRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "effectRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "speed": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "timeRemapping": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "time": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/time"
+              },
+              "sourceTime": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/time"
+              }
+            },
+            "required": [
+              "time",
+              "sourceTime"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 2
+        },
+        "transitionIn": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/timeline.schema.json#/$defs/transition"
+        },
+        "transitionOut": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/timeline.schema.json#/$defs/transition"
+        },
+        "volume": {
+          "type": "number",
+          "minimum": 0
+        },
+        "muted": {
+          "type": "boolean"
+        },
+        "extensions": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/extensions"
+        }
+      },
+      "required": [
+        "id",
+        "start",
+        "duration"
+      ],
+      "additionalProperties": false
+    },
+    "track": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "type": {
+          "enum": [
+            "visual",
+            "video",
+            "audio",
+            "motion",
+            "action",
+            "camera",
+            "lighting",
+            "entity",
+            "effect",
+            "caption",
+            "subtitle"
+          ]
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "clips": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/timeline.schema.json#/$defs/clip"
+          }
+        },
+        "muted": {
+          "type": "boolean"
+        },
+        "locked": {
+          "type": "boolean"
+        },
+        "layer": {
+          "type": "integer"
+        },
+        "extensions": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/extensions"
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "clips"
+      ],
+      "additionalProperties": false
+    },
+    "marker": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "time": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/time"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "actionRefs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+          },
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "id",
+        "time"
+      ],
+      "additionalProperties": false
+    },
+    "timeline": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "duration": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/duration"
+        },
+        "fps": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "tracks": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/timeline.schema.json#/$defs/track"
+          }
+        },
+        "markers": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/timeline.schema.json#/$defs/marker"
+          }
+        },
+        "loop": {
+          "type": "boolean"
+        },
+        "synchronization": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "sourceRef": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+              },
+              "targetRef": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+              },
+              "mode": {
+                "enum": [
+                  "beat",
+                  "cue",
+                  "dialogue",
+                  "timecode",
+                  "marker"
+                ]
+              },
+              "offset": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/time"
+              }
+            },
+            "required": [
+              "sourceRef",
+              "targetRef",
+              "mode"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "extensions": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/extensions"
+        }
+      },
+      "required": [
+        "id",
+        "duration",
+        "tracks"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$ref": "#/$defs/timeline"
+}

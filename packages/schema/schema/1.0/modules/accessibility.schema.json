@@ -1,0 +1,569 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://visualspec.dev/schema/1.0/modules/accessibility.schema.json",
+  "title": "Accessibility",
+  "description": "Cross-platform semantic accessibility contract, with explicit native-first ARIA mappings.",
+  "$defs": {
+    "name": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "type": "object",
+          "properties": {
+            "source": {
+              "enum": [
+                "content",
+                "literal",
+                "reference",
+                "derived"
+              ]
+            },
+            "value": {
+              "type": "string",
+              "minLength": 1
+            },
+            "targetRef": {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+            },
+            "required": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "source"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "focus": {
+      "type": "object",
+      "properties": {
+        "strategy": {
+          "enum": [
+            "natural",
+            "roving",
+            "active-descendant",
+            "programmatic",
+            "none"
+          ]
+        },
+        "trap": {
+          "type": "boolean"
+        },
+        "restoreOnClose": {
+          "type": "boolean"
+        },
+        "restore": {
+          "type": "boolean"
+        },
+        "initial": {
+          "type": "string",
+          "minLength": 1
+        },
+        "order": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+          },
+          "uniqueItems": true
+        },
+        "activation": {
+          "enum": [
+            "automatic",
+            "manual"
+          ]
+        },
+        "visible": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "relationships": {
+      "type": "object",
+      "properties": {
+        "controls": {
+          "anyOf": [
+            {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+              },
+              "uniqueItems": true
+            }
+          ]
+        },
+        "describedBy": {
+          "anyOf": [
+            {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+              },
+              "uniqueItems": true
+            }
+          ]
+        },
+        "details": {
+          "anyOf": [
+            {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+              },
+              "uniqueItems": true
+            }
+          ]
+        },
+        "flowTo": {
+          "anyOf": [
+            {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+              },
+              "uniqueItems": true
+            }
+          ]
+        },
+        "labelledBy": {
+          "anyOf": [
+            {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+              },
+              "uniqueItems": true
+            }
+          ]
+        },
+        "owns": {
+          "anyOf": [
+            {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+              },
+              "uniqueItems": true
+            }
+          ]
+        },
+        "activeDescendant": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        }
+      },
+      "additionalProperties": false
+    },
+    "accessibility": {
+      "type": "object",
+      "properties": {
+        "semanticRole": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/taxonomy"
+        },
+        "role": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/taxonomy"
+        },
+        "name": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/accessibility.schema.json#/$defs/name"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/accessibility.schema.json#/$defs/name"
+            }
+          ]
+        },
+        "labelRequired": {
+          "type": "boolean"
+        },
+        "decorative": {
+          "type": "boolean"
+        },
+        "hidden": {
+          "type": "boolean"
+        },
+        "states": {
+          "type": "object",
+          "properties": {
+            "checked": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "enum": [
+                    "mixed"
+                  ]
+                }
+              ]
+            },
+            "disabled": {
+              "type": "boolean"
+            },
+            "expanded": {
+              "type": "boolean"
+            },
+            "hidden": {
+              "type": "boolean"
+            },
+            "invalid": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "enum": [
+                    "grammar",
+                    "spelling"
+                  ]
+                }
+              ]
+            },
+            "pressed": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "enum": [
+                    "mixed"
+                  ]
+                }
+              ]
+            },
+            "selected": {
+              "type": "boolean"
+            },
+            "busy": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        },
+        "properties": {
+          "type": "object",
+          "properties": {
+            "autocomplete": {
+              "enum": [
+                "none",
+                "inline",
+                "list",
+                "both"
+              ]
+            },
+            "hasPopup": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/taxonomy"
+                }
+              ]
+            },
+            "level": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "multiline": {
+              "type": "boolean"
+            },
+            "orientation": {
+              "enum": [
+                "horizontal",
+                "vertical"
+              ]
+            },
+            "placeholder": {
+              "type": "string",
+              "minLength": 1
+            },
+            "readonly": {
+              "type": "boolean"
+            },
+            "required": {
+              "type": "boolean"
+            },
+            "valueMin": {
+              "type": "number"
+            },
+            "valueMax": {
+              "type": "number"
+            },
+            "valueNow": {
+              "type": "number"
+            },
+            "valueText": {
+              "type": "string",
+              "minLength": 1
+            },
+            "selectionMode": {
+              "enum": [
+                "none",
+                "single",
+                "multiple"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        "relationships": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/accessibility.schema.json#/$defs/relationships"
+        },
+        "focus": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/accessibility.schema.json#/$defs/focus"
+        },
+        "keyboard": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minItems": 1,
+            "uniqueItems": true
+          }
+        },
+        "inputModalities": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "keyboard",
+              "pointer",
+              "touch",
+              "voice",
+              "switch",
+              "gamepad",
+              "spatial"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "readingOrder": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+          },
+          "uniqueItems": true
+        },
+        "live": {
+          "type": "object",
+          "properties": {
+            "politeness": {
+              "enum": [
+                "off",
+                "polite",
+                "assertive"
+              ]
+            },
+            "atomic": {
+              "type": "boolean"
+            },
+            "relevant": {
+              "type": "array",
+              "items": {
+                "enum": [
+                  "additions",
+                  "removals",
+                  "text",
+                  "all"
+                ]
+              },
+              "uniqueItems": true
+            }
+          },
+          "additionalProperties": false
+        },
+        "textScaling": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "min": {
+              "type": "number",
+              "minimum": 0
+            },
+            "max": {
+              "type": "number",
+              "minimum": 0
+            }
+          },
+          "additionalProperties": false
+        },
+        "contrast": {
+          "type": "object",
+          "properties": {
+            "minimumRatio": {
+              "type": "number",
+              "minimum": 1,
+              "maximum": 21
+            },
+            "highContrast": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        },
+        "reducedMotion": {
+          "enum": [
+            "respect",
+            "remove",
+            "reduce",
+            "substitute"
+          ]
+        },
+        "targetSize": {
+          "type": "object",
+          "properties": {
+            "width": {
+              "type": "number",
+              "minimum": 0
+            },
+            "height": {
+              "type": "number",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "width",
+            "height"
+          ],
+          "additionalProperties": false
+        },
+        "aria": {
+          "type": "object",
+          "properties": {
+            "preferNative": {
+              "type": "boolean"
+            },
+            "htmlElement": {
+              "type": "string",
+              "minLength": 1
+            },
+            "role": {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/taxonomy"
+            },
+            "attributes": {
+              "type": "object",
+              "propertyNames": {
+                "pattern": "^aria-[a-z]+(?:-[a-z]+)*$"
+              },
+              "additionalProperties": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "type": "number"
+                  }
+                ]
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "platformMappings": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "role": {
+                "type": "string",
+                "minLength": 1
+              },
+              "label": {
+                "type": "string",
+                "minLength": 1
+              },
+              "traits": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              },
+              "properties": {
+                "type": "object",
+                "additionalProperties": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    {
+                      "type": "boolean"
+                    },
+                    {
+                      "type": "number"
+                    }
+                  ]
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "motionPolicy": {
+          "type": "object",
+          "properties": {
+            "respectSystemPreference": {
+              "type": "boolean"
+            },
+            "requireReducedAlternative": {
+              "type": "boolean"
+            },
+            "essentialMotionRequiresJustification": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        },
+        "conformance": {
+          "enum": [
+            "WCAG-2.2-A",
+            "WCAG-2.2-AA",
+            "WCAG-2.2-AAA"
+          ]
+        },
+        "extensions": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/extensions"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "$ref": "#/$defs/accessibility"
+}

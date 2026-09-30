@@ -1,0 +1,75 @@
+---
+import Base from '@app/layouts/Base.astro';
+
+interface Props {
+  path?: string;
+}
+
+const requested = Astro.props.path ?? Astro.url.searchParams.get('path');
+const path = requested && requested.startsWith('/') ? requested : Astro.url.pathname;
+Astro.response.status = 404;
+
+const suggestions = [
+  { href: '/use-cases/', label: 'Use Cases' },
+  { href: '/specification/1.0/', label: 'Specification' },
+  { href: '/learn/quick-start/', label: 'Quick start' }
+];
+
+const typoHints = [];
+if (
+  (/example/i.test(path) || /generated/i.test(path)) &&
+  !path.startsWith('/use-cases/')
+) {
+  typoHints.push({ href: '/use-cases/', text: 'Browse use cases' });
+}
+---
+<Base title="Page not found" description="The page you requested is not part of Visual Spec.">
+  <section class="not-found container">
+    <div class="eyebrow">Outside the specification</div>
+    <h1>404<span class="serif">.</span></h1>
+    <p class="not-found-lead">This URL is not in the site map. The path below was not found.</p>
+    <p class="not-found-path mono" aria-label="Requested path" data-path={path}>{path}</p>
+    {typoHints.length > 0 && (
+      <ul class="not-found-hints">
+        {typoHints.map((hint) => (
+          <li><a class="text-link" href={hint.href}>{hint.text} <span aria-hidden="true">↗</span></a></li>
+        ))}
+      </ul>
+    )}
+    <div class="not-found-links">
+      {suggestions.map((item) => (
+        <a class="button secondary small" href={item.href}>{item.label}</a>
+      ))}
+    </div>
+    <p class="not-found-foot">
+      <a class="button" href="/">Back to home <span aria-hidden="true">→</span></a>
+    </p>
+  </section>
+  <script is:inline>
+    (function () {
+      var el = document.querySelector('.not-found-path');
+      if (!el) return;
+      var fromQuery = new URLSearchParams(location.search).get('path');
+      var shown = fromQuery || (location.pathname !== '/404/' ? location.pathname : el.getAttribute('data-path'));
+      if (shown) el.textContent = shown;
+      var hints = document.querySelector('.not-found-hints');
+      if (
+        !hints &&
+        shown &&
+        (/example/i.test(shown) || /generated/i.test(shown)) &&
+        shown.indexOf('/use-cases/') !== 0
+      ) {
+        var wrap = document.createElement('ul');
+        wrap.className = 'not-found-hints';
+        var li = document.createElement('li');
+        var a = document.createElement('a');
+        a.className = 'text-link';
+        a.href = '/use-cases/';
+        a.innerHTML = 'Browse use cases <span aria-hidden="true">↗</span>';
+        li.appendChild(a);
+        wrap.appendChild(li);
+        el.parentNode.insertBefore(wrap, el.nextSibling);
+      }
+    })();
+  </script>
+</Base>

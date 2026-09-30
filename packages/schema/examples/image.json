@@ -1,0 +1,162 @@
+{
+  "$schema": "https://visualspec.dev/schema/1.0/schema.json",
+  "visualSpec": "1.0",
+  "metadata": {
+    "title": "Ceramic cup still",
+    "language": "en",
+    "status": "approved"
+  },
+  "profiles": [
+    "image"
+  ],
+  "visualReferences": [
+    {
+      "id": "ref.light",
+      "kind": "image",
+      "role": "source-of-truth",
+      "aspects": [
+        "lighting"
+      ],
+      "uri": "https://example.com/references/cup-light.jpg",
+      "locator": {
+        "image": {
+          "region": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1
+          }
+        }
+      },
+      "matchMode": "perceptual",
+      "confidence": 0.9,
+      "provenance": {
+        "method": "explicit"
+      }
+    }
+  ],
+  "visualReferenceSets": [
+    {
+      "id": "set.lighting",
+      "title": "Lighting baseline",
+      "references": [
+        {
+          "referenceRef": "ref.light",
+          "aspects": [
+            "lighting"
+          ],
+          "priority": 1
+        }
+      ],
+      "conflictPolicy": "explicit-over-inferred"
+    }
+  ],
+  "entities": [
+    {
+      "id": "entity.cup",
+      "kind": "object.product",
+      "name": "Ceramic cup",
+      "lifecycle": "persistent",
+      "appearance": {
+        "fill": "#f4f1ea"
+      }
+    }
+  ],
+  "cameras": [
+    {
+      "id": "camera.main",
+      "type": "photographic",
+      "framing": "close-up",
+      "focalLength": 85,
+      "aperture": 2.8,
+      "intent": "Isolate the glaze against a quiet ground."
+    }
+  ],
+  "lights": [
+    {
+      "id": "light.key",
+      "type": "natural",
+      "role": "key",
+      "color": "#fff4e5",
+      "intensity": 1
+    },
+    {
+      "id": "light.fill",
+      "type": "area",
+      "role": "fill",
+      "color": "#f7f8f3",
+      "intensity": 0.35
+    }
+  ],
+  "compositions": [
+    {
+      "id": "composition.still",
+      "sceneRef": "scene.still",
+      "cameraRef": "camera.main",
+      "subjectRefs": [
+        "entity.cup"
+      ],
+      "rules": [
+        "rule-of-thirds"
+      ],
+      "intent": "Cup on the left third, negative space to the right.",
+      "subjectPlacement": [
+        {
+          "entityRef": "entity.cup",
+          "bounds": {
+            "x": 0.08,
+            "y": 0.18,
+            "width": 0.28,
+            "height": 0.64
+          },
+          "priority": 1
+        }
+      ]
+    }
+  ],
+  "scenes": [
+    {
+      "id": "scene.still",
+      "kind": "2d",
+      "viewport": {
+        "width": 640,
+        "height": 400
+      },
+      "background": "#e7e2d8",
+      "cameraRef": "camera.main",
+      "lightRefs": [
+        "light.key",
+        "light.fill"
+      ],
+      "entityRefs": [
+        "entity.cup"
+      ],
+      "nodes": [
+        {
+          "id": "node.cup",
+          "kind": "image",
+          "entityRef": "entity.cup"
+        }
+      ]
+    }
+  ],
+  "rendering": {
+    "targets": [
+      {
+        "id": "target.still",
+        "platform": "web",
+        "width": 640,
+        "height": 400,
+        "colorSpace": "srgb",
+        "quality": "production",
+        "capabilities": [
+          {
+            "name": "image.still",
+            "level": "required"
+          }
+        ]
+      }
+    ],
+    "fallbackPolicy": "report-and-approximate"
+  }
+}

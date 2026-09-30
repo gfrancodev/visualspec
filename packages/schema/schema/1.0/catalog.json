@@ -1,0 +1,304 @@
+{
+  "modules": [
+    {
+      "name": "common",
+      "title": "Common",
+      "description": "Shared constrained identifiers, values, units, bounds, provenance and extension payloads.",
+      "definitions": [
+        "id",
+        "taxonomy",
+        "uri",
+        "time",
+        "duration",
+        "delay",
+        "dimension",
+        "size",
+        "tokenRef",
+        "jsonValue",
+        "extensions",
+        "provenance",
+        "evidence",
+        "vector2",
+        "vector3",
+        "quaternion",
+        "bounds",
+        "coordinateSpace",
+        "viewport",
+        "condition",
+        "metadata"
+      ]
+    },
+    {
+      "name": "references",
+      "title": "References",
+      "description": "Addressable source resources, visual evidence, reference graph and conflict resolution.",
+      "definitions": [
+        "source",
+        "locator",
+        "reference",
+        "binding",
+        "referenceSet",
+        "assertion"
+      ]
+    },
+    {
+      "name": "appearance",
+      "title": "Appearance",
+      "description": "Color spaces, paint, typography, filters, surface and rendering appearance.",
+      "definitions": [
+        "color",
+        "gradient",
+        "paint",
+        "stroke",
+        "shadow",
+        "typography",
+        "filter",
+        "appearance"
+      ]
+    },
+    {
+      "name": "tokens",
+      "title": "Tokens",
+      "description": "Typed design tokens, aliases, modes and provenance. Alias cycles require semantic validation.",
+      "definitions": [
+        "token",
+        "tokenRegistry",
+        "visualLanguage"
+      ]
+    },
+    {
+      "name": "layout",
+      "title": "Layout",
+      "description": "Framework-independent layout, constraints, responsive rules and adaptive alternatives.",
+      "definitions": [
+        "insets",
+        "constraint",
+        "layout",
+        "query",
+        "responsive"
+      ]
+    },
+    {
+      "name": "geometry",
+      "title": "Geometry",
+      "description": "2D and 3D primitives, paths, transforms and coordinate conventions.",
+      "definitions": [
+        "geometry",
+        "transformOp",
+        "transform"
+      ]
+    },
+    {
+      "name": "accessibility",
+      "title": "Accessibility",
+      "description": "Cross-platform semantic accessibility contract, with explicit native-first ARIA mappings.",
+      "definitions": [
+        "name",
+        "focus",
+        "relationships",
+        "accessibility"
+      ]
+    },
+    {
+      "name": "components",
+      "title": "Components",
+      "description": "Component definitions and instances, anatomy, variants, behavior and existing design-system mappings.",
+      "definitions": [
+        "mapping",
+        "behavior",
+        "slot",
+        "composition",
+        "component"
+      ]
+    },
+    {
+      "name": "semantics",
+      "title": "Semantics",
+      "description": "A semantic tree independently describes meaning, roles and reading relationships.",
+      "definitions": [
+        "semanticNode"
+      ]
+    },
+    {
+      "name": "interaction",
+      "title": "Interaction",
+      "description": "Observable events, declarative visual actions and visual state graphs. No executable business logic.",
+      "definitions": [
+        "event",
+        "action",
+        "state",
+        "flow"
+      ]
+    },
+    {
+      "name": "motion",
+      "title": "Motion",
+      "description": "Temporal visual changes including keyframes, springs, paths, shared elements and driven progress.",
+      "definitions": [
+        "value",
+        "easing",
+        "spring",
+        "keyframe",
+        "step",
+        "track",
+        "driver",
+        "path",
+        "sharedElement",
+        "animation"
+      ]
+    },
+    {
+      "name": "timeline",
+      "title": "Timeline",
+      "description": "Tracks, clips, markers, editorial transitions and audio-visual synchronization.",
+      "definitions": [
+        "transition",
+        "clip",
+        "track",
+        "marker",
+        "timeline"
+      ]
+    },
+    {
+      "name": "assets",
+      "title": "Assets",
+      "description": "Resources used in the output, distinct from references that specify expected appearance.",
+      "definitions": [
+        "asset"
+      ]
+    },
+    {
+      "name": "camera",
+      "title": "Camera",
+      "description": "Photographic and realtime cameras with shared optical and composition intent.",
+      "definitions": [
+        "camera"
+      ]
+    },
+    {
+      "name": "lighting",
+      "title": "Lighting",
+      "description": "Physical and intent-oriented lights, environment illumination and shadows.",
+      "definitions": [
+        "light"
+      ]
+    },
+    {
+      "name": "materials",
+      "title": "Materials",
+      "description": "Interoperable material intent, texture bindings and physically based surface parameters.",
+      "definitions": [
+        "texture",
+        "material"
+      ]
+    },
+    {
+      "name": "effects",
+      "title": "Effects",
+      "description": "Reusable visual effects, particle systems and post-processing intent.",
+      "definitions": [
+        "effect"
+      ]
+    },
+    {
+      "name": "world",
+      "title": "World",
+      "description": "Visual world, environments, identities, representations, lifecycle and semantic relationships.",
+      "definitions": [
+        "environment",
+        "representation",
+        "entity",
+        "relationship",
+        "world"
+      ]
+    },
+    {
+      "name": "scene",
+      "title": "Scene",
+      "description": "Renderable scene tree and its semantic, entity and component bindings.",
+      "definitions": [
+        "content",
+        "node",
+        "scene"
+      ]
+    },
+    {
+      "name": "media",
+      "title": "Media",
+      "description": "Image composition, illustration, audiovisual projects, captions and data visualization.",
+      "definitions": [
+        "composition",
+        "illustration",
+        "caption",
+        "shot",
+        "video",
+        "chart"
+      ]
+    },
+    {
+      "name": "presentation",
+      "title": "Presentation",
+      "description": "Slides, masters, narrative sequence, presenter notes and per-slide timelines.",
+      "definitions": [
+        "master",
+        "slide",
+        "presentation"
+      ]
+    },
+    {
+      "name": "document",
+      "title": "Document",
+      "description": "Editorial and paginated visual layout, page sections, figures, notes and pagination.",
+      "definitions": [
+        "section",
+        "note",
+        "page",
+        "document"
+      ]
+    },
+    {
+      "name": "three-d",
+      "title": "Three D",
+      "description": "3D scene intent, geometry instances, LOD, skeletons, skins, rigs and morph targets.",
+      "definitions": [
+        "joint",
+        "skeleton",
+        "mesh",
+        "rig",
+        "threeD"
+      ]
+    },
+    {
+      "name": "game",
+      "title": "Game",
+      "description": "Visual-only game profile: levels, HUD, characters, animation controllers, spatial UI and cutscenes.",
+      "definitions": [
+        "spatialUI",
+        "character",
+        "level",
+        "game"
+      ]
+    },
+    {
+      "name": "rendering",
+      "title": "Rendering",
+      "description": "Output requirements, capability negotiation, explicit fallbacks and platform overrides.",
+      "definitions": [
+        "capability",
+        "target",
+        "rendering",
+        "override"
+      ]
+    },
+    {
+      "name": "validation",
+      "title": "Validation",
+      "description": "Structural, semantic, accessibility, visual and reference conformance expectations.",
+      "definitions": [
+        "tolerance",
+        "rule",
+        "validation"
+      ]
+    }
+  ]
+}

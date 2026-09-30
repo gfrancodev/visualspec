@@ -1,0 +1,165 @@
+[
+  {
+    "id": "ui",
+    "title": "User interfaces",
+    "description": "Responsive interfaces with reusable components, semantics and observable behavior.",
+    "uses": [
+      "Web and native applications",
+      "Design-system contracts",
+      "Interactive product experiences"
+    ],
+    "modules": [
+      "components",
+      "layout",
+      "interaction",
+      "semantics",
+      "accessibility"
+    ],
+    "example": "ui.json"
+  },
+  {
+    "id": "image",
+    "title": "Images",
+    "description": "Still-image intent with identifiable subjects, composition, lighting and visual references.",
+    "uses": [
+      "Product photography",
+      "Art direction",
+      "Reference-based image generation"
+    ],
+    "modules": [
+      "entities",
+      "scenes",
+      "graphics",
+      "references",
+      "rendering"
+    ],
+    "example": "image.json"
+  },
+  {
+    "id": "illustration",
+    "title": "Illustration",
+    "description": "A shared contract for shape language, graphic style and vector or raster representations.",
+    "uses": [
+      "Editorial illustration",
+      "Icon families",
+      "Brand illustration systems"
+    ],
+    "modules": [
+      "graphics",
+      "appearance",
+      "entities",
+      "tokens",
+      "references"
+    ],
+    "example": "illustration.json"
+  },
+  {
+    "id": "document",
+    "title": "Documents",
+    "description": "Paginated visual structure, typography and accessible reading relationships.",
+    "uses": [
+      "Reports and proposals",
+      "PDF output",
+      "Multi-page publications"
+    ],
+    "modules": [
+      "document",
+      "layout",
+      "tokens",
+      "semantics",
+      "accessibility"
+    ],
+    "example": "document.json"
+  },
+  {
+    "id": "presentation",
+    "title": "Presentations",
+    "description": "Slide order, repeated visual structures and time-based presentation behavior.",
+    "uses": [
+      "Pitch and technical decks",
+      "Narrated presentations",
+      "Reusable slide systems"
+    ],
+    "modules": [
+      "presentation",
+      "layout",
+      "graphics",
+      "timelines",
+      "accessibility"
+    ],
+    "example": "presentation.json"
+  },
+  {
+    "id": "video",
+    "title": "Video",
+    "description": "Shots, temporal composition, camera intent and synchronized audio-visual cues.",
+    "uses": [
+      "Film and short-form video",
+      "Product videos",
+      "Storyboards and editorial plans"
+    ],
+    "modules": [
+      "media",
+      "timelines",
+      "motion",
+      "world",
+      "rendering"
+    ],
+    "example": "video.json"
+  },
+  {
+    "id": "motion-graphics",
+    "title": "Motion graphics",
+    "description": "Animated typography, shapes and graphic sequences with explicit timing.",
+    "uses": [
+      "Title sequences",
+      "Explainer graphics",
+      "Animated brand systems"
+    ],
+    "modules": [
+      "graphics",
+      "motion",
+      "timelines",
+      "tokens",
+      "rendering"
+    ],
+    "example": "motion-graphics.json"
+  },
+  {
+    "id": "3d",
+    "title": "3D",
+    "description": "Spatial scenes with persistent entities, materials, lights and cameras.",
+    "uses": [
+      "Product visualization",
+      "Spatial composition",
+      "3D content interchange intent"
+    ],
+    "modules": [
+      "three-d",
+      "world",
+      "entities",
+      "assets",
+      "rendering"
+    ],
+    "example": "3d.json"
+  },
+  {
+    "id": "game",
+    "title": "Games",
+    "description": "World and character state visualization, HUDs, effects and cutscenes.",
+    "uses": [
+      "Visual state mappings",
+      "HUD and spatial UI",
+      "Level art and cutscenes"
+    ],
+    "modules": [
+      "game",
+      "world",
+      "components",
+      "states",
+      "motion",
+      "three-d"
+    ],
+    "example": "game.json"
+  }
+]

@@ -1,0 +1,204 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://visualspec.dev/schema/1.0/modules/assets.schema.json",
+  "title": "Assets",
+  "description": "Resources used in the output, distinct from references that specify expected appearance.",
+  "$defs": {
+    "asset": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "type": {
+          "enum": [
+            "image",
+            "video",
+            "audio",
+            "font",
+            "svg",
+            "vector",
+            "raster",
+            "icon",
+            "lottie",
+            "model",
+            "texture",
+            "shader",
+            "document",
+            "animation",
+            "data"
+          ]
+        },
+        "uri": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/uri"
+        },
+        "mediaType": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "width": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "duration": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/duration"
+        },
+        "byteLength": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "checksum": {
+          "type": "string",
+          "minLength": 1
+        },
+        "license": {
+          "type": "string",
+          "minLength": 1
+        },
+        "attribution": {
+          "type": "string",
+          "minLength": 1
+        },
+        "colorSpace": {
+          "enum": [
+            "srgb",
+            "display-p3",
+            "rec2020",
+            "linear",
+            "unknown"
+          ]
+        },
+        "variants": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "uri": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/uri"
+              },
+              "width": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "height": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "mediaType": {
+                "type": "string",
+                "minLength": 1
+              },
+              "quality": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "platform": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/taxonomy"
+              }
+            },
+            "required": [
+              "uri"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "fallbackRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "font": {
+          "type": "object",
+          "properties": {
+            "family": {
+              "type": "string",
+              "minLength": 1
+            },
+            "style": {
+              "enum": [
+                "normal",
+                "italic",
+                "oblique"
+              ]
+            },
+            "weight": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "min": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "max": {
+                      "type": "integer",
+                      "minimum": 1
+                    }
+                  },
+                  "required": [
+                    "min",
+                    "max"
+                  ],
+                  "additionalProperties": false
+                }
+              ]
+            },
+            "axes": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object",
+                "properties": {
+                  "min": {
+                    "type": "number"
+                  },
+                  "max": {
+                    "type": "number"
+                  },
+                  "default": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "min",
+                  "max",
+                  "default"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "integrity": {
+          "type": "string",
+          "minLength": 1
+        },
+        "extensions": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/extensions"
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "uri"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$ref": "#/$defs/asset"
+}

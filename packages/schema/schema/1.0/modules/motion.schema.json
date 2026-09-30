@@ -1,0 +1,762 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://visualspec.dev/schema/1.0/modules/motion.schema.json",
+  "title": "Motion",
+  "description": "Temporal visual changes including keyframes, springs, paths, shared elements and driven progress.",
+  "$defs": {
+    "value": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/vector2"
+        },
+        {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/vector3"
+        },
+        {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/appearance.schema.json#/$defs/color"
+        }
+      ]
+    },
+    "easing": {
+      "anyOf": [
+        {
+          "enum": [
+            "linear",
+            "ease",
+            "ease-in",
+            "ease-out",
+            "ease-in-out"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "const": "cubic-bezier"
+            },
+            "values": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 4,
+              "maxItems": 4
+            }
+          },
+          "required": [
+            "type",
+            "values"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "const": "cubic-bezier"
+            },
+            "x1": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "y1": {
+              "type": "number"
+            },
+            "x2": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "y2": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "type",
+            "x1",
+            "y1",
+            "x2",
+            "y2"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "const": "linear"
+            },
+            "points": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 2
+            }
+          },
+          "required": [
+            "type",
+            "points"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "const": "steps"
+            },
+            "count": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "position": {
+              "enum": [
+                "start",
+                "end",
+                "jump-start",
+                "jump-end",
+                "jump-none",
+                "jump-both"
+              ]
+            }
+          },
+          "required": [
+            "type",
+            "count"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "const": "spring"
+            },
+            "mass": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "stiffness": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "damping": {
+              "type": "number",
+              "minimum": 0
+            },
+            "initialVelocity": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "type",
+            "mass",
+            "stiffness",
+            "damping"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "spring": {
+      "type": "object",
+      "properties": {
+        "mass": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "stiffness": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "damping": {
+          "type": "number",
+          "minimum": 0
+        },
+        "initialVelocity": {
+          "type": "number"
+        },
+        "restSpeed": {
+          "type": "number",
+          "minimum": 0
+        },
+        "restDelta": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "mass",
+        "stiffness",
+        "damping"
+      ],
+      "additionalProperties": false
+    },
+    "keyframe": {
+      "type": "object",
+      "properties": {
+        "offset": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "value": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/motion.schema.json#/$defs/value"
+        },
+        "values": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/motion.schema.json#/$defs/value"
+          }
+        },
+        "easing": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/motion.schema.json#/$defs/easing"
+        },
+        "composite": {
+          "enum": [
+            "replace",
+            "add",
+            "accumulate"
+          ]
+        }
+      },
+      "required": [
+        "offset"
+      ],
+      "additionalProperties": false,
+      "anyOf": [
+        {
+          "required": [
+            "value"
+          ]
+        },
+        {
+          "required": [
+            "values"
+          ]
+        }
+      ]
+    },
+    "step": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "enum": [
+            "animation",
+            "sequence",
+            "parallel",
+            "stagger",
+            "wait"
+          ]
+        },
+        "motionRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "each": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/duration"
+        },
+        "from": {
+          "enum": [
+            "first",
+            "last",
+            "center"
+          ]
+        },
+        "seed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "duration": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/duration"
+        },
+        "targets": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+          },
+          "uniqueItems": true
+        },
+        "children": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/motion.schema.json#/$defs/step"
+          }
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "track": {
+      "type": "object",
+      "properties": {
+        "property": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Animatable visual property path, for example appearance.opacity or transform.translate."
+        },
+        "from": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/motion.schema.json#/$defs/value"
+        },
+        "to": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/motion.schema.json#/$defs/value"
+        },
+        "keyframes": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/motion.schema.json#/$defs/keyframe"
+          },
+          "minItems": 2
+        },
+        "easing": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/motion.schema.json#/$defs/easing"
+        },
+        "composite": {
+          "enum": [
+            "replace",
+            "add",
+            "accumulate"
+          ]
+        }
+      },
+      "required": [
+        "property"
+      ],
+      "additionalProperties": false
+    },
+    "driver": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "enum": [
+            "event",
+            "state-transition",
+            "gesture",
+            "scroll",
+            "timeline",
+            "viewport",
+            "visibility",
+            "media-playback",
+            "external-progress"
+          ]
+        },
+        "sourceRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "axis": {
+          "enum": [
+            "x",
+            "y",
+            "both"
+          ]
+        },
+        "range": {
+          "type": "object",
+          "properties": {
+            "start": {
+              "type": "number"
+            },
+            "end": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "start",
+            "end"
+          ],
+          "additionalProperties": false
+        },
+        "clamp": {
+          "type": "boolean"
+        },
+        "externalName": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "path": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "string",
+          "minLength": 1
+        },
+        "pathRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "orientation": {
+          "enum": [
+            "auto",
+            "auto-reverse",
+            "fixed"
+          ]
+        },
+        "start": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "end": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "coordinateSpace": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/coordinateSpace"
+        }
+      },
+      "additionalProperties": false
+    },
+    "sharedElement": {
+      "type": "object",
+      "properties": {
+        "entityRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "fromNodeRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "toNodeRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "preserve": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "position",
+              "size",
+              "shape",
+              "opacity",
+              "color",
+              "content"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "crossfade": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "entityRef",
+        "fromNodeRef",
+        "toNodeRef"
+      ],
+      "additionalProperties": false
+    },
+    "animation": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "enum": [
+            "property",
+            "spring",
+            "decay",
+            "path",
+            "morph",
+            "layout",
+            "shared-element",
+            "sequence",
+            "parallel",
+            "stagger",
+            "transition"
+          ]
+        },
+        "targets": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+          },
+          "uniqueItems": true
+        },
+        "tracks": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/motion.schema.json#/$defs/track"
+          },
+          "minItems": 1
+        },
+        "duration": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/duration"
+        },
+        "delay": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/delay"
+        },
+        "easing": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/motion.schema.json#/$defs/easing"
+        },
+        "spring": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/motion.schema.json#/$defs/spring"
+        },
+        "decay": {
+          "type": "object",
+          "properties": {
+            "velocity": {
+              "type": "number"
+            },
+            "deceleration": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            }
+          },
+          "required": [
+            "velocity",
+            "deceleration"
+          ],
+          "additionalProperties": false
+        },
+        "timing": {
+          "type": "object",
+          "properties": {
+            "duration": {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/duration"
+            },
+            "delay": {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/delay"
+            },
+            "endDelay": {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/duration"
+            },
+            "iterations": {
+              "anyOf": [
+                {
+                  "type": "number",
+                  "minimum": 0
+                },
+                {
+                  "const": "infinite"
+                }
+              ]
+            },
+            "iterationStart": {
+              "type": "number",
+              "minimum": 0
+            },
+            "direction": {
+              "enum": [
+                "normal",
+                "reverse",
+                "alternate",
+                "alternate-reverse"
+              ]
+            },
+            "fill": {
+              "enum": [
+                "none",
+                "forwards",
+                "backwards",
+                "both"
+              ]
+            },
+            "playbackRate": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            }
+          },
+          "additionalProperties": false
+        },
+        "iterations": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0
+            },
+            {
+              "const": "infinite"
+            }
+          ]
+        },
+        "direction": {
+          "enum": [
+            "normal",
+            "reverse",
+            "alternate",
+            "alternate-reverse"
+          ]
+        },
+        "autoreverse": {
+          "type": "boolean"
+        },
+        "fill": {
+          "enum": [
+            "none",
+            "forwards",
+            "backwards",
+            "both"
+          ]
+        },
+        "composition": {
+          "enum": [
+            "replace",
+            "add",
+            "accumulate"
+          ]
+        },
+        "motionRefs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+          },
+          "uniqueItems": true
+        },
+        "children": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/motion.schema.json#/$defs/step"
+          }
+        },
+        "stagger": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/duration"
+        },
+        "trigger": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/motion.schema.json#/$defs/driver"
+        },
+        "path": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/motion.schema.json#/$defs/path"
+        },
+        "morph": {
+          "type": "object",
+          "properties": {
+            "fromPath": {
+              "type": "string",
+              "minLength": 1
+            },
+            "toPath": {
+              "type": "string",
+              "minLength": 1
+            },
+            "preserveTopology": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "fromPath",
+            "toPath"
+          ],
+          "additionalProperties": false
+        },
+        "sharedElement": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/motion.schema.json#/$defs/sharedElement"
+        },
+        "essential": {
+          "type": "boolean"
+        },
+        "interrupt": {
+          "anyOf": [
+            {
+              "enum": [
+                "cancel",
+                "finish",
+                "reverse",
+                "retarget",
+                "blend",
+                "queue",
+                "ignore"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "policy": {
+                  "enum": [
+                    "cancel",
+                    "finish",
+                    "reverse",
+                    "retarget",
+                    "blend",
+                    "queue",
+                    "ignore"
+                  ]
+                },
+                "preserveVelocity": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "policy"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        "cancel": {
+          "enum": [
+            "restore",
+            "freeze",
+            "finish"
+          ]
+        },
+        "reducedMotion": {
+          "type": "object",
+          "properties": {
+            "strategy": {
+              "enum": [
+                "instant",
+                "fade",
+                "reduce",
+                "substitute",
+                "none",
+                "disable",
+                "replace",
+                "shorten"
+              ]
+            },
+            "duration": {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/duration"
+            },
+            "motionRef": {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+            }
+          },
+          "additionalProperties": false
+        },
+        "performance": {
+          "type": "object",
+          "properties": {
+            "preferCompositor": {
+              "type": "boolean"
+            },
+            "frameBudget": {
+              "type": "number",
+              "minimum": 0
+            }
+          },
+          "additionalProperties": false
+        },
+        "extensions": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/extensions"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$ref": "#/$defs/animation"
+}

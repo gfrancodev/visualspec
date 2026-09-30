@@ -1,0 +1,121 @@
+{
+  "$schema": "https://visualspec.dev/schema/1.0/schema.json",
+  "visualSpec": "1.0",
+  "metadata": {
+    "title": "Intent deck",
+    "language": "en",
+    "status": "approved"
+  },
+  "profiles": [
+    "presentation"
+  ],
+  "presentations": [
+    {
+      "id": "presentation.intent",
+      "title": "Intent",
+      "masters": [
+        {
+          "id": "master.title",
+          "name": "Title",
+          "sceneRef": "scene.slide"
+        }
+      ],
+      "slides": [
+        {
+          "id": "slide.1",
+          "title": "One contract",
+          "sceneRef": "scene.slide",
+          "masterRef": "master.title",
+          "narrativeRole": "opening",
+          "notes": "State the handoff before the profiles.",
+          "timelineRef": "timeline.slide",
+          "duration": 8,
+          "transition": {
+            "type": "fade",
+            "duration": {
+              "value": 400,
+              "unit": "ms"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "timelines": [
+    {
+      "id": "timeline.slide",
+      "duration": 8,
+      "tracks": [
+        {
+          "id": "track.slide",
+          "type": "visual",
+          "clips": [
+            {
+              "id": "clip.slide",
+              "start": 0,
+              "duration": 8,
+              "sceneRef": "scene.slide"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "scenes": [
+    {
+      "id": "scene.slide",
+      "kind": "2d",
+      "viewport": {
+        "width": 960,
+        "height": 540
+      },
+      "background": "#f7f8f3",
+      "layout": {
+        "type": "column",
+        "padding": 48,
+        "gap": 12
+      },
+      "nodes": [
+        {
+          "id": "node.kicker",
+          "kind": "text",
+          "text": "Visual Spec",
+          "appearance": {
+            "color": "#4b621c",
+            "typography": {
+              "fontSize": 14,
+              "fontWeight": 700
+            }
+          }
+        },
+        {
+          "id": "node.headline",
+          "kind": "text",
+          "text": "One contract",
+          "appearance": {
+            "color": "#22261f",
+            "typography": {
+              "fontFamily": "Newsreader",
+              "fontSize": 56,
+              "fontWeight": 500
+            }
+          },
+          "accessibility": {
+            "role": "heading",
+            "name": {
+              "source": "content",
+              "value": "One contract"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "accessibility": {
+    "readingOrder": [
+      "node.kicker",
+      "node.headline"
+    ],
+    "conformance": "WCAG-2.2-AA"
+  }
+}

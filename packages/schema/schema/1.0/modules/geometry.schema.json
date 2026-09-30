@@ -1,0 +1,210 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://visualspec.dev/schema/1.0/modules/geometry.schema.json",
+  "title": "Geometry",
+  "description": "2D and 3D primitives, paths, transforms and coordinate conventions.",
+  "$defs": {
+    "geometry": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "enum": [
+            "rectangle",
+            "rounded-rectangle",
+            "ellipse",
+            "circle",
+            "line",
+            "polygon",
+            "polyline",
+            "path",
+            "text",
+            "plane",
+            "box",
+            "sphere",
+            "cylinder",
+            "cone",
+            "torus",
+            "mesh",
+            "custom"
+          ]
+        },
+        "bounds": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/bounds"
+        },
+        "width": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/size"
+        },
+        "height": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/size"
+        },
+        "depth": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/size"
+        },
+        "radius": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/size"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "description": "SVG-compatible path data."
+        },
+        "points": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/vector2"
+              },
+              {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/vector3"
+              }
+            ]
+          },
+          "minItems": 2
+        },
+        "closed": {
+          "type": "boolean"
+        },
+        "assetRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "segments": {
+          "type": "integer",
+          "minimum": 3
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "extensions": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/extensions"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "transformOp": {
+      "type": "object",
+      "description": "One step in an ordered transform list. Order is significant.",
+      "properties": {
+        "type": {
+          "enum": [
+            "translate",
+            "scale",
+            "rotate",
+            "skew",
+            "perspective"
+          ]
+        },
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        },
+        "z": {
+          "type": "number"
+        },
+        "angle": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "transform": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "translate": {
+              "anyOf": [
+                {
+                  "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/vector2"
+                },
+                {
+                  "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/vector3"
+                }
+              ]
+            },
+            "rotate": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/vector3"
+                },
+                {
+                  "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/quaternion"
+                }
+              ]
+            },
+            "scale": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/vector2"
+                },
+                {
+                  "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/vector3"
+                }
+              ]
+            },
+            "origin": {
+              "anyOf": [
+                {
+                  "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/vector2"
+                },
+                {
+                  "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/vector3"
+                }
+              ]
+            },
+            "matrix": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "anyOf": [
+                {
+                  "minItems": 6,
+                  "maxItems": 6
+                },
+                {
+                  "minItems": 16,
+                  "maxItems": 16
+                }
+              ]
+            },
+            "operations": {
+              "type": "array",
+              "items": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/geometry.schema.json#/$defs/transformOp"
+              },
+              "minItems": 1
+            },
+            "coordinateSpace": {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/coordinateSpace"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/geometry.schema.json#/$defs/transformOp"
+          },
+          "minItems": 1
+        }
+      ]
+    }
+  },
+  "$ref": "#/$defs/geometry"
+}

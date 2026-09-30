@@ -1,0 +1,301 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://visualspec.dev/schema/1.0/modules/scene.schema.json",
+  "title": "Scene",
+  "description": "Renderable scene tree and its semantic, entity and component bindings.",
+  "$defs": {
+    "content": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "assetRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "alt": {
+          "type": "string",
+          "minLength": 1
+        },
+        "runs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "text": {
+                "type": "string"
+              },
+              "typography": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/appearance.schema.json#/$defs/typography"
+              },
+              "color": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/appearance.schema.json#/$defs/color"
+              }
+            },
+            "required": [
+              "text"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "fit": {
+          "enum": [
+            "contain",
+            "cover",
+            "fill",
+            "none",
+            "scale-down"
+          ]
+        },
+        "objectPosition": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/vector2"
+        },
+        "chart": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/media.schema.json#/$defs/chart"
+        }
+      },
+      "additionalProperties": false
+    },
+    "node": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "kind": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/taxonomy"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "entityRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "componentRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "semanticRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "assetRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "materialRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "instanceOf": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "text": {
+          "type": "string"
+        },
+        "content": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/scene.schema.json#/$defs/content"
+        },
+        "geometry": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/geometry.schema.json#/$defs/geometry"
+        },
+        "layout": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/layout.schema.json#/$defs/layout"
+        },
+        "appearance": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/appearance.schema.json#/$defs/appearance"
+        },
+        "transform": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/geometry.schema.json#/$defs/transform"
+        },
+        "bounds": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/bounds"
+        },
+        "responsive": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/layout.schema.json#/$defs/responsive"
+        },
+        "accessibility": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/accessibility.schema.json#/$defs/accessibility"
+        },
+        "children": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/scene.schema.json#/$defs/node"
+          }
+        },
+        "visible": {
+          "type": "boolean"
+        },
+        "layer": {
+          "type": "string",
+          "minLength": 1
+        },
+        "stateRefs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+          },
+          "uniqueItems": true
+        },
+        "eventRefs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+          },
+          "uniqueItems": true
+        },
+        "actionRefs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+          },
+          "uniqueItems": true
+        },
+        "motionRefs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+          },
+          "uniqueItems": true
+        },
+        "effectRefs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+          },
+          "uniqueItems": true
+        },
+        "references": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+          },
+          "uniqueItems": true
+        },
+        "spatialUI": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/game.schema.json#/$defs/spatialUI"
+        },
+        "extensions": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/extensions"
+        }
+      },
+      "required": [
+        "id",
+        "kind"
+      ],
+      "additionalProperties": false
+    },
+    "scene": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "enum": [
+            "2d",
+            "2.5d",
+            "3d"
+          ]
+        },
+        "nodes": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/scene.schema.json#/$defs/node"
+          }
+        },
+        "entityRefs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+          },
+          "uniqueItems": true
+        },
+        "cameraRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "lightRefs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+          },
+          "uniqueItems": true
+        },
+        "layers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "order": {
+                "type": "integer"
+              },
+              "visible": {
+                "type": "boolean"
+              },
+              "opacity": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "environment": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/world.schema.json#/$defs/environment"
+        },
+        "effects": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+          },
+          "uniqueItems": true
+        },
+        "overlays": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+          },
+          "uniqueItems": true
+        },
+        "viewport": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/viewport"
+        },
+        "background": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/appearance.schema.json#/$defs/paint"
+        },
+        "coordinateSpace": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/coordinateSpace"
+        },
+        "timelineRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "layout": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/layout.schema.json#/$defs/layout"
+        },
+        "extensions": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/extensions"
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "nodes"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$ref": "#/$defs/scene"
+}

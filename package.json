@@ -1,0 +1,30 @@
+{
+  "name": "visualspec",
+  "version": "1.0.0-rc.1",
+  "private": true,
+  "license": "Apache-2.0",
+  "type": "module",
+  "packageManager": "pnpm@10.26.1",
+  "scripts": {
+    "dev": "node scripts/build-schema.mjs && node scripts/sync-public.mjs && node scripts/sync-use-case-artifacts.mjs && pnpm --filter @visualspec/web dev -- --host 0.0.0.0",
+    "build": "node scripts/build-schema.mjs && node scripts/sync-public.mjs && node scripts/sync-use-case-artifacts.mjs && pnpm --filter @visualspec/web build",
+    "check": "pnpm --filter @visualspec/web check",
+    "fmt": "pnpm --filter @visualspec/web fmt",
+    "fmt:check": "pnpm --filter @visualspec/web fmt:check",
+    "test": "node --experimental-strip-types --import ./tests/register-web-ts.mjs --test tests/*.test.mjs",
+    "validate": "node packages/validator/cli.mjs",
+    "preview": "pnpm --filter @visualspec/web preview -- --host 0.0.0.0"
+  },
+  "devDependencies": {
+    "ajv": "8.20.0",
+    "ajv-formats": "3.0.1",
+    "@playwright/test": "1.63.0"
+  },
+  "engines": {
+    "node": ">=24",
+    "pnpm": ">=10"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": ["esbuild", "sharp"]
+  }
+}

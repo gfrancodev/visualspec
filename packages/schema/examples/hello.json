@@ -1,0 +1,23 @@
+{
+  "$schema": "https://visualspec.dev/schema/1.0/schema.json",
+  "visualSpec": "1.0",
+  "metadata": {
+    "title": "Hello Visual Spec"
+  },
+  "profiles": [
+    "ui"
+  ],
+  "scenes": [
+    {
+      "id": "scene.main",
+      "kind": "2d",
+      "nodes": [
+        {
+          "id": "node.title",
+          "kind": "text",
+          "text": "Hello Visual Spec"
+        }
+      ]
+    }
+  ]
+}

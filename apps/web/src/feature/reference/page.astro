@@ -1,0 +1,42 @@
+---
+import Base from '@app/layouts/Base.astro';
+import { DocAside, catalogPath, readJson, rootSchemaPath } from '@core';
+import SchemaNode from './SchemaNode.astro';
+import { describeNode } from './schema';
+
+interface CatalogModule { name: string; title: string; description: string; definitions?: string[] }
+type Catalog = { modules: CatalogModule[] };
+const catalog = readJson(catalogPath) as Catalog;
+const modules = catalog.modules;
+const root = readJson(rootSchemaPath);
+const rootNode = describeNode(root);
+---
+<Base title="Schema reference" description="Generated reference for Visual Spec 1.0 schema modules.">
+  <div class="container doc-layout">
+    <DocAside current="reference" modules={modules} />
+    <div>
+      <header class="page-head" style="padding-top:0">
+        <div class="eyebrow">JSON Schema 1.0</div>
+        <h1>Reference</h1>
+        <p>Start with the module that matches your question, not with a keyword from JSON Schema. Each module page explains what the definitions are for, what you must write, and a minimal example. Open “Exact constraints” only when you need the validator’s view: types, patterns, and numeric bounds. Normative requirements still live in the <a href="/specification/1.0/">specification</a>.</p>
+      </header>
+      <section class="schema-section" id="root">
+        <h2>Root document</h2>
+        <p class="schema-path">Raw schema: <a href="/schema/1.0/schema.json">/schema/1.0/schema.json</a></p>
+        {root.description && <p>{root.description}</p>}
+        <SchemaNode node={rootNode} />
+      </section>
+      <div class="index-list">
+        {modules.map((mod) => (
+          <a class="index-row" href={`/reference/${mod.name}/`}>
+            <div>
+              <div class="row-title">{mod.title}</div>
+              <p>{mod.description}</p>
+            </div>
+            <span class="mono">{mod.definitions?.length ?? 0} defs</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</Base>

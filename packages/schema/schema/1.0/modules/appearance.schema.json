@@ -1,0 +1,506 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://visualspec.dev/schema/1.0/modules/appearance.schema.json",
+  "title": "Appearance",
+  "description": "Color spaces, paint, typography, filters, surface and rendering appearance.",
+  "$defs": {
+    "color": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$"
+        },
+        {
+          "enum": [
+            "transparent",
+            "currentColor",
+            "black",
+            "white"
+          ]
+        },
+        {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/tokenRef"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "space": {
+              "enum": [
+                "srgb",
+                "srgb-linear",
+                "display-p3",
+                "rec2020",
+                "lab",
+                "lch",
+                "oklab",
+                "oklch",
+                "xyz-d50",
+                "xyz-d65"
+              ]
+            },
+            "channels": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 3,
+              "maxItems": 3
+            },
+            "alpha": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          },
+          "required": [
+            "space",
+            "channels"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "gradient": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "enum": [
+            "linear",
+            "radial",
+            "conic"
+          ]
+        },
+        "angle": {
+          "type": "number"
+        },
+        "center": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/vector2"
+        },
+        "stops": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "offset": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "color": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/appearance.schema.json#/$defs/color"
+              }
+            },
+            "required": [
+              "offset",
+              "color"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 2
+        }
+      },
+      "required": [
+        "type",
+        "stops"
+      ],
+      "additionalProperties": false
+    },
+    "paint": {
+      "anyOf": [
+        {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/appearance.schema.json#/$defs/color"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "enum": [
+                "solid",
+                "gradient",
+                "image",
+                "pattern"
+              ]
+            },
+            "color": {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/appearance.schema.json#/$defs/color"
+            },
+            "gradient": {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/appearance.schema.json#/$defs/gradient"
+            },
+            "assetRef": {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+            },
+            "scale": {
+              "type": "number",
+              "minimum": 0
+            },
+            "repeat": {
+              "enum": [
+                "none",
+                "x",
+                "y",
+                "both"
+              ]
+            },
+            "opacity": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          },
+          "required": [
+            "type"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "stroke": {
+      "type": "object",
+      "properties": {
+        "color": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/appearance.schema.json#/$defs/color"
+        },
+        "width": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/size"
+        },
+        "alignment": {
+          "enum": [
+            "inside",
+            "center",
+            "outside"
+          ]
+        },
+        "dash": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "minimum": 0
+          }
+        },
+        "cap": {
+          "enum": [
+            "butt",
+            "round",
+            "square"
+          ]
+        },
+        "join": {
+          "enum": [
+            "miter",
+            "round",
+            "bevel"
+          ]
+        }
+      },
+      "required": [
+        "color",
+        "width"
+      ],
+      "additionalProperties": false
+    },
+    "shadow": {
+      "type": "object",
+      "properties": {
+        "color": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/appearance.schema.json#/$defs/color"
+        },
+        "x": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/dimension"
+        },
+        "y": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/dimension"
+        },
+        "blur": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/size"
+        },
+        "spread": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/dimension"
+        },
+        "inset": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "color",
+        "x",
+        "y",
+        "blur"
+      ],
+      "additionalProperties": false
+    },
+    "typography": {
+      "type": "object",
+      "properties": {
+        "fontFamily": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 1
+            }
+          ]
+        },
+        "fontAssetRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "fontSize": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/size"
+        },
+        "fontWeight": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000
+            },
+            {
+              "enum": [
+                "normal",
+                "bold"
+              ]
+            }
+          ]
+        },
+        "fontStyle": {
+          "enum": [
+            "normal",
+            "italic",
+            "oblique"
+          ]
+        },
+        "lineHeight": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0
+            },
+            {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/dimension"
+            }
+          ]
+        },
+        "letterSpacing": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/dimension"
+        },
+        "textAlign": {
+          "enum": [
+            "start",
+            "end",
+            "left",
+            "right",
+            "center",
+            "justify"
+          ]
+        },
+        "textTransform": {
+          "enum": [
+            "none",
+            "uppercase",
+            "lowercase",
+            "capitalize"
+          ]
+        },
+        "textDecoration": {
+          "enum": [
+            "none",
+            "underline",
+            "line-through",
+            "overline"
+          ]
+        },
+        "direction": {
+          "enum": [
+            "ltr",
+            "rtl",
+            "auto"
+          ]
+        },
+        "fontFeatures": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "boolean"
+          }
+        },
+        "fontVariations": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "number"
+          }
+        },
+        "maxLines": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "overflow": {
+          "enum": [
+            "clip",
+            "ellipsis",
+            "wrap"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "filter": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "enum": [
+            "blur",
+            "brightness",
+            "contrast",
+            "grayscale",
+            "hue-rotate",
+            "invert",
+            "saturate",
+            "sepia",
+            "custom"
+          ]
+        },
+        "amount": {
+          "type": "number"
+        },
+        "assetRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "appearance": {
+      "type": "object",
+      "properties": {
+        "fill": {
+          "anyOf": [
+            {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/appearance.schema.json#/$defs/paint"
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/appearance.schema.json#/$defs/paint"
+              }
+            }
+          ]
+        },
+        "background": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/appearance.schema.json#/$defs/paint"
+        },
+        "color": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/appearance.schema.json#/$defs/color"
+        },
+        "stroke": {
+          "anyOf": [
+            {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/appearance.schema.json#/$defs/stroke"
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "https://visualspec.dev/schema/1.0/modules/appearance.schema.json#/$defs/stroke"
+              }
+            }
+          ]
+        },
+        "opacity": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "blend": {
+          "enum": [
+            "normal",
+            "multiply",
+            "screen",
+            "overlay",
+            "darken",
+            "lighten",
+            "color-dodge",
+            "color-burn",
+            "hard-light",
+            "soft-light",
+            "difference",
+            "exclusion",
+            "hue",
+            "saturation",
+            "color",
+            "luminosity"
+          ]
+        },
+        "radius": {
+          "anyOf": [
+            {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/size"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "topLeft": {
+                  "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/size"
+                },
+                "topRight": {
+                  "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/size"
+                },
+                "bottomRight": {
+                  "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/size"
+                },
+                "bottomLeft": {
+                  "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/size"
+                }
+              },
+              "additionalProperties": false
+            }
+          ]
+        },
+        "shadows": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/appearance.schema.json#/$defs/shadow"
+          }
+        },
+        "blur": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/size"
+        },
+        "filters": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/appearance.schema.json#/$defs/filter"
+          }
+        },
+        "maskRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "clipRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "materialRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "textureRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "typography": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/appearance.schema.json#/$defs/typography"
+        },
+        "visible": {
+          "type": "boolean"
+        },
+        "extensions": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/extensions"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "$ref": "#/$defs/appearance"
+}

@@ -1,0 +1,225 @@
+{
+  "$schema": "https://visualspec.dev/schema/1.0/schema.json",
+  "visualSpec": "1.0",
+  "metadata": {
+    "title": "Four second still",
+    "language": "en",
+    "status": "approved"
+  },
+  "profiles": [
+    "video"
+  ],
+  "world": {
+    "id": "world.studio",
+    "name": "Studio",
+    "environment": {
+      "kind": "environment.interior"
+    }
+  },
+  "cameras": [
+    {
+      "id": "camera.hold",
+      "type": "photographic",
+      "framing": "medium",
+      "intent": "Hold the subject without a move."
+    },
+    {
+      "id": "camera.detail",
+      "type": "photographic",
+      "framing": "close-up",
+      "intent": "Move in on the glaze."
+    }
+  ],
+  "assets": [
+    {
+      "id": "asset.room",
+      "type": "audio",
+      "uri": "https://example.com/media/room-tone.wav",
+      "mediaType": "audio/wav",
+      "duration": 4
+    }
+  ],
+  "motion": [
+    {
+      "id": "motion.push",
+      "targets": [
+        "node.detail"
+      ],
+      "essential": false,
+      "duration": {
+        "value": 2000,
+        "unit": "ms"
+      },
+      "tracks": [
+        {
+          "property": "transform.scale",
+          "from": 1,
+          "to": 1.08
+        }
+      ],
+      "reducedMotion": {
+        "strategy": "disable"
+      }
+    }
+  ],
+  "timelines": [
+    {
+      "id": "timeline.main",
+      "duration": 4,
+      "fps": 24,
+      "tracks": [
+        {
+          "id": "track.picture",
+          "type": "visual",
+          "clips": [
+            {
+              "id": "clip.hold",
+              "start": 0,
+              "duration": 2,
+              "sceneRef": "scene.shot",
+              "cameraRef": "camera.hold"
+            },
+            {
+              "id": "clip.detail",
+              "start": 2,
+              "duration": 2,
+              "sceneRef": "scene.detail",
+              "cameraRef": "camera.detail"
+            }
+          ]
+        },
+        {
+          "id": "track.audio",
+          "type": "audio",
+          "clips": [
+            {
+              "id": "clip.tone",
+              "start": 0,
+              "duration": 4,
+              "assetRef": "asset.room"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "id": "video.main",
+      "timelineRef": "timeline.main",
+      "aspectRatio": 1.777,
+      "audioAssetRefs": [
+        "asset.room"
+      ],
+      "shots": [
+        {
+          "id": "shot.hold",
+          "sceneRef": "scene.shot",
+          "cameraRef": "camera.hold",
+          "start": 0,
+          "duration": 2,
+          "intent": "Static hold."
+        },
+        {
+          "id": "shot.detail",
+          "sceneRef": "scene.detail",
+          "cameraRef": "camera.detail",
+          "start": 2,
+          "duration": 2,
+          "intent": "Push in.",
+          "transition": {
+            "type": "dissolve",
+            "duration": {
+              "value": 12,
+              "unit": "f"
+            }
+          }
+        }
+      ],
+      "captions": [
+        {
+          "id": "caption.hold",
+          "start": 0,
+          "end": 2,
+          "text": "A still hold.",
+          "language": "en"
+        },
+        {
+          "id": "caption.detail",
+          "start": 2,
+          "end": 4,
+          "text": "Then a closer hold.",
+          "language": "en"
+        }
+      ]
+    }
+  ],
+  "entities": [
+    {
+      "id": "entity.subject",
+      "kind": "object.product",
+      "name": "Subject",
+      "appearance": {
+        "fill": "#d9ed94"
+      }
+    }
+  ],
+  "scenes": [
+    {
+      "id": "scene.shot",
+      "kind": "2d",
+      "viewport": {
+        "width": 640,
+        "height": 360
+      },
+      "background": "#20261f",
+      "cameraRef": "camera.hold",
+      "nodes": [
+        {
+          "id": "node.subject",
+          "kind": "image",
+          "entityRef": "entity.subject"
+        }
+      ]
+    },
+    {
+      "id": "scene.detail",
+      "kind": "2d",
+      "viewport": {
+        "width": 640,
+        "height": 360
+      },
+      "background": "#20261f",
+      "cameraRef": "camera.detail",
+      "nodes": [
+        {
+          "id": "node.detail",
+          "kind": "image",
+          "entityRef": "entity.subject"
+        }
+      ]
+    }
+  ],
+  "rendering": {
+    "targets": [
+      {
+        "id": "target.film",
+        "platform": "web",
+        "width": 640,
+        "height": 360,
+        "quality": "preview",
+        "capabilities": [
+          {
+            "name": "video.timeline",
+            "level": "required",
+            "fallback": {
+              "strategy": "flatten",
+              "description": "Preview shows the shots as still frames."
+            }
+          }
+        ]
+      }
+    ],
+    "fallbackPolicy": "report-and-approximate"
+  }
+}

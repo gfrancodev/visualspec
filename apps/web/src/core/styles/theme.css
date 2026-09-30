@@ -1,0 +1,195 @@
+html[data-theme="dark"] .preview-card {
+  background: var(--white);
+}
+html[data-theme="dark"] .preview-card:hover {
+  border-color: #4c5844;
+}
+html[data-theme="dark"] .schema-node-body > p,
+html[data-theme="dark"] .schema-plain p,
+html[data-theme="dark"] .schema-lead {
+  color: #c5cbb8;
+}
+html[data-theme="dark"] .schema-flag {
+  background: #2a3324;
+  color: #d9ed94;
+}
+html[data-theme="dark"] .schema-enum li code {
+  background: #2a3324;
+  color: #d9ed94;
+}
+.theme-switch {
+  display: inline-flex;
+  align-items: stretch;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--white);
+}
+.theme-switch button {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  border-right: 1px solid var(--line);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+}
+.theme-switch button:last-child {
+  border-right: 0;
+}
+.theme-switch button svg {
+  display: block;
+}
+.theme-switch button:hover {
+  color: var(--ink);
+  background: color-mix(in srgb, var(--paper) 65%, var(--white));
+}
+.theme-switch button.is-active {
+  background: var(--ink);
+  color: #f7f8f3;
+}
+.theme-switch button.is-active:hover {
+  background: #39432e;
+  color: #f7f8f3;
+}
+html[data-theme="dark"] .theme-switch {
+  background: var(--white);
+}
+html[data-theme="dark"] .theme-switch button.is-active {
+  background: #d9ed94;
+  color: #22261f;
+}
+html[data-theme="dark"] .theme-switch button.is-active:hover {
+  background: #d9ed94;
+  color: #22261f;
+}
+html[data-theme="dark"] {
+  --paper: #161a14;
+  --white: #1c2219;
+  --ink: #f3f6ee;
+  --muted: #a8b09c;
+  --line: #31382c;
+  --accent: #d9ed94;
+  --accent-dark: #d9ed94;
+  --code: #10140e;
+  color-scheme: dark;
+}
+html[data-theme="dark"] body {
+  background: var(--paper);
+  color: var(--ink);
+}
+html[data-theme="dark"] .button:not(.secondary):not(.accent) {
+  background: var(--accent);
+  color: #22261f;
+  border-color: var(--accent);
+}
+html[data-theme="dark"] .button:not(.secondary):not(.accent):hover {
+  background: #e8f5a8;
+  border-color: #e8f5a8;
+  color: #22261f;
+}
+html[data-theme="dark"] .button.secondary {
+  border-color: #5c6654;
+  color: var(--ink);
+}
+html[data-theme="dark"] .button.secondary:hover {
+  background: #242b20;
+  border-color: #6f7964;
+  color: var(--ink);
+}
+html[data-theme="dark"] .spec-window,
+html[data-theme="dark"] .input,
+html[data-theme="dark"] .resource-card,
+html[data-theme="dark"] .preview-strip {
+  background: var(--white);
+  color: var(--ink);
+}
+html[data-theme="dark"] .profile-card:hover,
+html[data-theme="dark"] .sidebar a:hover,
+html[data-theme="dark"] .button.secondary:hover {
+  background: #242b20;
+}
+html[data-theme="dark"] .sidebar a {
+  color: #b7beaa;
+}
+html[data-theme="dark"] .sidebar a.active {
+  background: #2a3324;
+  color: var(--ink);
+}
+html[data-theme="dark"] .prose,
+html[data-theme="dark"] .prose p,
+html[data-theme="dark"] .prose li {
+  color: #c5cbb8;
+}
+html[data-theme="dark"] .prose code {
+  background: #2a3324;
+  color: #d9ed94;
+}
+html[data-theme="dark"] .prose th,
+html[data-theme="dark"] .property-table th {
+  background: #242b20;
+  color: #e7ecdf;
+}
+html[data-theme="dark"] .callout,
+html[data-theme="dark"] .prose blockquote {
+  background: #242b20;
+  border-color: #3a4434;
+  color: #c5cbb8;
+}
+html[data-theme="dark"] .flow-core {
+  background: #2a3324;
+  border-color: #4c5840;
+}
+html[data-theme="dark"] .code-line.highlight {
+  background: #2a3324;
+}
+html[data-theme="dark"] .spec-code .key {
+  color: #e7ecdf;
+}
+html[data-theme="dark"] .spec-code .value {
+  color: #d9ed94;
+}
+html[data-theme="dark"] .desktop-nav a:hover,
+html[data-theme="dark"] .desktop-nav a[aria-current] {
+  color: var(--accent);
+}
+html[data-theme="dark"] .version-tag {
+  border-color: #3a4434;
+  color: #a8b09c;
+}
+html[data-theme="dark"] .prose .spec-window--doc {
+  background: var(--white);
+  color: var(--ink);
+}
+html[data-theme="dark"] .prose .spec-window--doc .window-bar {
+  background: var(--white);
+  color: var(--muted);
+}
+html[data-theme="dark"] .prose .spec-window--doc .spec-code {
+  background: var(--white);
+  color: #a8b09c;
+}
+html[data-theme="dark"] .prose .spec-window--doc .spec-code .key {
+  color: #e7ecdf;
+}
+html[data-theme="dark"] .prose .spec-window--doc .spec-code .value {
+  color: #d9ed94;
+}
+html[data-theme="dark"] .spec-code .value {
+  color: #d9ed94;
+}
+html[data-theme="dark"] .sidebar,
+html[data-theme="dark"] .target-stage-shell {
+  scrollbar-color: rgba(217, 237, 148, 0.18) transparent;
+}
+html[data-theme="dark"] .sidebar::-webkit-scrollbar-thumb,
+html[data-theme="dark"] .target-stage-shell::-webkit-scrollbar-thumb {
+  background: rgba(217, 237, 148, 0.12);
+}
+html[data-theme="dark"] .sidebar:hover::-webkit-scrollbar-thumb,
+html[data-theme="dark"] .target-stage-shell:hover::-webkit-scrollbar-thumb {
+  background: rgba(217, 237, 148, 0.22);
+}

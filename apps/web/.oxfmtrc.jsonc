@@ -1,0 +1,16 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "printWidth": 100,
+  "ignorePatterns": [
+    "dist/**",
+    ".astro/**",
+    "node_modules/**",
+    "public/schema/**",
+    "public/examples/**",
+    "public/registries/**",
+    "public/specification/**",
+    "public/targets/**",
+    "artifacts/**",
+    "**/*.astro",
+  ],
+}

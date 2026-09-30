@@ -1,0 +1,12 @@
+:root {
+  --paper: #f7f8f3;
+  --white: #fff;
+  --ink: #22261f;
+  --muted: #73786e;
+  --line: #dce0d5;
+  --accent: #d9ed94;
+  --accent-dark: #4b621c;
+  --code: #20261f;
+  --font: "Manrope Variable", sans-serif;
+  --mono: "IBM Plex Mono", monospace;
+}

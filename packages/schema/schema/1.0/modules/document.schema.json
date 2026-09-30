@@ -1,0 +1,217 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://visualspec.dev/schema/1.0/modules/document.schema.json",
+  "title": "Document",
+  "description": "Editorial and paginated visual layout, page sections, figures, notes and pagination.",
+  "$defs": {
+    "section": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "nodeRefs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+          },
+          "uniqueItems": true
+        },
+        "columns": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "columnGap": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/dimension"
+        },
+        "breakBefore": {
+          "enum": [
+            "auto",
+            "page",
+            "column",
+            "odd",
+            "even"
+          ]
+        },
+        "keepTogether": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "additionalProperties": false
+    },
+    "note": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "anchorRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "enum": [
+            "footnote",
+            "endnote",
+            "caption"
+          ]
+        },
+        "nodeRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        }
+      },
+      "required": [
+        "id",
+        "text",
+        "kind"
+      ],
+      "additionalProperties": false
+    },
+    "page": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "sceneRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "size": {
+          "type": "object",
+          "properties": {
+            "width": {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/size"
+            },
+            "height": {
+              "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/size"
+            }
+          },
+          "required": [
+            "width",
+            "height"
+          ],
+          "additionalProperties": false
+        },
+        "margin": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/layout.schema.json#/$defs/insets"
+        },
+        "bleed": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/size"
+        },
+        "headerRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "footerRef": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "sections": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/document.schema.json#/$defs/section"
+          }
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/document.schema.json#/$defs/note"
+          }
+        },
+        "number": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "extensions": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/extensions"
+        }
+      },
+      "required": [
+        "id",
+        "sceneRef"
+      ],
+      "additionalProperties": false
+    },
+    "document": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/id"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "pages": {
+          "type": "array",
+          "items": {
+            "$ref": "https://visualspec.dev/schema/1.0/modules/document.schema.json#/$defs/page"
+          },
+          "minItems": 1
+        },
+        "pagination": {
+          "type": "object",
+          "properties": {
+            "start": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "format": {
+              "enum": [
+                "decimal",
+                "lower-roman",
+                "upper-roman",
+                "lower-alpha",
+                "upper-alpha"
+              ]
+            },
+            "position": {
+              "enum": [
+                "header",
+                "footer",
+                "margin"
+              ]
+            },
+            "showFirst": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        },
+        "binding": {
+          "enum": [
+            "left",
+            "right",
+            "top",
+            "none"
+          ]
+        },
+        "widows": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "orphans": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "extensions": {
+          "$ref": "https://visualspec.dev/schema/1.0/modules/common.schema.json#/$defs/extensions"
+        }
+      },
+      "required": [
+        "id",
+        "pages"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$ref": "#/$defs/document"
+}

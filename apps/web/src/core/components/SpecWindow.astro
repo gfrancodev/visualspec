@@ -1,0 +1,12 @@
+---
+interface Props {
+  caption?: string;
+  badge?: string;
+  variant?: 'default' | 'doc';
+}
+const { caption = 'Visual Spec document', badge = 'JSON', variant = 'default' } = Astro.props;
+---
+<div class:list={['spec-window', variant === 'doc' && 'spec-window--doc']}>
+  <div class="window-bar"><i></i><i></i><i></i><span>{caption}</span><b>{badge}</b></div>
+  <slot />
+</div>

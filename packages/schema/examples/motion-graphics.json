@@ -1,0 +1,158 @@
+{
+  "$schema": "https://visualspec.dev/schema/1.0/schema.json",
+  "visualSpec": "1.0",
+  "metadata": {
+    "title": "Title fade",
+    "language": "en",
+    "status": "approved"
+  },
+  "profiles": [
+    "motion-graphics"
+  ],
+  "tokens": {
+    "color.accent": {
+      "type": "color",
+      "value": "#d9ed94"
+    },
+    "color.ink": {
+      "type": "color",
+      "value": "#20261f"
+    }
+  },
+  "scenes": [
+    {
+      "id": "scene.title",
+      "kind": "2d",
+      "viewport": {
+        "width": 640,
+        "height": 360
+      },
+      "background": "{color.ink}",
+      "layout": {
+        "type": "column",
+        "padding": 48,
+        "gap": 8
+      },
+      "nodes": [
+        {
+          "id": "node.title",
+          "kind": "text",
+          "text": "Visual Spec",
+          "appearance": {
+            "color": "{color.accent}",
+            "typography": {
+              "fontFamily": "Newsreader",
+              "fontSize": 64,
+              "fontWeight": 500
+            }
+          }
+        },
+        {
+          "id": "node.version",
+          "kind": "text",
+          "text": "1.0",
+          "appearance": {
+            "color": "#f7f8f3",
+            "typography": {
+              "fontSize": 18,
+              "fontWeight": 650
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "motion": [
+    {
+      "id": "motion.fade",
+      "essential": false,
+      "duration": {
+        "value": 800,
+        "unit": "ms"
+      },
+      "targets": [
+        "node.title",
+        "node.version"
+      ],
+      "tracks": [
+        {
+          "property": "appearance.opacity",
+          "from": 0,
+          "to": 1
+        }
+      ],
+      "children": [
+        {
+          "type": "stagger",
+          "each": {
+            "value": 80,
+            "unit": "ms"
+          },
+          "from": "first",
+          "seed": 3,
+          "targets": [
+            "node.title",
+            "node.version"
+          ],
+          "motionRef": "motion.fade"
+        }
+      ],
+      "reducedMotion": {
+        "strategy": "fade",
+        "duration": {
+          "value": 1,
+          "unit": "ms"
+        }
+      }
+    }
+  ],
+  "timelines": [
+    {
+      "id": "timeline.title",
+      "duration": 2,
+      "tracks": [
+        {
+          "id": "track.type",
+          "type": "motion",
+          "clips": [
+            {
+              "id": "clip.fade",
+              "start": 0,
+              "duration": {
+                "value": 800,
+                "unit": "ms"
+              },
+              "motionRef": "motion.fade",
+              "sceneRef": "scene.title"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "rendering": {
+    "targets": [
+      {
+        "id": "target.title",
+        "platform": "web",
+        "width": 640,
+        "height": 360,
+        "capabilities": [
+          {
+            "name": "scene.2d",
+            "level": "required"
+          },
+          {
+            "name": "motion.stagger",
+            "level": "required",
+            "fallback": {
+              "strategy": "flatten",
+              "description": "Preview shows the settled title, not the stagger."
+            }
+          }
+        ]
+      }
+    ],
+    "fallbackPolicy": "report-and-approximate"
+  }
+}

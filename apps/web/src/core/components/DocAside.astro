@@ -1,0 +1,33 @@
+---
+interface ModuleLink { name: string; title: string }
+interface Props {
+  current?: string;
+  modules?: ModuleLink[];
+}
+const { current = '', modules = [] } = Astro.props as Props;
+const site = [
+  ['/reference/', 'Reference', 'reference'],
+  ['/schemas/', 'Schemas', 'schemas'],
+  ['/components/', 'Components', 'components'],
+  ['/ecosystem/', 'Ecosystem', 'ecosystem'],
+  ['/rfcs/', 'RFCs', 'rfcs'],
+  ['/learn/contributing/', 'Contributing', 'contributing']
+];
+---
+<aside class="sidebar" aria-label="Documentation">
+  {modules.length > 0 && (
+    <div class="sidebar-group">
+      <h3>Modules</h3>
+      <a href="/reference/" class:list={[{ active: current === 'reference' }]}>Overview</a>
+      {modules.map((mod) => (
+        <a href={`/reference/${mod.name}/`} class:list={[{ active: current === mod.name }]}>{mod.title}</a>
+      ))}
+    </div>
+  )}
+  <div class="sidebar-group">
+    <h3>Site</h3>
+    {site.map(([href, label, id]) => (
+      <a href={href} class:list={[{ active: current === id || current.startsWith(`${id}/`) }]}>{label}</a>
+    ))}
+  </div>
+</aside>

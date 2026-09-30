@@ -1,0 +1,5 @@
+---
+import { Page } from '@feature/not-found';
+Astro.response.status = 404;
+---
+<Page path={Astro.url.searchParams.get('path') ?? undefined} />

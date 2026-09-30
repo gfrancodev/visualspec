@@ -1,0 +1,204 @@
+{
+  "$schema": "https://visualspec.dev/schema/1.0/schema.json",
+  "visualSpec": "1.0",
+  "metadata": {
+    "title": "Field notes",
+    "language": "en",
+    "status": "approved"
+  },
+  "profiles": [
+    "document"
+  ],
+  "tokens": {
+    "type.title": {
+      "type": "typography",
+      "value": {
+        "fontFamily": "Newsreader",
+        "fontSize": "22pt",
+        "fontWeight": 600,
+        "textAlign": "start"
+      }
+    },
+    "color.body": {
+      "type": "color",
+      "value": "#3c4336"
+    }
+  },
+  "documents": [
+    {
+      "id": "document.notes",
+      "title": "Field notes",
+      "binding": "left",
+      "widows": 2,
+      "orphans": 2,
+      "pagination": {
+        "start": 1,
+        "format": "decimal",
+        "position": "footer",
+        "showFirst": false
+      },
+      "pages": [
+        {
+          "id": "page.1",
+          "number": 1,
+          "sceneRef": "scene.page",
+          "size": {
+            "width": "210mm",
+            "height": "297mm"
+          },
+          "margin": {
+            "top": "18mm",
+            "right": "16mm",
+            "bottom": "20mm",
+            "left": "16mm"
+          },
+          "sections": [
+            {
+              "id": "section.opening",
+              "title": "Opening",
+              "nodeRefs": [
+                "node.title",
+                "node.body"
+              ],
+              "columns": 1
+            }
+          ],
+          "notes": [
+            {
+              "id": "note.caption",
+              "kind": "caption",
+              "text": "A contract between reference and render.",
+              "anchorRef": "node.body"
+            }
+          ]
+        },
+        {
+          "id": "page.2",
+          "number": 2,
+          "sceneRef": "scene.page2",
+          "size": {
+            "width": "210mm",
+            "height": "297mm"
+          },
+          "margin": {
+            "top": "18mm",
+            "right": "16mm",
+            "bottom": "20mm",
+            "left": "16mm"
+          },
+          "sections": [
+            {
+              "id": "section.follow",
+              "title": "Follow",
+              "nodeRefs": [
+                "node.follow"
+              ],
+              "columns": 1,
+              "breakBefore": "page"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "scenes": [
+    {
+      "id": "scene.page",
+      "kind": "2d",
+      "viewport": {
+        "width": 420,
+        "height": 594
+      },
+      "background": "#fff",
+      "layout": {
+        "type": "column",
+        "padding": 28,
+        "gap": 14
+      },
+      "nodes": [
+        {
+          "id": "node.title",
+          "kind": "text",
+          "text": "Field notes",
+          "appearance": {
+            "color": "#22261f",
+            "typography": {
+              "fontFamily": "Newsreader",
+              "fontSize": "22pt",
+              "fontWeight": 600,
+              "textAlign": "start"
+            }
+          }
+        },
+        {
+          "id": "node.body",
+          "kind": "text",
+          "text": "A contract sits between the reference and the render.",
+          "appearance": {
+            "color": "{color.body}",
+            "typography": {
+              "fontSize": "11pt",
+              "lineHeight": 1.5
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "scene.page2",
+      "kind": "2d",
+      "viewport": {
+        "width": 420,
+        "height": 594
+      },
+      "background": "#fff",
+      "layout": {
+        "type": "column",
+        "padding": 28,
+        "gap": 14
+      },
+      "nodes": [
+        {
+          "id": "node.follow",
+          "kind": "text",
+          "text": "Page two keeps the same margin and reading order.",
+          "appearance": {
+            "color": "{color.body}",
+            "typography": {
+              "fontSize": "11pt",
+              "lineHeight": 1.5
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "semantics": [
+    {
+      "id": "sem.title",
+      "role": "heading",
+      "name": {
+        "source": "content",
+        "value": "Field notes"
+      },
+      "nodeRef": "node.title"
+    },
+    {
+      "id": "sem.follow",
+      "role": "heading",
+      "name": {
+        "source": "content",
+        "value": "Follow"
+      },
+      "nodeRef": "node.follow"
+    }
+  ],
+  "accessibility": {
+    "readingOrder": [
+      "node.title",
+      "node.body",
+      "node.follow"
+    ],
+    "conformance": "WCAG-2.2-AA"
+  }
+}

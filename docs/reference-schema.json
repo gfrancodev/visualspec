@@ -1,0 +1,604 @@
+{
+  "$schema": "https://json-schema.dev/draft/2020-12/schema",
+  "$id": "https://visualspec.dev/schema/1.0/schema.json",
+  "title": "Visual Spec 1.0",
+  "description": "Visual Spec 1.0 canonical modular entrypoint. Describes visual intent, composition, behavior, media, rendering, accessibility and validation across digital media.",
+  "$comment": "Canonical modular entrypoint. Legacy #/$defs/* pointers remain stable via aliases. Use schema.bundle.json for a single-file distribution.",
+  "type": "object",
+  "required": [
+    "visualSpec",
+    "metadata",
+    "profiles"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "const": "https://visualspec.dev/schema/1.0/schema.json"
+    },
+    "visualSpec": {
+      "const": "1.0"
+    },
+    "metadata": {
+      "$ref": "#/$defs/Metadata"
+    },
+    "profiles": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/Profile"
+      }
+    },
+    "capabilities": {
+      "$ref": "#/$defs/CapabilityManifest"
+    },
+    "visualReferences": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/VisualReference"
+      },
+      "uniqueItems": false
+    },
+    "visualReferenceSets": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/VisualReferenceSet"
+      }
+    },
+    "provenance": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ProvenanceRecord"
+      }
+    },
+    "tokenSets": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/TokenSet"
+      }
+    },
+    "visualLanguage": {
+      "$ref": "#/$defs/VisualLanguage"
+    },
+    "assets": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Asset"
+      }
+    },
+    "canvases": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Canvas"
+      }
+    },
+    "scenes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Scene"
+      }
+    },
+    "timelines": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Timeline"
+      }
+    },
+    "animations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Animation"
+      }
+    },
+    "stateMachines": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/StateMachine"
+      }
+    },
+    "components": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Component"
+      }
+    },
+    "screens": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Screen"
+      }
+    },
+    "flows": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Flow"
+      }
+    },
+    "imageCompositions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ImageComposition"
+      }
+    },
+    "videoProjects": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/VideoProject"
+      }
+    },
+    "presentations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Presentation"
+      }
+    },
+    "documents": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Document"
+      }
+    },
+    "threeD": {
+      "$ref": "#/$defs/ThreeDDocument"
+    },
+    "accessibility": {
+      "$ref": "#/$defs/AccessibilityDocument"
+    },
+    "rendering": {
+      "$ref": "#/$defs/RenderingSpec"
+    },
+    "validation": {
+      "$ref": "#/$defs/ValidationSpec"
+    },
+    "platformOverrides": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/PlatformOverride"
+      }
+    },
+    "extensions": {
+      "$ref": "#/$defs/Extensions"
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "Identifier": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/core.schema.json#/$defs/Identifier"
+    },
+    "NonEmptyString": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/core.schema.json#/$defs/NonEmptyString"
+    },
+    "URIRef": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/core.schema.json#/$defs/URIRef"
+    },
+    "ExtensionKey": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/core.schema.json#/$defs/ExtensionKey"
+    },
+    "Extensions": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/core.schema.json#/$defs/Extensions"
+    },
+    "Profile": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/core.schema.json#/$defs/Profile"
+    },
+    "Platform": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/core.schema.json#/$defs/Platform"
+    },
+    "Metadata": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/core.schema.json#/$defs/Metadata"
+    },
+    "Party": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/core.schema.json#/$defs/Party"
+    },
+    "Confidence": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/core.schema.json#/$defs/Confidence"
+    },
+    "ProvenanceRecord": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/core.schema.json#/$defs/ProvenanceRecord"
+    },
+    "CapabilityManifest": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/core.schema.json#/$defs/CapabilityManifest"
+    },
+    "CapabilityRequirement": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/core.schema.json#/$defs/CapabilityRequirement"
+    },
+    "ReferenceRole": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/references.schema.json#/$defs/ReferenceRole"
+    },
+    "ReferenceKind": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/references.schema.json#/$defs/ReferenceKind"
+    },
+    "ReferenceAspect": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/references.schema.json#/$defs/ReferenceAspect"
+    },
+    "MatchMode": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/references.schema.json#/$defs/MatchMode"
+    },
+    "Rect": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/core.schema.json#/$defs/Rect"
+    },
+    "Point2": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/core.schema.json#/$defs/Point2"
+    },
+    "Point3": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/core.schema.json#/$defs/Point3"
+    },
+    "TimeValue": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/core.schema.json#/$defs/TimeValue"
+    },
+    "TimeRange": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/core.schema.json#/$defs/TimeRange"
+    },
+    "Viewport": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/core.schema.json#/$defs/Viewport"
+    },
+    "Insets": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/core.schema.json#/$defs/Insets"
+    },
+    "VisualReferenceLocator": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/references.schema.json#/$defs/VisualReferenceLocator"
+    },
+    "ReferenceTolerance": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/references.schema.json#/$defs/ReferenceTolerance"
+    },
+    "VisualReference": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/references.schema.json#/$defs/VisualReference"
+    },
+    "VisualReferenceSet": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/references.schema.json#/$defs/VisualReferenceSet"
+    },
+    "LengthUnit": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/core.schema.json#/$defs/LengthUnit"
+    },
+    "Length": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/core.schema.json#/$defs/Length"
+    },
+    "Angle": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/core.schema.json#/$defs/Angle"
+    },
+    "ScalarOrToken": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/core.schema.json#/$defs/ScalarOrToken"
+    },
+    "LengthOrToken": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/core.schema.json#/$defs/LengthOrToken"
+    },
+    "TokenRef": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/core.schema.json#/$defs/TokenRef"
+    },
+    "IdRef": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/core.schema.json#/$defs/IdRef"
+    },
+    "URIOrRef": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/core.schema.json#/$defs/URIOrRef"
+    },
+    "ColorSpace": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/tokens.schema.json#/$defs/ColorSpace"
+    },
+    "Color": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/tokens.schema.json#/$defs/Color"
+    },
+    "GradientStop": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/tokens.schema.json#/$defs/GradientStop"
+    },
+    "Gradient": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/tokens.schema.json#/$defs/Gradient"
+    },
+    "Paint": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/tokens.schema.json#/$defs/Paint"
+    },
+    "FontAxis": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/tokens.schema.json#/$defs/FontAxis"
+    },
+    "Typography": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/tokens.schema.json#/$defs/Typography"
+    },
+    "TokenSet": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/tokens.schema.json#/$defs/TokenSet"
+    },
+    "VisualLanguage": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/tokens.schema.json#/$defs/VisualLanguage"
+    },
+    "VisualPrinciple": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/tokens.schema.json#/$defs/VisualPrinciple"
+    },
+    "MotionLanguage": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/tokens.schema.json#/$defs/MotionLanguage"
+    },
+    "ColorManagement": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/tokens.schema.json#/$defs/ColorManagement"
+    },
+    "AssetType": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/assets.schema.json#/$defs/AssetType"
+    },
+    "Asset": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/assets.schema.json#/$defs/Asset"
+    },
+    "CoordinateSystem": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/layout.schema.json#/$defs/CoordinateSystem"
+    },
+    "Canvas": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/layout.schema.json#/$defs/Canvas"
+    },
+    "Size2D": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/core.schema.json#/$defs/Size2D"
+    },
+    "Size3D": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/core.schema.json#/$defs/Size3D"
+    },
+    "Spacing": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/core.schema.json#/$defs/Spacing"
+    },
+    "LayoutSize": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/layout.schema.json#/$defs/LayoutSize"
+    },
+    "LayoutConstraint": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/layout.schema.json#/$defs/LayoutConstraint"
+    },
+    "GridTrack": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/layout.schema.json#/$defs/GridTrack"
+    },
+    "Layout": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/layout.schema.json#/$defs/Layout"
+    },
+    "Border": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/graphics.schema.json#/$defs/Border"
+    },
+    "CornerRadius": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/graphics.schema.json#/$defs/CornerRadius"
+    },
+    "Shadow": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/graphics.schema.json#/$defs/Shadow"
+    },
+    "Filter": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/graphics.schema.json#/$defs/Filter"
+    },
+    "BlendMode": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/graphics.schema.json#/$defs/BlendMode"
+    },
+    "Material": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/graphics.schema.json#/$defs/Material"
+    },
+    "SurfaceStyle": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/graphics.schema.json#/$defs/SurfaceStyle"
+    },
+    "Transform2D": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/graphics.schema.json#/$defs/Transform2D"
+    },
+    "Quaternion": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/graphics.schema.json#/$defs/Quaternion"
+    },
+    "Transform3D": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/graphics.schema.json#/$defs/Transform3D"
+    },
+    "PathCommand": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/graphics.schema.json#/$defs/PathCommand"
+    },
+    "VectorPath": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/graphics.schema.json#/$defs/VectorPath"
+    },
+    "ClipMask": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/graphics.schema.json#/$defs/ClipMask"
+    },
+    "SemanticRole": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/accessibility.schema.json#/$defs/SemanticRole"
+    },
+    "AccessibilityNode": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/accessibility.schema.json#/$defs/AccessibilityNode"
+    },
+    "GestureType": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/interaction.schema.json#/$defs/GestureType"
+    },
+    "Gesture": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/interaction.schema.json#/$defs/Gesture"
+    },
+    "EventTrigger": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/interaction.schema.json#/$defs/EventTrigger"
+    },
+    "Interaction": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/interaction.schema.json#/$defs/Interaction"
+    },
+    "Haptic": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/interaction.schema.json#/$defs/Haptic"
+    },
+    "NodeType": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/graphics.schema.json#/$defs/NodeType"
+    },
+    "Node": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/graphics.schema.json#/$defs/Node"
+    },
+    "NodeContent": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/graphics.schema.json#/$defs/NodeContent"
+    },
+    "TextRun": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/graphics.schema.json#/$defs/TextRun"
+    },
+    "Shape": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/graphics.schema.json#/$defs/Shape"
+    },
+    "CustomDrawing": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/graphics.schema.json#/$defs/CustomDrawing"
+    },
+    "DrawingCommand": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/graphics.schema.json#/$defs/DrawingCommand"
+    },
+    "ChartSpec": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/graphics.schema.json#/$defs/ChartSpec"
+    },
+    "Scene": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/graphics.schema.json#/$defs/Scene"
+    },
+    "AdaptiveCondition": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/layout.schema.json#/$defs/AdaptiveCondition"
+    },
+    "AdaptiveRule": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/layout.schema.json#/$defs/AdaptiveRule"
+    },
+    "VisualState": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/interaction.schema.json#/$defs/VisualState"
+    },
+    "Easing": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/motion.schema.json#/$defs/Easing"
+    },
+    "Spring": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/motion.schema.json#/$defs/Spring"
+    },
+    "AnimValue": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/motion.schema.json#/$defs/AnimValue"
+    },
+    "Keyframe": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/motion.schema.json#/$defs/Keyframe"
+    },
+    "PropertyTrack": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/motion.schema.json#/$defs/PropertyTrack"
+    },
+    "Timing": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/motion.schema.json#/$defs/Timing"
+    },
+    "ProgressDriver": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/motion.schema.json#/$defs/ProgressDriver"
+    },
+    "AnimationKind": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/motion.schema.json#/$defs/AnimationKind"
+    },
+    "Animation": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/motion.schema.json#/$defs/Animation"
+    },
+    "AnimationGroup": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/motion.schema.json#/$defs/AnimationGroup"
+    },
+    "MotionPath": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/motion.schema.json#/$defs/MotionPath"
+    },
+    "SharedElementTransition": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/motion.schema.json#/$defs/SharedElementTransition"
+    },
+    "AnimationEvent": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/motion.schema.json#/$defs/AnimationEvent"
+    },
+    "ReducedMotionFallback": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/motion.schema.json#/$defs/ReducedMotionFallback"
+    },
+    "AnimationPerformanceHint": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/motion.schema.json#/$defs/AnimationPerformanceHint"
+    },
+    "PlatformFallback": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/motion.schema.json#/$defs/PlatformFallback"
+    },
+    "TimelineMarker": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/motion.schema.json#/$defs/TimelineMarker"
+    },
+    "TimelineTrackType": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/motion.schema.json#/$defs/TimelineTrackType"
+    },
+    "TimelineItem": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/motion.schema.json#/$defs/TimelineItem"
+    },
+    "TimelineTrack": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/motion.schema.json#/$defs/TimelineTrack"
+    },
+    "Timeline": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/motion.schema.json#/$defs/Timeline"
+    },
+    "MediaTransition": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/motion.schema.json#/$defs/MediaTransition"
+    },
+    "StateMachine": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/interaction.schema.json#/$defs/StateMachine"
+    },
+    "Flow": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/interaction.schema.json#/$defs/Flow"
+    },
+    "Component": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/ui.schema.json#/$defs/Component"
+    },
+    "Screen": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/ui.schema.json#/$defs/Screen"
+    },
+    "ImplementationMapping": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/ui.schema.json#/$defs/ImplementationMapping"
+    },
+    "CompositionIntent": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/media.schema.json#/$defs/CompositionIntent"
+    },
+    "CameraIntent": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/media.schema.json#/$defs/CameraIntent"
+    },
+    "LightSource": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/media.schema.json#/$defs/LightSource"
+    },
+    "LightingIntent": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/media.schema.json#/$defs/LightingIntent"
+    },
+    "PostProcessing": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/media.schema.json#/$defs/PostProcessing"
+    },
+    "ImageComposition": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/media.schema.json#/$defs/ImageComposition"
+    },
+    "Shot": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/media.schema.json#/$defs/Shot"
+    },
+    "VideoProject": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/media.schema.json#/$defs/VideoProject"
+    },
+    "CaptionTrack": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/media.schema.json#/$defs/CaptionTrack"
+    },
+    "SlideMaster": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/presentation.schema.json#/$defs/SlideMaster"
+    },
+    "Slide": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/presentation.schema.json#/$defs/Slide"
+    },
+    "Presentation": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/presentation.schema.json#/$defs/Presentation"
+    },
+    "Page": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/document.schema.json#/$defs/Page"
+    },
+    "Document": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/document.schema.json#/$defs/Document"
+    },
+    "CameraPose": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/three-d.schema.json#/$defs/CameraPose"
+    },
+    "Camera": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/three-d.schema.json#/$defs/Camera"
+    },
+    "Light": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/three-d.schema.json#/$defs/Light"
+    },
+    "Mesh": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/three-d.schema.json#/$defs/Mesh"
+    },
+    "Environment3D": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/three-d.schema.json#/$defs/Environment3D"
+    },
+    "ThreeDDocument": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/three-d.schema.json#/$defs/ThreeDDocument"
+    },
+    "AccessibilityDocument": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/accessibility.schema.json#/$defs/AccessibilityDocument"
+    },
+    "RenderTarget": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/rendering.schema.json#/$defs/RenderTarget"
+    },
+    "RenderingSpec": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/rendering.schema.json#/$defs/RenderingSpec"
+    },
+    "VisualMetric": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/validation.schema.json#/$defs/VisualMetric"
+    },
+    "ValidationRule": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/validation.schema.json#/$defs/ValidationRule"
+    },
+    "ValidationSpec": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/validation.schema.json#/$defs/ValidationSpec"
+    },
+    "PatchOperation": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/validation.schema.json#/$defs/PatchOperation"
+    },
+    "PlatformOverride": {
+      "$ref": "https://visualspec.dev/schema/1.0/modules/core.schema.json#/$defs/PlatformOverride"
+    }
+  }
+}
