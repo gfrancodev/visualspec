@@ -6,8 +6,8 @@
   "type": "module",
   "packageManager": "pnpm@10.26.1",
   "scripts": {
-    "dev": "node scripts/build-schema.mjs && node scripts/sync-public.mjs && node scripts/sync-use-case-artifacts.mjs && node scripts/build-llm-index.mjs && pnpm --filter @visualspec/web dev",
-    "build": "node scripts/build-schema.mjs && node scripts/sync-public.mjs && node scripts/sync-use-case-artifacts.mjs && node scripts/build-llm-index.mjs && pnpm --filter @visualspec/web build",
+    "dev": "node scripts/build-schema.mjs && node scripts/sync-public.mjs && node scripts/sync-use-case-artifacts.mjs && node scripts/build-llm-index.mjs && node apps/web/scripts/emit-client-i18n.mjs && pnpm --filter @visualspec/web dev",
+    "build": "node scripts/build-schema.mjs && node scripts/sync-public.mjs && node scripts/sync-use-case-artifacts.mjs && node scripts/build-llm-index.mjs && node apps/web/scripts/emit-client-i18n.mjs && pnpm --filter @visualspec/web build",
     "check": "pnpm --filter @visualspec/web check",
     "fmt": "pnpm --filter @visualspec/web fmt",
     "fmt:check": "pnpm --filter @visualspec/web fmt:check",

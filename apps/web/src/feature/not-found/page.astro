@@ -28,24 +28,24 @@ const browseUseCasesLabel = t('notFound.browseUseCases');
 ---
 <Base title={t('notFound.title')} description={t('notFound.description')} noindex={true}>
   <section class="not-found container" data-browse-use-cases={browseUseCasesLabel}>
-    <div class="eyebrow">{t('notFound.eyebrow')}</div>
+    <div class="eyebrow" data-i18n="notFound.eyebrow">{t('notFound.eyebrow')}</div>
     <h1>404<span class="serif">.</span></h1>
-    <p class="not-found-lead">{t('notFound.lead')}</p>
-    <p class="not-found-path mono" aria-label={t('aria.requestedPath')} data-path={path}>{path}</p>
+    <p class="not-found-lead" data-i18n="notFound.lead">{t('notFound.lead')}</p>
+    <p class="not-found-path mono" data-i18n-aria-label="aria.requestedPath" aria-label={t('aria.requestedPath')} data-path={path}>{path}</p>
     {typoHints.length > 0 && (
       <ul class="not-found-hints">
         {typoHints.map((hint) => (
-          <li><a class="text-link" href={hint.href}>{hint.text} <span aria-hidden="true">↗</span></a></li>
+          <li><a class="text-link" href={hint.href} data-i18n="notFound.browseUseCases">{hint.text} <span aria-hidden="true">↗</span></a></li>
         ))}
       </ul>
     )}
     <div class="not-found-links">
       {suggestions.map((item) => (
-        <a class="button secondary small" href={item.href}>{item.label}</a>
+        <a class="button secondary small" href={item.href} data-i18n={item.href === '/use-cases/' ? 'notFound.suggestions.useCases' : item.href.startsWith('/specification') ? 'notFound.suggestions.specification' : 'notFound.suggestions.quickStart'}>{item.label}</a>
       ))}
     </div>
     <p class="not-found-foot">
-      <a class="button" href="/">{t('notFound.backHome')} <span aria-hidden="true">→</span></a>
+      <a class="button" href="/"><span data-i18n="notFound.backHome">{t('notFound.backHome')}</span> <span aria-hidden="true">→</span></a>
     </p>
   </section>
   <script is:inline>

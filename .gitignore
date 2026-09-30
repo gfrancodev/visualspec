@@ -13,5 +13,6 @@ apps/web/public/registries/
 apps/web/public/specification/
 apps/web/public/llms.txt
 apps/web/public/llms-full.txt
+apps/web/public/i18n/
 
 .vercel

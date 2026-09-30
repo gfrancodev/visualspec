@@ -13,17 +13,17 @@ const taglineLines = t('chrome.footerTagline', undefined, locale).split('\n');
 <footer class="site-footer">
   <div class="footer-top">
     <a class="brand" href="/">visualspec.</a>
-    <p>{taglineLines[0]}<br/>{taglineLines[1]}</p>
+    <p><span data-i18n="chrome.footerTagline" data-i18n-split="0">{taglineLines[0]}</span><br/><span data-i18n="chrome.footerTagline" data-i18n-split="1">{taglineLines[1]}</span></p>
     <div class="footer-links">
-      <a href="/specification/1.0/">{t('nav.specification', undefined, locale)}</a>
-      <a href="/schemas/">{t('nav.schemas', undefined, locale)}</a>
-      <a href="/use-cases/">{t('nav.useCases', undefined, locale)}</a>
-      <a href={SITE.github} rel="me noopener noreferrer">{t('common.github', undefined, locale)}</a>
-      <a href="/learn/contributing/">{t('nav.contributing', undefined, locale)}</a>
+      <a href="/specification/1.0/" data-i18n="nav.specification">{t('nav.specification', undefined, locale)}</a>
+      <a href="/schemas/" data-i18n="nav.schemas">{t('nav.schemas', undefined, locale)}</a>
+      <a href="/use-cases/" data-i18n="nav.useCases">{t('nav.useCases', undefined, locale)}</a>
+      <a href={SITE.github} rel="me noopener noreferrer" data-i18n="common.github">{t('common.github', undefined, locale)}</a>
+      <a href="/learn/contributing/" data-i18n="nav.contributing">{t('nav.contributing', undefined, locale)}</a>
     </div>
   </div>
   <div class="footer-bottom">
-    <span>{t('chrome.footerMaintained', undefined, locale)} <a href={SITE.authorUrl} rel="me noopener noreferrer">Gustavo Franco ↗</a></span>
-    <span class="mono"><a href={SITE.license}>{t('chrome.footerLicense', undefined, locale)}</a> · {t('chrome.footerMotto', undefined, locale)}</span>
+    <span><span data-i18n="chrome.footerMaintained">{t('chrome.footerMaintained', undefined, locale)}</span> <a href={SITE.authorUrl} rel="me noopener noreferrer">Gustavo Franco ↗</a></span>
+    <span class="mono"><a href={SITE.license} data-i18n="chrome.footerLicense">{t('chrome.footerLicense', undefined, locale)}</a> · <span data-i18n="chrome.footerMotto">{t('chrome.footerMotto', undefined, locale)}</span></span>
   </div>
 </footer>

@@ -1,5 +1,5 @@
 ---
-import { siteNavItems, t } from '@core/i18n';
+import { SITE_NAV, t } from '@core/i18n';
 
 interface ModuleLink { name: string; title: string }
 interface Props {
@@ -7,22 +7,21 @@ interface Props {
   modules?: ModuleLink[];
 }
 const { current = '', modules = [] } = Astro.props as Props;
-const site = siteNavItems();
 ---
-<aside class="sidebar" aria-label={t('aria.docAside')}>
+<aside class="sidebar" data-i18n-aria-label="aria.docAside" aria-label={t('aria.docAside')}>
   {modules.length > 0 && (
     <div class="sidebar-group">
-      <h3>{t('docAside.modules')}</h3>
-      <a href="/reference/" class:list={[{ active: current === 'reference' }]}>{t('common.overview')}</a>
+      <h3 data-i18n="docAside.modules">{t('docAside.modules')}</h3>
+      <a href="/reference/" class:list={[{ active: current === 'reference' }]} data-i18n="common.overview">{t('common.overview')}</a>
       {modules.map((mod) => (
         <a href={`/reference/${mod.name}/`} class:list={[{ active: current === mod.name }]}>{mod.title}</a>
       ))}
     </div>
   )}
   <div class="sidebar-group">
-    <h3>{t('docAside.site')}</h3>
-    {site.map(({ href, label, id }) => (
-      <a href={href} class:list={[{ active: current === id || current.startsWith(`${id}/`) }]}>{label}</a>
+    <h3 data-i18n="docAside.site">{t('docAside.site')}</h3>
+    {SITE_NAV.map(({ href, labelKey, id }) => (
+      <a href={href} data-i18n={labelKey} class:list={[{ active: current === id || current.startsWith(`${id}/`) }]}>{t(labelKey)}</a>
     ))}
   </div>
 </aside>

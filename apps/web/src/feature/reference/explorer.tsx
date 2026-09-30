@@ -1,4 +1,4 @@
-import { useId, useMemo, useState } from "react";
+import { useEffect, useId, useMemo, useState } from "react";
 import { copyText } from "@core/components/CopyButton";
 import { getMessages, t } from "@core/i18n";
 
@@ -130,6 +130,13 @@ export default function ReferenceExplorer() {
   const [aspects, setAspects] = useState("layout, typography");
   const [uri, setUri] = useState("");
   const [fields, setFields] = useState<Record<string, string>>({});
+  const [, setLocaleRevision] = useState(0);
+
+  useEffect(() => {
+    const onLocale = () => setLocaleRevision((n) => n + 1);
+    window.addEventListener("visualspec-locale", onLocale);
+    return () => window.removeEventListener("visualspec-locale", onLocale);
+  }, []);
 
   const output = useMemo(() => {
     const aspectsList = aspects

@@ -3,17 +3,21 @@ import { getMessages } from '@core/i18n';
 
 interface Props {
   caption?: string;
+  captionKey?: string;
   badge?: string;
+  badgeKey?: string;
   variant?: 'default' | 'doc';
 }
 const defaults = getMessages().chrome;
 const {
   caption = defaults.specWindowDefaultCaption,
+  captionKey,
   badge = defaults.specWindowBadgeJson,
+  badgeKey = 'chrome.specWindowBadgeJson',
   variant = 'default',
 } = Astro.props;
 ---
 <div class:list={['spec-window', variant === 'doc' && 'spec-window--doc']}>
-  <div class="window-bar"><i></i><i></i><i></i><span>{caption}</span><b>{badge}</b></div>
+  <div class="window-bar"><i></i><i></i><i></i><span data-i18n={captionKey}>{caption}</span><b data-i18n={badgeKey}>{badge}</b></div>
   <slot />
 </div>

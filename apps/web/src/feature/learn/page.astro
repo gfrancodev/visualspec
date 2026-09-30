@@ -10,9 +10,9 @@ const p = (key: Parameters<typeof t>[0]) => t(key);
 <Base title={p('pages.learn.title')} description={p('pages.learn.description')}>
   <div class="container">
     <header class="page-head">
-      <div class="eyebrow">{p('pages.learn.eyebrow')}</div>
-      <h1>{p('pages.learn.heading')}</h1>
-      <p>{p('pages.learn.lead')}</p>
+      <div class="eyebrow" data-i18n="pages.learn.eyebrow">{p('pages.learn.eyebrow')}</div>
+      <h1 data-i18n="pages.learn.heading">{p('pages.learn.heading')}</h1>
+      <p data-i18n="pages.learn.lead">{p('pages.learn.lead')}</p>
     </header>
     {categories.map((category) => (
       <section class="index-list" aria-labelledby={`cat-${category}`}>

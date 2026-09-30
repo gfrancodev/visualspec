@@ -90,9 +90,20 @@ const jsonLd = siteJsonLd({
       document.documentElement.style.colorScheme = theme;
     })();
   </script>
+  <script is:inline>
+    (function () {
+      var match = document.cookie.match(/(?:^|;\s*)vs_locale=([^;]+)/);
+      if (!match) return;
+      var loc = decodeURIComponent(match[1].trim());
+      if (loc === 'en' || loc === 'pt-BR' || loc === 'es') document.documentElement.lang = loc;
+    })();
+  </script>
 </head>
 <body class:list={[{ wide }]}>
-  <a class="skip-link" href="#main">{t('aria.skipToContent', undefined, locale)}</a>
+  <script>
+    import '@core/i18n/client-locale.entry';
+  </script>
+  <a class="skip-link" href="#main" data-i18n="aria.skipToContent">{t('aria.skipToContent', undefined, locale)}</a>
   <Header path={path} locale={locale} />
   <main id="main"><slot/></main>
   <Footer locale={locale} />
