@@ -146,27 +146,51 @@ export const en = {
     section3Copy:
       "Start with the profile you need. Combine profiles when your experience crosses boundaries.",
     profiles: [
-      { id: "ui", title: "Interfaces", description: "Components, layouts, states and accessible interactions." },
-      { id: "image", title: "Images", description: "Composition, subjects, lighting and visual language." },
+      {
+        id: "ui",
+        title: "Interfaces",
+        description: "Components, layouts, states and accessible interactions.",
+      },
+      {
+        id: "image",
+        title: "Images",
+        description: "Composition, subjects, lighting and visual language.",
+      },
       {
         id: "illustration",
         title: "Illustration",
         description: "Vector primitives, shapes, paths and graphic systems.",
       },
-      { id: "document", title: "Documents", description: "Pages, reading order, print and flowing content." },
+      {
+        id: "document",
+        title: "Documents",
+        description: "Pages, reading order, print and flowing content.",
+      },
       {
         id: "presentation",
         title: "Presentations",
         description: "Slides, masters, transitions and speaker context.",
       },
-      { id: "video", title: "Video", description: "Shots, sequences, cameras and synchronized media." },
+      {
+        id: "video",
+        title: "Video",
+        description: "Shots, sequences, cameras and synchronized media.",
+      },
       {
         id: "motion-graphics",
         title: "Motion graphics",
         description: "Property tracks, keyframes and choreographed motion.",
       },
-      { id: "3d", title: "3D scenes", description: "Spatial entities, materials, cameras and lighting." },
-      { id: "game", title: "Games", description: "Worlds, characters, HUDs and visual state mappings." },
+      {
+        id: "3d",
+        title: "3D scenes",
+        description: "Spatial entities, materials, cameras and lighting.",
+      },
+      {
+        id: "game",
+        title: "Games",
+        description: "Worlds, characters, HUDs and visual state mappings.",
+      },
     ],
     ctaEyebrow: "Make your first visual contract",
     ctaTitle: "From idea to",
@@ -195,8 +219,7 @@ export const en = {
         "Worked Visual Spec documents and generated artifacts for every profile: UI, image, illustration, document, presentation, video, 3D, and games.",
       eyebrow: "Specification-driven generation",
       heading: "Use Cases",
-      lead:
-        "These examples show how Visual Spec acts as the contract for visual intent: a validated document describes what should exist, and a large language model reads that specification to produce the finished artifact (UI, illustration, document, motion, 3D, or interactive output). Each card pairs the source JSON with the generated result so you can inspect input and output side by side.",
+      lead: "These examples show how Visual Spec acts as the contract for visual intent: a validated document describes what should exist, and a large language model reads that specification to produce the finished artifact (UI, illustration, document, motion, 3D, or interactive output). Each card pairs the source JSON with the generated result so you can inspect input and output side by side.",
       notWritten: "Not written yet",
       detailTitleSuffix: "{title} | Use case",
       detailDescription: "Visual Spec use case ({profiles}): {title}.",
@@ -221,7 +244,8 @@ export const en = {
       heading: "Profiles",
       lead: "Select a profile by the kind of visual artifact you describe. Combine profiles when an experience crosses media.",
       detailTitleSuffix: "{title} | Profile",
-      detailDescription: "{description} Visual Spec profile for the open visual intermediate representation.",
+      detailDescription:
+        "{description} Visual Spec profile for the open visual intermediate representation.",
       eyebrowDetail: "Profile · {id}",
       typicalUses: "Typical uses",
       relatedModules: "Related modules",
@@ -311,8 +335,7 @@ export const en = {
         "JSON Schema 1.0 module reference for Visual Spec, the open visual intermediate representation for visual intent.",
       eyebrow: "JSON Schema 1.0",
       heading: "Reference",
-      lead:
-        "Start with the module that matches your question, not with a keyword from JSON Schema. Each module page explains what the definitions are for, what you must write, and a minimal example. Open “Exact constraints” only when you need the validator’s view: types, patterns, and numeric bounds. Normative requirements still live in the specification.",
+      lead: "Start with the module that matches your question, not with a keyword from JSON Schema. Each module page explains what the definitions are for, what you must write, and a minimal example. Open “Exact constraints” only when you need the validator’s view: types, patterns, and numeric bounds. Normative requirements still live in the specification.",
       specificationLink: "specification",
       rootHeading: "Root document",
       rawSchema: "Raw schema:",
@@ -338,8 +361,7 @@ export const en = {
         "Download Visual Spec 1.0 JSON Schema artifacts, semantic rules, and profile schemas. Canonical id: https://visualspec.dev/schema/1.0/schema.json",
       eyebrow: "Downloads",
       heading: "Schemas",
-      lead:
-        "Canonical schema identifiers live under https://visualspec.dev/schema/1.0/. Pin versioned 1.0 URLs in builds. /schema/latest/ is a discovery copy of 1.0 and may move.",
+      lead: "Canonical schema identifiers live under https://visualspec.dev/schema/1.0/. Pin versioned 1.0 URLs in builds. /schema/latest/ is a discovery copy of 1.0 and may move.",
       validateCallout: "Validate locally.",
       validateCalloutBody:
         "After cloning the repository: npm run validate -- <file>. Schemas resolve from the packaged files; validators must not fetch references at runtime.",
@@ -353,7 +375,11 @@ export const en = {
           "/schema/1.0/schema.bundle.json",
           "Self-contained schema for offline validation",
         ],
-        ["Manifest", "/schema/1.0/manifest.json", "Version, modules, profiles and semantic rule codes"],
+        [
+          "Manifest",
+          "/schema/1.0/manifest.json",
+          "Version, modules, profiles and semantic rule codes",
+        ],
         ["Semantic rules", "/schema/1.0/semantic-rules.json", "Rules beyond JSON Schema"],
         ["Checksums", "/schema/1.0/SHA256SUMS", "SHA-256 sums for published artifacts"],
       ],
@@ -365,7 +391,8 @@ export const en = {
       eyebrow: "Locators",
       heading: "Reference explorer",
       lead: "Construct a visual-reference descriptor with kind, role, aspects and a kind-specific locator. No network calls are made.",
-      builderNote: "This builder constructs a descriptor. It does not fetch or verify the resource.",
+      builderNote:
+        "This builder constructs a descriptor. It does not fetch or verify the resource.",
       kind: "Kind",
       role: "Role",
       aspects: "Aspects (comma-separated)",

@@ -38,9 +38,7 @@ if (!locale || !["pt-BR", "es"].includes(locale)) {
   process.exit(1);
 }
 
-const flat = JSON.parse(
-  readFileSync(`${dir}/locale-flat/${locale}.json`, "utf8"),
-);
+const flat = JSON.parse(readFileSync(`${dir}/locale-flat/${locale}.json`, "utf8"));
 const clone = structuredClone(en);
 applyFlat(clone, flat);
 

@@ -47,9 +47,7 @@ export function resolveLocale(
   acceptLanguageHeader: string | null | undefined,
 ): Locale {
   return (
-    parseLocaleCookie(cookieHeader) ??
-    parseAcceptLanguage(acceptLanguageHeader) ??
-    DEFAULT_LOCALE
+    parseLocaleCookie(cookieHeader) ?? parseAcceptLanguage(acceptLanguageHeader) ?? DEFAULT_LOCALE
   );
 }
 
